@@ -1,19 +1,3 @@
-
-	
-
-Tools Overview
-	- React Query
-	- Axios vs Fetch
-		- Axios Interceptors
-	- Storybook
-Project Structure
-	- Diagram of project structure
-	- Separation of concerns 
-Helpful tips
-	- React Developer Extension
-	- Light House Extension
-Testing
-- Playwright
 ## TOC
 
 ## Introduction
@@ -36,6 +20,11 @@ npm create vite@latest my-react-app --template
 - Each option
 
 ### Migrate to PNPM
+
+"scripts": { "preinstall": "npx only-allow pnpm", ... }
+
+https://dev.to/andreychernykh/yarn-npm-to-pnpm-migration-guide-2n04
+https://pnpm.io/
 
 ### Vs Code Folder
 
@@ -67,8 +56,12 @@ Speed Web Compile
 
 ### Why React + Vite + TypeScript
 
-### Alternatives
-- Frame works like next
+We chose React, Vite, and TypeScript for this guide because they are a powerful combination that offers a modern development experience. React is a popular library for building user interfaces, Vite is a fast build tool that leverages modern browser features, and TypeScript is a statically typed superset of JavaScript that helps catch errors early in the development process.
+
+#### Alternatives
+
+- **React**: Other popular libraries for building user interfaces include `Angular` and `Vue.js`.
+- **Vite**: Alternatives to Vite include `Webpack`, `Parcel`, and `Snowpack`.
 
 ## Components and Styling
 

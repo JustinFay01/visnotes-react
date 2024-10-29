@@ -56,7 +56,3 @@
 
 # Winner PNPM
 
-"scripts": { "preinstall": "npx only-allow pnpm", ... }
-
-https://dev.to/andreychernykh/yarn-npm-to-pnpm-migration-guide-2n04
-https://pnpm.io/
