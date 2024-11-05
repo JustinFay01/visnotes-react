@@ -244,9 +244,9 @@ In addition, you may use a `.prettierignore` file to exclude files or directorie
 
 [Husky](https://typicode.github.io/husky/) serves as a way to share [git hooks](https://git-scm.com/docs/githooks) between developers. Git hooks serve as a way to run scripts before major git actions like pushes, commits, etc. However, they are stored in the git folder which is not tracked by version control. Therefore, we use husky to ensure that before each commit, the code maintains formatting style.
 
-As a special note, since our `package.json` is not in the root directory, installation was slightly different. View the `Project Not in Git Root Directory` on the [How To page](https://typicode.github.io/husky/how-to.html) section within the husky documentation.
+As a special note, if your `package.json` is not in the root directory, installation will be slightly different. View the `Project Not in Git Root Directory` on the [How To page](https://typicode.github.io/husky/how-to.html) section within the husky documentation.
 
-In our case, the prepare script should look like so:
+If that is the case case, the prepare script should look like so:
 
 ```
 "prepare": "cd ../.. && husky ./src/your-project-name/.husky"
@@ -260,7 +260,7 @@ cd ./src/your-project-name
 <rest_of_your_script>
 ```
 
-When first running the `.husky` folder should appear within the `src/your-project-name` folder structure. **Make sure this is correct or the scripts will not work correctly**. If the scripts are not running check your `.git/config` file (local). It should contain the following setting:
+When first running, the `.husky` folder should appear within the `src/your-project-name` folder structure. **Make sure this is correct or the scripts will not work correctly**. If the scripts are not running check your `.git/config` file (local). It should contain the following setting:
 
 ```
 hooksPath = ./src/your-project-name/.husky/_
@@ -269,14 +269,14 @@ hooksPath = ./src/your-project-name/.husky/_
 
 ## Storybook
 
-[Storybook](https://storybook.js.org/) is a tool for developing UI components in isolation. It allows you to build and test components independently of your application, making it easier to develop and maintain complex UIs. To add Storybook to your project, run the following [Storybook for React & Vite](https://storybook.js.org/docs/get-started/frameworks/react-vite?renderer=react).
+[Storybook](https://storybook.js.org/) is a tool for developing UI components in isolation. It allows you to build and test components independently of your application, making it easier to develop and maintain complex UIs. To add Storybook to your project, checkout this guide [Storybook for React & Vite](https://storybook.js.org/docs/get-started/frameworks/react-vite?renderer=react).
 
 
 ### Gotchas with Storybook
 
-Upon first setup of Storybook, you may encounter that it works as expected. However, as your app grows more complex you may find that Storybook does not update as expected. This is *sometimes* due to the providers that are found within your app, specifically, the `react-router-dom` provider. Therefore, it is recommended to create a `storybook-provider` file that will wrap your components in a provider that is specific to Storybook. This will allow you to maintain the same functionality as your app while also allowing Storybook to update as expected, hopefully reducing the headache of debugging strange state issues.
+Upon first setup of Storybook, you may encounter that it works as expected. However, as your app grows more complex you may find that Storybook does not update as expected. This is *sometimes* due to the providers that are found within your app. Therefore, it is recommended to create a `storybook-provider` file that will wrap your components in a provider that is specific to Storybook. This will allow you to maintain the same functionality as your app while also allowing Storybook to update as expected, hopefully reducing the headache of debugging strange state issues.
 
-***Warning** Static imports will not work in the .storybook folder.*
+***Warning** Static imports may not work in the .storybook folder.*
 
 To do this, make these two changes: 
 
