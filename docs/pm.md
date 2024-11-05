@@ -53,6 +53,3 @@
 - **pnpm**: Use when efficient disk usage and fast installations are priorities, along with full compatibility with the npm ecosystem and support for monorepos.
 
 
-
-# Winner PNPM
-

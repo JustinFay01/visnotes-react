@@ -58,6 +58,8 @@ Speed Web Compile
 
 We chose React, Vite, and TypeScript for this guide because they are a powerful combination that offers a modern development experience. React is a popular library for building user interfaces, Vite is a fast build tool that leverages modern browser features, and TypeScript is a statically typed superset of JavaScript that helps catch errors early in the development process.
 
+If you aren't familiar with Vite check out the [Vite documentation](https://vitejs.dev/) as well as [Vite in 100 Seconds](https://www.youtube.com/watch?v=KCrXgy8qtjM).
+
 #### Alternatives
 
 - **React**: Other popular libraries for building user interfaces include `Angular` and `Vue.js`.
