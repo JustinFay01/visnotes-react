@@ -16,7 +16,7 @@ Last updated: 11/2024
 
 ## Introduction
 
-This guide will help you set up a new React project using Vite and TypeScript in Visual Studio Code. We will cover the installation process, project creation, and configuration of essential tools such as PNPM, ESLint, Prettier, Husky, and Storybook. By the end of this guide, you will have a fully functional React project with a modern development environment. Feel free to skip any tools that you are already familiar with or prefer not to use.
+This guide will help you set up a new React project using Vite and TypeScript in Visual Studio Code. We will cover the installation process, project creation, and configuration of essential tools such as PNPM, ESLint, Prettier, Husky, and Storybook. By the end of this guide, you will have a fully functional React project with a modern development environment. Feel free to skip any tools that you are already familiar with or prefer not to use. For additional details on each tool, refer to [project-standards.md](./project-standards.md#table-of-contents).
 
 ## Prerequisites
 
@@ -74,7 +74,7 @@ After this, the project will be created and you can navigate to the project dire
 
 ## Install PNPM
 
-*Why [PNPM](https://pnpm.io/)?* PNPM is a package manager that uses a unique symlink structure to save disk space and speed up installations. It is often faster than `npm` and `yarn` due to its optimized package management.
+*Why [PNPM](https://pnpm.io/)?* PNPM is a package manager that uses a unique symlink structure to save disk space and speed up installations. It is often faster than `npm` and `yarn` due to its optimized package management. Also, see [package-managers.md](./package-managers.md) for more information.
 
 *Already using `npm` or `yarn`?* Follow [How to migrate from yarn / npm to pnpm](https://dev.to/andreychernykh/yarn-npm-to-pnpm-migration-guide-2n04) to migrate your project to PNPM.
 
@@ -159,7 +159,7 @@ import MyComponent from '@/components/MyComponent';
 
 ## ESLint 
 
-ESLint is a static code analysis tool that helps identify and fix problems in your code. **Eslint has recently updated from v8 to v9.** When using the earlier command to setup `your-project-name`, it should have automatically added ESLint to your project. If not, you can follow the [ESLint setup guide](https://eslint.org/docs/user-guide/getting-started) to add it manually. Make sure that your version is `9.0.0` or higher in order to use the `flat config` feature.
+ESLint is a static code analysis tool that helps identify and fix problems in your code. **Eslint has recently updated from v8 to v9.** When using the earlier command to setup `your-project-name`, it should have automatically added ESLint to your project. If not, you can follow the [ESLint setup guide](https://eslint.org/docs/user-guide/getting-started) to add it manually. Make sure that your version is `9.0.0` or higher in order to use the `flat config` feature. [ESLint Project Standards](./project-standards.md#eslint) for more information.
 
 *Need to update ESLint?* [Migrate to v9.x](https://eslint.org/docs/latest/use/migrate-to-9.0.0) to update your project to the latest version.
 
@@ -240,9 +240,7 @@ In addition, you may use a `.prettierignore` file to exclude files or directorie
 
 ## Husky
 
-**To ignore husky** use any git command with the `--no-verify` flag.
-
-[Husky](https://typicode.github.io/husky/) serves as a way to share [git hooks](https://git-scm.com/docs/githooks) between developers. Git hooks serve as a way to run scripts before major git actions like pushes, commits, etc. However, they are stored in the git folder which is not tracked by version control. Therefore, we use husky to ensure that before each commit, the code maintains formatting style.
+[Husky](https://typicode.github.io/husky/) serves as a way to share [git hooks](https://git-scm.com/docs/githooks) between developers.
 
 As a special note, if your `package.json` is not in the root directory, installation will be slightly different. View the `Project Not in Git Root Directory` on the [How To page](https://typicode.github.io/husky/how-to.html) section within the husky documentation.
 
