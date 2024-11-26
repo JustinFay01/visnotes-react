@@ -9,6 +9,17 @@
   - [Wrapper Components](#wrapper-components)
 - [Tools](#tools)
     - [React Query](#react-query)
+      - [Configuration](#configuration)
+      - [Api Layer](#api-layer)
+        - [Get Subject](#get-subject)
+          - [Query Key](#query-key)
+          - [API Call](#api-call)
+          - [Query](#query)
+        - [Update Subject](#update-subject)
+      - [References](#references)
+    - [MUI](#mui)
+      - [Styling](#styling)
+      - [Global](#global)
 
 ## Introduction
 
@@ -294,5 +305,16 @@ This can be critical because if we want to use the hook **optimistically** in mu
 
 ### MUI 
 
+> MUI offers a comprehensive suite of free UI tools to help you ship new features faster. Start with Material UI, our fully-loaded component library, or bring your own design system to our production-ready components. -- <cite>[Material-UI](https://mui.com/)</cite>
 #### Styling 
 
+- Use [Padding and Margin](https://mui.com/system/spacing/) to be the numbers.
+- Use [Typography](https://mui.com/system/typography/) to be `rem`.
+- Utilize the [sx prop](https://mui.com/system/the-sx-prop/) for applying styles directly to components.
+- Leverage [styled components](https://mui.com/system/styled/) for creating custom-styled components.
+
+#### Global
+
+- Customize the theme using [createTheme](https://mui.com/material-ui/customization/theming/#createtheme-options-args-theme) to define global styles, color palettes, typography, and component overrides.
+- Use the [ThemeProvider](https://mui.com/material-ui/customization/theming/#themeprovider) to apply the custom theme across the entire application.
+- For more info on how to customize, check [here](https://mui.com/material-ui/customization/how-to-customize/).
