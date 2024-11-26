@@ -9,6 +9,8 @@ Last updated: 11/2024
 - [ESLint](#eslint)
 - [Husky](#husky)
 - [Prettier](#prettier)
+- [File Naming Conventions](#file-naming-conventions)
+- [Absolute Imports](#absolute-imports)
 
 ## Introduction
 
@@ -33,3 +35,20 @@ like pushes, commits, etc. However, they are stored in the git folder which is n
 ## Prettier
 
 [Prettier](https://prettier.io/) is a useful tool for maintaining consistent code formatting in your project. By enabling the "format on save" feature in your IDE, code is automatically formatted according to the rules set in the `.prettierrc` configuration file. This practice ensures a uniform code style across your codebase and provides helpful feedback on code issues. If the auto-formatting fails, it signals potential syntax error. Furthermore, Prettier can be integrated with ESLint to handle code formatting tasks alongside enforcing coding standards effectively throughout the development process. [quick-start.md](quick-start.md#prettier) provides more information on how to use Prettier.
+
+
+## File Naming Conventions
+
+- **Components**: PascalCase
+- **Hooks**: useCamelCase
+- **Files**: kebab-case
+- **Folders**: kebab-case
+- **Tests**: kebab-case.test.tsx
+- **Storybook**: kebab-case.stories.tsx
+
+We can enforce the file naming conventions using ESLint and Prettier. For more information, see [quick-start.md](quick-start.md#eslint).
+
+
+## Absolute Imports
+
+Absolute imports are a way to import modules using the absolute path from the project's root directory. This practice helps in avoiding lengthy relative paths and simplifies the import statements. By configuring the `tsconfig.app.json` file, you can set up absolute imports in your project. This approach not only enhances the readability of the code but also makes it easier to move files around without breaking the import paths. For more information, see [quick-start.md](quick-start.md#absolute-imports).
