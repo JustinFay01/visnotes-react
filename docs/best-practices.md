@@ -125,6 +125,24 @@ Now, there is a lot going on in this file and it can be a bit overwhelming at fi
 
 You may not feel the need for the extra types defined in this file and that is okay. However, it is recommended to use the `queryConfig` object to define the default strategy.
 
+You can apply the `queryConfig` object to the `QueryClientProvider` in the `AppProvider.tsx` file (or wherever you are defining the `QueryClientProvider`).
+
+```ts
+const appQueryClient = new QueryClient({
+  defaultOptions: queryConfig,
+})
+
+export const AppProvider = ({ children }: WithChildren) => {
+  return (
+    ...
+    <QueryClientProvider client={appQueryClient}>
+          {children}
+        <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
+  ...
+  )
+}
+```
 
 #### Api Layer
 
