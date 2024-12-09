@@ -55,9 +55,9 @@ I **_HIGHLY_** recommend checking out [these guides](https://tkdodo.eu/blog/prac
 
 > MUI offers a comprehensive suite of free UI tools to help you ship new features faster. Start with Material UI, our fully-loaded component library, or bring your own design system to our production-ready components. -- <cite>[Material-UI](https://mui.com/)</cite>
 
+Mui offers developers an easy way to create production ready components. It ties in difficult to manage concepts like theming and styling into a simple API. With this, you don't need to have a great understanding of React Context or CSS to create a beautiful (and consistent) application.
 
 [Configuration & Example](./tools/mui.md)
-
 
 ### Axios
 
@@ -65,5 +65,10 @@ I **_HIGHLY_** recommend checking out [these guides](https://tkdodo.eu/blog/prac
 
 ### React Hook Form
 
+### Zustand
 
+### Toastify
 
+### Suspense
+
+### Error Boundaries

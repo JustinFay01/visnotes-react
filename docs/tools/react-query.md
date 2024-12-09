@@ -1,6 +1,14 @@
 # React Query
 
-#### Configuration
+## Installation
+
+To install [React Query](https://tanstack.com/query/latest/docs/framework/react/installation), run the following command:
+
+```bash
+pnpm add @tanstack/react-query
+```
+
+## Configuration
 
 Conforming to our project structure, we have a folder called lib. This folder is used to configure any third party libraries that we wish to use throughout the application. In this case, we have a file called `react-query.ts`. This file is used to configure the react query client. 
 
@@ -87,15 +95,15 @@ export const AppProvider = ({ children }: WithChildren) => {
 }
 ```
 
-#### Api Layer
+## Api Layer
 
 As we add react query to the app we will have the API call and query/mutation hook in the same file. With this pattern we'll want to have each API call in a separate file the following convention `{verb}-{resource}` (i.e. `get-subject` or `update-subject`).
 
 For this example, we will cover both the `get-subject` and `update-subject` API calls to give a brief overview of mutations and queries.
 
-##### Get Subject
+### Get Subject
 
-###### Query Key
+#### Query Key
 
 Starting with the `get-subject` API call, we will first define the query [key](https://tanstack.com/query/latest/docs/framework/react/guides/query-keys). This key is used to identify the query in the cache. It is important to note that the query key should be unique to the query. 
 
@@ -117,7 +125,7 @@ export const subjectKeys = {
 
  You will see shortly how this key is used in the `get-subject` query.
 
-###### API Call
+#### API Call
 
 For your project, you may choose to use axios, fetch, or any other library to make the API call. In this example, we will use axios. 
 
@@ -129,7 +137,7 @@ export const getSubject = async (id: string): Promise<Subject> => {
 
 As you can see, this function is a simple axios call that fetches a subject by its id and casts the response to a `Subject` type. This not always recommended as you can see it limits access to the error handling and other features of axios. However, in our application, things like [axios interceptors](https://axios-http.com/docs/interceptors) are used to manage errors. In addition, we rely solely on the react query client for the majority of our data manipulation, therefore in order to avoid unnecessary chaining (like `subjectQuery.data?.data`), we cast the response to the `Subject` type and access the data directly.
 
-###### Query
+#### Query
 
 Now that we have defined the query key and the API call, we can define the query options and the query itself. 
 
@@ -176,7 +184,7 @@ const results = useQueries({
 })
 ```
 
-##### Update Subject
+### Update Subject
 
 Now that we have covered the `get-subject` query, we can move on to the `update-subject` [mutation](https://tanstack.com/query/latest/docs/framework/react/guides/mutations). This guide won't dive into the details of mutations, but it is important to note that mutations are used to update data on the server.
 
@@ -256,7 +264,7 @@ Here we see the use of the `MutationConfig` type that was defined in the `react-
 This can be critical because if we want to use the hook **optimistically** in multiple places with different error handling, we can pass in the error handling as a configuration option. 
 
 
-#### References 
+## References 
 
 - [TanStack Query](https://tanstack.com/query/v5/docs/framework/react/overview)
 - [TanStack Query Keys](https://tanstack.com/query/v5/docs/guides/query-keys)
