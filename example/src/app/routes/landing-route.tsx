@@ -28,22 +28,44 @@ export const BoxAndText = ({ color }: { color: string }) => {
 
 export const LandingRoute = () => {
   return (
-    <FlexColumn padding={10}>
+    <FlexColumn
+      padding={10}
+      sx={{
+        minWidth: 700,
+        minHeight: 700,
+      }}
+    >
       <Typography variant="h1">Hello, world!</Typography>
       <Typography variant="body1"> Welcome to the landing page.</Typography>
 
-      <Card sx={{ margin: 5 }}>
-        <FlexRow padding={2} spacing={5}>
-          <BoxAndText color="primary.main" />
-          <BoxAndText color="primary.light" />
-          <BoxAndText color="primary.dark" />
-          <FlexSpacer />
+      <FlexColumn spacing={2} sx={{ margin: 5 }}>
+        <Typography variant="h2">Primary Colors</Typography>
+        <Typography variant="body1">Custom defined</Typography>
+        <Card>
+          <FlexRow padding={2} spacing={5} sx={{ overflow: "auto" }}>
+            <BoxAndText color="primary.main" />
+            <BoxAndText color="primary.light" />
+            <BoxAndText color="primary.dark" />
+            <FlexSpacer />
 
-          <BoxAndText color="secondary.main" />
-          <BoxAndText color="secondary.light" />
-          <BoxAndText color="secondary.dark" />
-        </FlexRow>
-      </Card>
+            <BoxAndText color="secondary.main" />
+            <BoxAndText color="secondary.light" />
+            <BoxAndText color="secondary.dark" />
+          </FlexRow>
+        </Card>
+
+        <FlexSpacer />
+
+        <Typography variant="h2">Mui Defined Examples</Typography>
+        <Card>
+          <FlexRow padding={2} spacing={5} sx={{ overflow: "auto" }}>
+            <BoxAndText color="warning.main" />
+            <BoxAndText color="error.main" />
+            <BoxAndText color="info.main" />
+            <BoxAndText color="success.main" />
+          </FlexRow>
+        </Card>
+      </FlexColumn>
     </FlexColumn>
   );
 };
