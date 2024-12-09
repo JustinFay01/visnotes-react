@@ -67,15 +67,13 @@ export const theme = createTheme({
 Now, you can use the `ThemeProvider` to apply the theme to your application:
 
 ```tsx
-import { ThemeProvider } from '@mui/material/styles';
-import { theme } from './library/theme';
+import { ThemeProvider } from "@mui/material";
+import { theme } from "@/lib/theme";
 
-function App() {
-    return (
-        <ThemeProvider theme={theme}>
-            <YourApp />
-        </ThemeProvider>
-    );
+export function AppProvider({ children }: React.PropsWithChildren) {
+  return (
+      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+  );
 }
 ```
 
