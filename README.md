@@ -8,17 +8,17 @@ It heavily focuses on integration with tools like ESLint, Prettier, TypeScript, 
 
 ## The Docs
 
-- [Quick Start](./docs/getting-started.md) 
+- [Quick Start](/docs/quick-start.md)
     - Get started with a new React + Vite + TypeScript project using create-vite.
-- [Best Practices](./docs/best-practices.md) 
+- [Best Practices](/docs/best-practices.md) 
     - Learn about a set of theories that can help you build better React applications.
     - Learn about the recommended tools for building React applications.
     - Each section will lead you to to a configuration guide that also includes a set of recommended implementations.
-- [Project Structure](./docs/project-structure.md) 
+- [Project Structure](/docs/project-structure.md) 
     - Learn about an easily maintainable project structure for React applications.
-- [Project Standards](./docs/project-standards.md) 
+- [Project Standards](/docs/project-standards.md) 
     - Learn about the recommended tools that are used across the industry for building React applications.
-- [Package Managers](./docs/package-managers.md) 
+- [Package Managers](/docs/package-managers.md) 
     - Learn about the recommended package managers for building React applications.
     
 
