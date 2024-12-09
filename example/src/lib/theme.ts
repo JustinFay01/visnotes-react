@@ -23,7 +23,7 @@ export const theme = createTheme({
     },
     background: {
       default: themeColors.background,
-      paper: themeColors.white,
+      paper: themeColors.brand.champagnePink,
     },
     text: {
       primary: themeColors.black,

@@ -35,7 +35,7 @@ export const themeColors = {
 }
 ```
 
-Next, create a theme object that uses the colors you defined:
+Next, create a [theme object](https://mui.com/material-ui/customization/theming/) that uses the colors you defined:
 
 ```ts
 import { createTheme } from '@mui/material/styles';
@@ -46,6 +46,8 @@ export const theme = createTheme({
     palette: {
         primary: {
             main: themeColors.brand.slateBlue,
+            light: themeColors.brand.thistle,
+            dark: themeColors.brand.spaceCadet,
         },
         secondary: {
             main: themeColors.brand.tropicalIndigo,
