@@ -20,6 +20,14 @@ It heavily focuses on integration with tools like ESLint, Prettier, TypeScript, 
     - Learn about the recommended tools that are used across the industry for building React applications.
 - [Package Managers](/docs/package-managers.md) 
     - Learn about the recommended package managers for building React applications.
+
+## Example Project
+
+You can run the example project by following the steps below:
+
+1. Clone the repository.
+2. Run 'pnpm install' to install the dependencies.
+3. Run 'pnpm run dev' to start the development server.
     
 
 
