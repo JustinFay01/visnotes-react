@@ -80,3 +80,7 @@ Mui offers developers an easy way to create production ready components. It ties
 ### Suspense
 
 ### Error Boundaries
+
+> Reusable React error boundary component. Supports all React renderers (including React DOM and React Native). -- <cite>[React Error Boundary](https://www.npmjs.com/package/react-error-boundary)
+
+[Configuration & Example](./tools/error-boundaries.md)
