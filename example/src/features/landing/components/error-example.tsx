@@ -16,7 +16,7 @@ export const ErrorExample = () => {
           <Button
             variant="contained"
             onClick={() => {
-              showBoundary(new Error("Simulated Error"));
+              showBoundary(new Error("You just threw an error!"));
             }}
           >
             Simulate Error

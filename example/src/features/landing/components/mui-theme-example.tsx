@@ -7,7 +7,6 @@ export const MuiThemeExample = () => {
     <FlexColumn spacing={2}>
       <Typography variant="h2">Color Examples</Typography>
 
-      <Typography variant="h3">Primary Colors</Typography>
       <Typography variant="body1">Custom defined</Typography>
       <Card>
         <FlexRow padding={2} spacing={5} sx={{ overflow: "auto" }}>
@@ -24,7 +23,7 @@ export const MuiThemeExample = () => {
 
       <FlexSpacer />
 
-      <Typography variant="h3">Mui Defined Examples</Typography>
+      <Typography variant="body1">Mui Extras</Typography>
       <Card>
         <FlexRow padding={2} spacing={5} sx={{ overflow: "auto" }}>
           <BoxAndText color="warning.main" />

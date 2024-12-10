@@ -1,5 +1,5 @@
 import { FlexColumn } from "@/ui/layout/flexbox";
-import { Box, Typography } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 import { ErrorExample } from "./components/error-example";
 import { MuiThemeExample } from "./components/mui-theme-example";
 
@@ -31,7 +31,7 @@ export const BoxAndText = ({ color }: { color: string }) => {
 export const LandingView = () => {
   return (
     <FlexColumn
-      padding={10}
+      margin={5}
       height="100vh"
       sx={{
         minWidth: 700,
@@ -40,9 +40,10 @@ export const LandingView = () => {
     >
       <Typography variant="h1">Hello, world!</Typography>
       <Typography variant="body1"> Welcome to the landing page.</Typography>
-
-      <FlexColumn margin={5} spacing={5}>
+      <Divider />
+      <FlexColumn spacing={5} padding={5}>
         <MuiThemeExample />
+        <Divider />
         <ErrorExample />
       </FlexColumn>
     </FlexColumn>
