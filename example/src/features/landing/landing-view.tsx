@@ -1,5 +1,7 @@
-import { FlexColumn, FlexRow, FlexSpacer } from "@/ui/layout/flexbox";
-import { Box, Button, Card, Typography } from "@mui/material";
+import { FlexColumn } from "@/ui/layout/flexbox";
+import { Box, Typography } from "@mui/material";
+import { ErrorExample } from "./components/error-example";
+import { MuiThemeExample } from "./components/mui-theme-example";
 
 export const ColorBox = ({ color }: { color: string }) => {
   return (
@@ -30,6 +32,7 @@ export const LandingView = () => {
   return (
     <FlexColumn
       padding={10}
+      height="100vh"
       sx={{
         minWidth: 700,
         minHeight: 700,
@@ -38,51 +41,10 @@ export const LandingView = () => {
       <Typography variant="h1">Hello, world!</Typography>
       <Typography variant="body1"> Welcome to the landing page.</Typography>
 
-      <FlexColumn spacing={2} sx={{ margin: 5 }}>
-        <Typography variant="h2">Primary Colors</Typography>
-        <Typography variant="body1">Custom defined</Typography>
-        <Card>
-          <FlexRow padding={2} spacing={5} sx={{ overflow: "auto" }}>
-            <BoxAndText color="primary.main" />
-            <BoxAndText color="primary.light" />
-            <BoxAndText color="primary.dark" />
-            <FlexSpacer />
-
-            <BoxAndText color="secondary.main" />
-            <BoxAndText color="secondary.light" />
-            <BoxAndText color="secondary.dark" />
-          </FlexRow>
-        </Card>
-
-        <FlexSpacer />
-
-        <Typography variant="h2">Mui Defined Examples</Typography>
-        <Card>
-          <FlexRow padding={2} spacing={5} sx={{ overflow: "auto" }}>
-            <BoxAndText color="warning.main" />
-            <BoxAndText color="error.main" />
-            <BoxAndText color="info.main" />
-            <BoxAndText color="success.main" />
-          </FlexRow>
-        </Card>
+      <FlexColumn margin={5} spacing={5}>
+        <MuiThemeExample />
+        <ErrorExample />
       </FlexColumn>
-
-      <Typography variant="h2">Error Boundary Example</Typography>
-      <Typography variant="body1">
-        Click the button to simulate an error
-      </Typography>
-      <Card>
-        <FlexRow padding={2} spacing={5} sx={{ overflow: "auto" }}>
-          <Button
-            variant="contained"
-            onClick={() => {
-              throw new Error("Simulated error");
-            }}
-          >
-            Simulate Error
-          </Button>
-        </FlexRow>
-      </Card>
     </FlexColumn>
   );
 };

@@ -13,8 +13,11 @@ const LandingFallBack = ({ error }: FallbackProps) => {
       <Button
         variant="contained"
         color="primary"
+        sx={{ width: 200 }}
         onClick={() => window.location.reload()}
-      />
+      >
+        Reload Page
+      </Button>
     </FlexColumn>
   );
 };
