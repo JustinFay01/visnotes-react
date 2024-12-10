@@ -75,6 +75,12 @@ Mui offers developers an easy way to create production ready components. It ties
 
 ### Zustand
 
+> A small, fast and scalable bearbones state-management solution using simplified flux principles. Has a comfy API based on hooks, isn't boilerplatey or opinionated. -- <cite>[Zustand](https://github.com/pmndrs/zustand) </cite>
+
+Zustand is an incredible tool that can abstract some of the complexities of state management. It can be used to create simple stores used across multiple components or to save preferences in local storage. (And a lot more!)
+
+[Configuration & Example](./tools/zustand.md)
+
 ### Toastify
 
 ### Suspense
