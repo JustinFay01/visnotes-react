@@ -67,6 +67,10 @@ Mui offers developers an easy way to create production ready components. It ties
 
 ### React Router
 
+> A user‑obsessed, standards‑focused, multi‑strategy router you can deploy anywhere. -- <cite>[React Router](https://reactrouter.com/)</cite>
+
+[Configuration & Example](./tools/react-router.md)
+
 ### React Hook Form
 
 ### Zustand
