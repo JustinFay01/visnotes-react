@@ -1,5 +1,6 @@
 import { Stack, Box } from "@mui/material";
 import { WithChildren, WithChildrenAndSx } from "../props";
+import { Header } from "./header";
 
 export const LayoutContainer = (props: WithChildren) => {
   const { children } = props;
@@ -19,7 +20,10 @@ export const Main = ({ children, sx }: WithChildrenAndSx) => (
 export const BasicLayout = ({ children }: WithChildren) => {
   return (
     <LayoutContainer>
-      <Main>{children}</Main>
+      <Main>
+        <Header />
+        {children}
+      </Main>
     </LayoutContainer>
   );
 };
