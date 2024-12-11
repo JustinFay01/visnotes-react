@@ -1,24 +1,10 @@
 import { FlexColumn } from "@/ui/layout/flexbox";
 import { Box, Typography } from "@mui/material";
 import OcrWordCloud from "./components/word-cloud/word-cloud";
-import { useEffect, useState } from "react";
+import useWindowDimensions from "@/hooks/use-window-dimensions";
 
 export const DashboardView = () => {
-  const [windowDimensions, setWindowDimensions] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });
-
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowDimensions({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const windowHook = useWindowDimensions();
 
   return (
     <FlexColumn spacing={5}>
@@ -40,8 +26,8 @@ export const DashboardView = () => {
         padding={20}
       >
         <OcrWordCloud
-          width={windowDimensions.width}
-          height={windowDimensions.height}
+          width={windowHook.width / 1.5}
+          height={windowHook.height / 1.5}
           showControls={true}
         />
       </Box>
