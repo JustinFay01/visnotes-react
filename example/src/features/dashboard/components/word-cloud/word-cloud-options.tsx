@@ -1,42 +1,55 @@
 import { SpiralType } from "@dashboard/types/word-cloud-types";
 import {
+  Checkbox,
   FormControl,
+  FormControlLabel,
+  FormGroup,
   InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
 } from "@mui/material";
+import { ChangeEvent } from "react";
 
 type WordCloudOptionsProps = {
-  style: SpiralType;
-  setStyle: (style: SpiralType) => void;
   withRotation: boolean;
   setWithRotation: (withRotation: boolean) => void;
   spiralType: SpiralType;
   setSpiralType: (spiralType: SpiralType) => void;
 };
-export const WordCloudOptions = ({
-  style,
-  setStyle,
-  ...props
-}: WordCloudOptionsProps) => {
+export const WordCloudOptions = (props: WordCloudOptionsProps) => {
+  const { withRotation, setWithRotation, spiralType, setSpiralType } = props;
+
   const handleStyleChange = (e: SelectChangeEvent) => {
-    setStyle(e.target.value as SpiralType);
+    setSpiralType(e.target.value as SpiralType);
+  };
+
+  const handleRotationChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setWithRotation(e.target.checked);
   };
 
   return (
-    <FormControl fullWidth>
-      <InputLabel id="style-label">Age</InputLabel>
-      <Select
-        labelId="style-label"
-        id="style"
-        value={style}
-        label="Style"
-        onChange={handleStyleChange}
-      >
-        <MenuItem value={"archimedean"}>Archimedean</MenuItem>
-        <MenuItem value={"rectangular"}>Rectangular</MenuItem>
-      </Select>
-    </FormControl>
+    <FormGroup>
+      <FormControl fullWidth>
+        <InputLabel id="style-label">Spiral</InputLabel>
+        <Select
+          labelId="style-label"
+          id="style"
+          value={spiralType as string}
+          label="Style"
+          onChange={handleStyleChange}
+        >
+          <MenuItem value={"archimedean"}>Archimedean</MenuItem>
+          <MenuItem value={"rectangular"}>Rectangular</MenuItem>
+        </Select>
+      </FormControl>
+
+      <FormControlLabel
+        control={
+          <Checkbox checked={withRotation} onChange={handleRotationChange} />
+        }
+        label="With Rotation"
+      />
+    </FormGroup>
   );
 };

@@ -63,16 +63,10 @@ export default function OcrWordCloud({
       </Wordcloud>
       {showControls && (
         <WordCloudOptions
-          style={spiralType}
-          setStyle={setSpiralType}
-          withRotation={false}
-          setWithRotation={function (withRotation: boolean): void {
-            throw new Error("Function not implemented.");
-          }}
-          spiralType={"archimedean"}
-          setSpiralType={function (spiralType: SpiralType): void {
-            throw new Error("Function not implemented.");
-          }}
+          withRotation={withRotation}
+          setWithRotation={setWithRotation}
+          spiralType={spiralType}
+          setSpiralType={setSpiralType}
         />
       )}
     </FlexColumn>
