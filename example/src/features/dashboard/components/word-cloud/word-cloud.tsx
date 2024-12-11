@@ -5,22 +5,19 @@ import { WordDataHelper } from "@dashboard/util/word-cloud-helper";
 import { scaleLog } from "@visx/scale";
 import { totoAfricaLyrics } from "@dashboard/assets/text-fixture";
 import { SpiralType, WordData } from "@dashboard/types/word-cloud-types";
-import { FlexColumn } from "@/ui/layout/flexbox";
+import { FlexColumn, FlexRow, FlexSpacer } from "@/ui/layout/flexbox";
 import { WordCloudOptions } from "./word-cloud-options";
+import { Box } from "@mui/material";
+import { WordCloudUpload } from "./word-cloud-upload";
 
 const colors = ["#143059", "#2F6B9A", "#82a6c2"];
 
 interface OcrWordCloudProps {
   width: number;
   height: number;
-  showControls?: boolean;
 }
 
-export default function OcrWordCloud({
-  width,
-  height,
-  showControls,
-}: OcrWordCloudProps) {
+export default function OcrWordCloud({ width, height }: OcrWordCloudProps) {
   const [spiralType, setSpiralType] = useState<SpiralType>("archimedean");
   const [withRotation, setWithRotation] = useState(false);
   const words = WordDataHelper.countWordsFromString(totoAfricaLyrics);
@@ -36,6 +33,24 @@ export default function OcrWordCloud({
 
   return (
     <FlexColumn>
+      <FlexRow>
+        <WordCloudUpload />
+        <FlexSpacer />
+        <Box
+          //Shrink the box to the content size
+          display={"flex"}
+          flexDirection={"column"}
+          alignItems={"center"}
+        >
+          <WordCloudOptions
+            withRotation={withRotation}
+            setWithRotation={setWithRotation}
+            spiralType={spiralType}
+            setSpiralType={setSpiralType}
+          />
+        </Box>
+      </FlexRow>
+
       <Wordcloud
         words={words}
         width={width}
@@ -61,14 +76,6 @@ export default function OcrWordCloud({
           ))
         }
       </Wordcloud>
-      {showControls && (
-        <WordCloudOptions
-          withRotation={withRotation}
-          setWithRotation={setWithRotation}
-          spiralType={spiralType}
-          setSpiralType={setSpiralType}
-        />
-      )}
     </FlexColumn>
   );
 }

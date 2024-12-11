@@ -7,7 +7,7 @@ export const DashboardView = () => {
   const windowHook = useWindowDimensions();
 
   return (
-    <FlexColumn spacing={5} alignItems={"center"} justifyContent={"center"}>
+    <FlexColumn spacing={5}>
       <Typography
         variant="h4"
         component={"h1"}

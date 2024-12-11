@@ -30,7 +30,7 @@ export const theme = createTheme({
     },
     background: {
       default: themeColors.background,
-      paper: themeColors.brand.champagnePink,
+      paper: themeColors.white,
     },
     text: {
       primary: themeColors.black,
