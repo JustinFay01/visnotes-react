@@ -23,10 +23,9 @@ export const DashboardView = () => {
         flexDirection={"column"}
         alignItems={"center"}
         justifyContent={"center"}
-        maxWidth={800}
       >
         <OcrWordCloud
-          width={windowHook.width}
+          width={windowHook.width > 800 ? 800 : windowHook.width}
           height={500}
           showControls={true}
         />
