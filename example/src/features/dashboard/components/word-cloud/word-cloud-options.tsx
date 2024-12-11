@@ -35,7 +35,7 @@ export const WordCloudOptions = (props: WordCloudOptionsProps) => {
         <Select
           labelId="style-label"
           id="style"
-          value={spiralType as string}
+          value={spiralType}
           label="Style"
           onChange={handleStyleChange}
         >

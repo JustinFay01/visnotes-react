@@ -7,7 +7,7 @@ export const DashboardView = () => {
   const windowHook = useWindowDimensions();
 
   return (
-    <FlexColumn spacing={5}>
+    <FlexColumn spacing={5} alignItems={"center"} justifyContent={"center"}>
       <Typography
         variant="h4"
         component={"h1"}
@@ -23,11 +23,11 @@ export const DashboardView = () => {
         flexDirection={"column"}
         alignItems={"center"}
         justifyContent={"center"}
-        padding={20}
+        maxWidth={800}
       >
         <OcrWordCloud
-          width={windowHook.width / 1.5}
-          height={windowHook.height / 1.5}
+          width={windowHook.width}
+          height={500}
           showControls={true}
         />
       </Box>
