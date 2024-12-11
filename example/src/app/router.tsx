@@ -1,14 +1,18 @@
 import { paths } from "@/lib/path";
 import { RouterProvider, createBrowserRouter } from "react-router-dom"; // need to install react-router-dom
+import { AppRoot } from "./routes/root";
 
 const createRouter = () =>
   createBrowserRouter([
     {
       path: paths.home.path,
-      lazy: async () => {
-        const { LandingRoute } = await import("./routes/landing-route");
-        return { Component: LandingRoute };
-      },
+      element: <AppRoot />,
+      children: [
+        {
+          path: paths.app.dashboard.path,
+          element: <div>Dashboard</div>,
+        },
+      ],
     },
   ]);
 

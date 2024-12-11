@@ -1,7 +1,7 @@
 import { AppProvider } from "./provider";
 import { AppRouter } from "./router";
 
-export const App = () => {
+export const OcrApp = () => {
   return (
     <AppProvider>
       <AppRouter />
