@@ -1,7 +1,7 @@
 import useDynamicIcon from "@/hooks/use-dynamic-icon";
 import { queryConfig } from "@/lib/react-query";
 import { theme } from "@/lib/theme";
-import { ThemeProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const appQueryClient = new QueryClient({
@@ -13,7 +13,10 @@ export function AppProvider({ children }: React.PropsWithChildren) {
 
   return (
     <QueryClientProvider client={appQueryClient}>
-      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        {children}
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }
