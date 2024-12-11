@@ -1,26 +1,26 @@
 import { Text } from "@visx/text";
 import Wordcloud from "@visx/wordcloud/lib/Wordcloud";
 import { useState } from "react";
-import { WordDataHelper } from "../util/word-cloud-helper";
-import { totoAfricaLyrics } from "../assets/text-fixture";
+import { WordDataHelper } from "@dashboard/util/word-cloud-helper";
 import { scaleLog } from "@visx/scale";
-import { WordData } from "../types/word-cloud-types";
+import { totoAfricaLyrics } from "@dashboard/assets/text-fixture";
+import { SpiralType, WordData } from "@dashboard/types/word-cloud-types";
+import { FlexColumn } from "@/ui/layout/flexbox";
+import { WordCloudOptions } from "./word-cloud-options";
 
-interface ExampleProps {
+const colors = ["#143059", "#2F6B9A", "#82a6c2"];
+
+interface OcrWordCloudProps {
   width: number;
   height: number;
   showControls?: boolean;
 }
 
-const colors = ["#143059", "#2F6B9A", "#82a6c2"];
-
-type SpiralType = "archimedean" | "rectangular";
-
 export default function OcrWordCloud({
   width,
   height,
   showControls,
-}: ExampleProps) {
+}: OcrWordCloudProps) {
   const [spiralType, setSpiralType] = useState<SpiralType>("archimedean");
   const [withRotation, setWithRotation] = useState(false);
   const words = WordDataHelper.countWordsFromString(totoAfricaLyrics);
@@ -35,14 +35,13 @@ export default function OcrWordCloud({
   const fontSizeSetter = (datum: WordData) => fontScale(datum.value);
 
   return (
-    <div className="wordcloud">
+    <FlexColumn>
       <Wordcloud
         words={words}
         width={width}
         height={height}
         fontSize={fontSizeSetter}
         font={"Impact"}
-        padding={2}
         spiral={spiralType}
         rotate={withRotation ? WordDataHelper.getRotationDegree : 0}
         random={WordDataHelper.fixedValueGenerator}
@@ -63,32 +62,19 @@ export default function OcrWordCloud({
         }
       </Wordcloud>
       {showControls && (
-        <div>
-          <label>
-            Spiral type &nbsp;
-            <select
-              onChange={(e) => setSpiralType(e.target.value as SpiralType)}
-              value={spiralType}
-            >
-              <option key={"archimedean"} value={"archimedean"}>
-                archimedean
-              </option>
-              <option key={"rectangular"} value={"rectangular"}>
-                rectangular
-              </option>
-            </select>
-          </label>
-          <label>
-            With rotation &nbsp;
-            <input
-              type="checkbox"
-              checked={withRotation}
-              onChange={() => setWithRotation(!withRotation)}
-            />
-          </label>
-          <br />
-        </div>
+        <WordCloudOptions
+          style={spiralType}
+          setStyle={setSpiralType}
+          withRotation={false}
+          setWithRotation={function (withRotation: boolean): void {
+            throw new Error("Function not implemented.");
+          }}
+          spiralType={"archimedean"}
+          setSpiralType={function (spiralType: SpiralType): void {
+            throw new Error("Function not implemented.");
+          }}
+        />
       )}
-    </div>
+    </FlexColumn>
   );
 }
