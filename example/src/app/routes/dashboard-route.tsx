@@ -1,11 +1,10 @@
-import { ErrorExample } from "@/features/landing/components/error-example";
+import { DashboardView } from "@/features/dashboard/dashboard-view";
 import { RouteBase } from "@/ui/layout/route-base";
 
 export const DashboardRoute = () => {
   return (
     <RouteBase>
-      <ErrorExample />
-      <h1>Dashboard</h1>
+      <DashboardView />
     </RouteBase>
   );
 };

@@ -36,7 +36,4 @@ export const theme = createTheme({
       primary: themeColors.black,
     },
   },
-  typography: {
-    fontFamily: "Inter, sans-serif",
-  },
 });
