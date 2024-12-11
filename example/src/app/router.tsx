@@ -10,7 +10,10 @@ const createRouter = () =>
       children: [
         {
           path: paths.app.dashboard.path,
-          element: <div>Dashboard</div>,
+          lazy: async () => {
+            const { DashboardRoute } = await import("./routes/dashboard-route");
+            return { Component: DashboardRoute };
+          },
         },
       ],
     },
