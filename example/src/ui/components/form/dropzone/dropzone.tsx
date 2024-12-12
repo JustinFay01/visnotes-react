@@ -16,6 +16,8 @@ type OcrDropzoneProps = WithSx & {
 
 const StyledDropzone = styled(Box)<{ isDragActive: boolean }>(
   ({ theme, isDragActive }) => ({
+    position: "relative",
+    overflow: "hidden",
     border: `2px solid ${
       isDragActive ? theme.palette.primary.main : "transparent"
     }`,
@@ -29,6 +31,10 @@ const StyledDropzone = styled(Box)<{ isDragActive: boolean }>(
     justifyContent: "center",
     padding: theme.spacing(2),
     borderRadius: theme.shape.borderRadius,
+    "&:focus-visible": {
+      outline: `2px solid ${theme.palette.primary.main}`,
+      borderColor: theme.palette.primary.main,
+    },
   })
 );
 
