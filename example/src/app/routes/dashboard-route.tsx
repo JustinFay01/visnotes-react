@@ -1,10 +1,10 @@
-import { DashboardView } from "@/features/dashboard/dashboard-view";
+import { Dashboard } from "@/features/dashboard/dashboard";
 import { RouteBase } from "@/ui/layout/route-base";
 
 export const DashboardRoute = () => {
   return (
     <RouteBase>
-      <DashboardView />
+      <Dashboard />
     </RouteBase>
   );
 };

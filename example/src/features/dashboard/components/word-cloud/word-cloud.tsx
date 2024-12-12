@@ -1,25 +1,27 @@
-import { FlexColumn, FlexRow } from "@/ui/layout/flexbox";
+import { FlexColumn } from "@/ui/layout/flexbox";
 import { totoAfricaLyrics } from "@dashboard/assets/text-fixture";
 import { SpiralType, WordData } from "@dashboard/types/word-cloud-types";
 import { WordDataHelper } from "@dashboard/util/word-cloud-helper";
+import { Box } from "@mui/material";
 import { scaleLog } from "@visx/scale";
 import { Text } from "@visx/text";
 import Wordcloud from "@visx/wordcloud/lib/Wordcloud";
-import { useState } from "react";
-import { WordCloudOptions } from "./word-cloud-options/word-cloud-options";
 
 const colors = ["#143059", "#2F6B9A", "#82a6c2"];
 
 interface OcrWordCloudProps {
   width: number;
   height: number;
+  spiralType: SpiralType;
+  withRotation: boolean;
 }
 
-export default function OcrWordCloud({ width, height }: OcrWordCloudProps) {
-  const [spiralType, setSpiralType] = useState<SpiralType>("archimedean");
-  const [withRotation, setWithRotation] = useState(false);
-  const [inputType, setInputType] = useState<"text" | "image">("text");
-
+export default function OcrWordCloud({
+  width,
+  height,
+  spiralType,
+  withRotation,
+}: OcrWordCloudProps) {
   const words = WordDataHelper.countWordsFromString(totoAfricaLyrics);
 
   const fontScale = scaleLog({
@@ -32,42 +34,45 @@ export default function OcrWordCloud({ width, height }: OcrWordCloudProps) {
   const fontSizeSetter = (datum: WordData) => fontScale(datum.value);
 
   return (
-    <FlexColumn>
-      <FlexRow>
-        <WordCloudOptions
-          withRotation={withRotation}
-          setWithRotation={setWithRotation}
-          spiralType={spiralType}
-          setSpiralType={setSpiralType}
-          inputType={inputType}
-        />
-      </FlexRow>
-
-      <Wordcloud
-        words={words}
-        width={width}
-        height={height}
-        fontSize={fontSizeSetter}
-        font={"Impact"}
-        spiral={spiralType}
-        rotate={withRotation ? WordDataHelper.getRotationDegree : 0}
-        random={WordDataHelper.fixedValueGenerator}
+    <FlexColumn
+      sx={{
+        width: "100%",
+        height: "100%",
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       >
-        {(cloudWords) =>
-          cloudWords.map((w, i) => (
-            <Text
-              key={w.text}
-              fill={colors[i % colors.length]}
-              textAnchor={"middle"}
-              transform={`translate(${w.x}, ${w.y}) rotate(${w.rotate})`}
-              fontSize={w.size}
-              fontFamily={w.font}
-            >
-              {w.text}
-            </Text>
-          ))
-        }
-      </Wordcloud>
+        <Wordcloud
+          words={words}
+          width={width}
+          height={height}
+          fontSize={fontSizeSetter}
+          font={"Impact"}
+          spiral={spiralType}
+          rotate={withRotation ? WordDataHelper.getRotationDegree : 0}
+          random={WordDataHelper.fixedValueGenerator}
+        >
+          {(cloudWords) =>
+            cloudWords.map((w, i) => (
+              <Text
+                key={w.text}
+                fill={colors[i % colors.length]}
+                textAnchor={"middle"}
+                transform={`translate(${w.x}, ${w.y}) rotate(${w.rotate})`}
+                fontSize={w.size}
+                fontFamily={w.font}
+              >
+                {w.text}
+              </Text>
+            ))
+          }
+        </Wordcloud>
+      </Box>
     </FlexColumn>
   );
 }
