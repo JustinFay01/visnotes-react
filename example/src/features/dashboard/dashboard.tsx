@@ -1,8 +1,8 @@
-import { FlexColumn, FlexRow } from "@/ui/layout/flexbox";
-import { Box, Typography } from "@mui/material";
-import OcrWordCloud from "./components/word-cloud/word-cloud";
 import useWindowDimensions from "@/hooks/use-window-dimensions";
+import { FlexColumn } from "@/ui/layout/flexbox";
+import { Typography } from "@mui/material";
 import { useState } from "react";
+import OcrWordCloud from "./components/word-cloud/word-cloud";
 import { WordCloudOptions } from "./components/word-cloud/word-cloud-options/word-cloud-options";
 import { SpiralType } from "./types/word-cloud-types";
 

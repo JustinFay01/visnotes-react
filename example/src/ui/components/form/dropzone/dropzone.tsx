@@ -35,9 +35,25 @@ const StyledDropzone = styled(Box)<{ isDragActive: boolean }>(
 const StyledMessage = styled(Box)<{ isDragActive: boolean }>(
   ({ theme, isDragActive }) => ({
     color: theme.palette.text.secondary,
-    display: isDragActive ? "block" : "none",
-    textAlign: "center",
-    marginTop: theme.spacing(2),
+    backgroundColor: theme.palette.primary.main,
+    fontWeight: 700,
+    height: 48,
+    borderRadius: "24px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: theme.spacing(1),
+    width: "340px",
+    position: "absolute",
+    left: "50%",
+    zIndex: 10,
+    transform: `${
+      isDragActive
+        ? "translateX(-50%) scale(1)"
+        : "translateX(-50%) translateY(100px) scale(0.8)"
+    }`,
+    opacity: isDragActive ? 1 : 0,
+    transition: "transform 0.2s ease-out, opacity 0.2s ease-out",
   })
 );
 
@@ -77,12 +93,12 @@ const OcrDropzone: React.FC<OcrDropzoneProps> = ({
       {...getRootProps({
         style,
       })}
-      sx={sx} // Users can pass the sx prop to extend or override styles
+      sx={sx}
     >
       <input {...getInputProps()} />
       {children}
 
-      <StyledMessage className="message" isDragActive={isDragActive}>
+      <StyledMessage isDragActive={isDragActive}>
         <CloudUpload />
         Drop files to upload
       </StyledMessage>
