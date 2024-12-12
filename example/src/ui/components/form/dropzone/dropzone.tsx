@@ -2,6 +2,7 @@ import { CloudUpload } from "@mui/icons-material";
 import React, { useCallback } from "react";
 import { Accept, FileRejection, useDropzone } from "react-dropzone";
 import { Box } from "@mui/material";
+import "./dropzone.css";
 
 interface OcrDropzoneProps {
   children: React.ReactNode;
@@ -34,7 +35,7 @@ const OcrDropzone: React.FC<OcrDropzoneProps> = ({
     [handleAcceptedFiles, handleRejectedFiles]
   );
 
-  const { getInputProps, isDragActive } = useDropzone({
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     noClick: true,
     accept: accept,
@@ -43,25 +44,17 @@ const OcrDropzone: React.FC<OcrDropzoneProps> = ({
   return (
     <Box
       aria-label="file dropzone"
-      className={className}
-      style={style}
-      sx={{
-        border: "1px dashed",
-        borderColor: isDragActive ? "primary.main" : "grey.500",
-        borderRadius: 1,
-        p: 2,
-        mt: 2,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        cursor: "pointer",
-      }}
+      className={`dropzone ${className ?? ""} ${
+        isDragActive ? "active" : "inactive"
+      }`}
+      {...getRootProps({
+        style: { ...style },
+      })}
     >
       <input {...getInputProps()} />
       {children}
 
-      <Box>
+      <Box className={`message ${isDragActive ? "visible" : ""}`}>
         <CloudUpload />
         Drop files to upload
       </Box>

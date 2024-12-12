@@ -1,4 +1,4 @@
-import OcrDropzone from "@/ui/components/form/dropzone";
+import OcrDropzone from "@/ui/components/form/dropzone/dropzone";
 import { FlexColumn } from "@/ui/layout/flexbox";
 import { Box, Typography } from "@mui/material";
 

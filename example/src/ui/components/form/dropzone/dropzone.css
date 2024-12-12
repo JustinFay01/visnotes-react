@@ -1,0 +1,47 @@
+.dropzone {
+    position: relative;
+    overflow: hidden;
+}
+
+.inactive {
+    border: 2px solid transparent;
+    transition: border 0.2s ease-out, background-color 0.2s ease-out;
+}
+
+.inactive:focus-visible {
+    outline: 2px solid #8a2be2;
+}
+
+.active {
+    border: 2px solid #8a2be2;
+    background-color: rgba(138, 43, 226, 0.05);
+}
+
+.message {
+    background-color: #8a2be2;
+    font-weight: 700;
+    color: #ffffff;
+    height: 48px;
+    border-radius: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 340px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    bottom: 24px;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+.message.visible {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+}
+
+.message:not(.visible) {
+    transform: translateX(-50%) translateY(100px) scale(0.8);
+    opacity: 0;
+}
