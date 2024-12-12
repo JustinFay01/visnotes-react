@@ -1,14 +1,12 @@
+import { FlexColumn, FlexRow } from "@/ui/layout/flexbox";
+import { totoAfricaLyrics } from "@dashboard/assets/text-fixture";
+import { SpiralType, WordData } from "@dashboard/types/word-cloud-types";
+import { WordDataHelper } from "@dashboard/util/word-cloud-helper";
+import { scaleLog } from "@visx/scale";
 import { Text } from "@visx/text";
 import Wordcloud from "@visx/wordcloud/lib/Wordcloud";
 import { useState } from "react";
-import { WordDataHelper } from "@dashboard/util/word-cloud-helper";
-import { scaleLog } from "@visx/scale";
-import { totoAfricaLyrics } from "@dashboard/assets/text-fixture";
-import { SpiralType, WordData } from "@dashboard/types/word-cloud-types";
-import { FlexColumn, FlexRow, FlexSpacer } from "@/ui/layout/flexbox";
 import { WordCloudOptions } from "./word-cloud-options/word-cloud-options";
-import { Box } from "@mui/material";
-import { WordCloudUpload } from "./word-cloud-options/word-cloud-upload";
 
 const colors = ["#143059", "#2F6B9A", "#82a6c2"];
 
@@ -20,6 +18,8 @@ interface OcrWordCloudProps {
 export default function OcrWordCloud({ width, height }: OcrWordCloudProps) {
   const [spiralType, setSpiralType] = useState<SpiralType>("archimedean");
   const [withRotation, setWithRotation] = useState(false);
+  const [inputType, setInputType] = useState<"text" | "image">("text");
+
   const words = WordDataHelper.countWordsFromString(totoAfricaLyrics);
 
   const fontScale = scaleLog({
@@ -34,12 +34,12 @@ export default function OcrWordCloud({ width, height }: OcrWordCloudProps) {
   return (
     <FlexColumn>
       <FlexRow>
-        <FlexSpacer />
         <WordCloudOptions
           withRotation={withRotation}
           setWithRotation={setWithRotation}
           spiralType={spiralType}
           setSpiralType={setSpiralType}
+          inputType={inputType}
         />
       </FlexRow>
 
