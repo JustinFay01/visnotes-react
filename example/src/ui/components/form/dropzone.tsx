@@ -1,10 +1,9 @@
 import { CloudUpload } from "@mui/icons-material";
 import React, { useCallback } from "react";
 import { Accept, FileRejection, useDropzone } from "react-dropzone";
-import styles from "./dropzone.module.scss";
 import { Box } from "@mui/material";
 
-interface DropzoneProps {
+interface OcrDropzoneProps {
   children: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
@@ -13,7 +12,7 @@ interface DropzoneProps {
   handleRejectedFiles?: (files: FileRejection[]) => void;
 }
 
-const Dropzone: React.FC<DropzoneProps> = ({
+const OcrDropzone: React.FC<OcrDropzoneProps> = ({
   className,
   children,
   style,
@@ -35,7 +34,7 @@ const Dropzone: React.FC<DropzoneProps> = ({
     [handleAcceptedFiles, handleRejectedFiles]
   );
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const { getInputProps, isDragActive } = useDropzone({
     onDrop,
     noClick: true,
     accept: accept,
@@ -44,12 +43,20 @@ const Dropzone: React.FC<DropzoneProps> = ({
   return (
     <Box
       aria-label="file dropzone"
-      className={`${className ?? ""} ${
-        isDragActive ? styles.active : styles.inactive
-      } ${styles.dropzone}`}
-      {...getRootProps({
-        style: { ...style },
-      })}
+      className={className}
+      style={style}
+      sx={{
+        border: "1px dashed",
+        borderColor: isDragActive ? "primary.main" : "grey.500",
+        borderRadius: 1,
+        p: 2,
+        mt: 2,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        cursor: "pointer",
+      }}
     >
       <input {...getInputProps()} />
       {children}
@@ -62,4 +69,4 @@ const Dropzone: React.FC<DropzoneProps> = ({
   );
 };
 
-export default Dropzone;
+export default OcrDropzone;

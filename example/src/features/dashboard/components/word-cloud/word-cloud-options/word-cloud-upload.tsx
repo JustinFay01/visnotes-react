@@ -1,17 +1,8 @@
+import OcrDropzone from "@/ui/components/form/dropzone";
 import { FlexColumn } from "@/ui/layout/flexbox";
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 export const WordCloudUpload = () => {
-  const TextHeader = () => {
-    return (
-      <FlexColumn>
-        <Typography variant="h6">Type Text</Typography>
-        <Typography variant="subtitle1">
-          Paste or type your text in the text area below
-        </Typography>
-      </FlexColumn>
-    );
-  };
   return (
     <FlexColumn>
       <FlexColumn>
@@ -20,7 +11,19 @@ export const WordCloudUpload = () => {
           Upload an image to generate a word cloud
         </Typography>
       </FlexColumn>
-      WordCloud Upload Holder
+      <OcrDropzone>
+        <Box
+          sx={{
+            border: "1px dashed",
+            borderColor: "grey.500",
+            borderRadius: 1,
+            p: 2,
+            mt: 2,
+          }}
+        >
+          <Typography variant="body2">Drop an image here</Typography>
+        </Box>
+      </OcrDropzone>
     </FlexColumn>
   );
 };
