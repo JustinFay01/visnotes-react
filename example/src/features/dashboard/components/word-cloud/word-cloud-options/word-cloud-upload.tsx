@@ -7,8 +7,9 @@ export const WordCloudUpload = () => {
     <FlexColumn>
       <FlexColumn>
         <Typography variant="h6">Upload Image</Typography>
-        <Typography variant="subtitle1">
-          Upload an image to generate a word cloud
+        <Typography variant="body1">
+          Upload an image to generate a word cloud. This could be a handwritten
+          document or a pdf!
         </Typography>
       </FlexColumn>
       <OcrDropzone>

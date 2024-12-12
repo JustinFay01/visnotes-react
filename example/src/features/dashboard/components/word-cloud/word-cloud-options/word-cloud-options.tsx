@@ -1,4 +1,4 @@
-import { FlexRow, FlexSpacer } from "@/ui/layout/flexbox";
+import { Grid2 } from "@mui/material";
 import { WordCloudForm, WordCloudFormProps } from "./word-cloud-form";
 import { WordCloudUpload } from "./word-cloud-upload";
 
@@ -11,10 +11,19 @@ export const WordCloudOptions = (props: WordCloudOptionsProps) => {
   const { inputType } = props;
 
   return (
-    <FlexRow spacing={5}>
-      {inputType === "text" ? <WordCloudUpload /> : null}
-      <FlexSpacer />
-      <WordCloudForm {...formProps} />
-    </FlexRow>
+    <Grid2
+      container
+      spacing={5}
+      sx={{
+        backgroundColor: "primary.main",
+      }}
+    >
+      <Grid2 size={6}>
+        {inputType !== "text" ? null : <WordCloudUpload />}
+      </Grid2>
+      <Grid2 size={6}>
+        <WordCloudForm {...formProps} />
+      </Grid2>
+    </Grid2>
   );
 };

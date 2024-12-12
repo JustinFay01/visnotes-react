@@ -6,7 +6,6 @@ import { WithSx } from "@/ui/props";
 
 type OcrDropzoneProps = WithSx & {
   children: React.ReactNode;
-  style?: React.CSSProperties;
   accept?: Accept;
   handleAcceptedFiles?: (files: File[]) => void;
   handleRejectedFiles?: (files: FileRejection[]) => void;
@@ -63,7 +62,6 @@ const StyledMessage = styled(Box)<{ isDragActive: boolean }>(
 
 const OcrDropzone: React.FC<OcrDropzoneProps> = ({
   children,
-  style,
   accept,
   sx,
   handleAcceptedFiles,
@@ -90,13 +88,7 @@ const OcrDropzone: React.FC<OcrDropzoneProps> = ({
   });
 
   return (
-    <StyledDropzone
-      isDragActive={isDragActive}
-      {...getRootProps({
-        style,
-      })}
-      sx={sx}
-    >
+    <StyledDropzone isDragActive={isDragActive} {...getRootProps()} sx={sx}>
       <input {...getInputProps()} />
       {children}
 
