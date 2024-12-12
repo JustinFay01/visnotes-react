@@ -6,9 +6,9 @@ import { scaleLog } from "@visx/scale";
 import { totoAfricaLyrics } from "@dashboard/assets/text-fixture";
 import { SpiralType, WordData } from "@dashboard/types/word-cloud-types";
 import { FlexColumn, FlexRow, FlexSpacer } from "@/ui/layout/flexbox";
-import { WordCloudOptions } from "./word-cloud-options";
+import { WordCloudOptions } from "./word-cloud-options/word-cloud-options";
 import { Box } from "@mui/material";
-import { WordCloudUpload } from "./word-cloud-upload";
+import { WordCloudUpload } from "./word-cloud-options/word-cloud-upload";
 
 const colors = ["#143059", "#2F6B9A", "#82a6c2"];
 
@@ -34,21 +34,13 @@ export default function OcrWordCloud({ width, height }: OcrWordCloudProps) {
   return (
     <FlexColumn>
       <FlexRow>
-        <WordCloudUpload />
         <FlexSpacer />
-        <Box
-          //Shrink the box to the content size
-          display={"flex"}
-          flexDirection={"column"}
-          alignItems={"center"}
-        >
-          <WordCloudOptions
-            withRotation={withRotation}
-            setWithRotation={setWithRotation}
-            spiralType={spiralType}
-            setSpiralType={setSpiralType}
-          />
-        </Box>
+        <WordCloudOptions
+          withRotation={withRotation}
+          setWithRotation={setWithRotation}
+          spiralType={spiralType}
+          setSpiralType={setSpiralType}
+        />
       </FlexRow>
 
       <Wordcloud

@@ -27,7 +27,6 @@ export const DashboardView = () => {
         <OcrWordCloud
           width={windowHook.width > 800 ? 800 : windowHook.width}
           height={500}
-          showControls={true}
         />
       </Box>
     </FlexColumn>
