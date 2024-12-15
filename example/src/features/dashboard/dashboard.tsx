@@ -11,7 +11,6 @@ export const Dashboard = () => {
 
   const [spiralType, setSpiralType] = useState<SpiralType>("archimedean");
   const [withRotation, setWithRotation] = useState(false);
-  const [inputType, setInputType] = useState<"text" | "image">("text");
 
   return (
     <FlexColumn spacing={5}>
@@ -29,7 +28,6 @@ export const Dashboard = () => {
           setWithRotation={setWithRotation}
           spiralType={spiralType}
           setSpiralType={setSpiralType}
-          inputType={inputType}
         />
       </FlexColumn>
       <OcrWordCloud

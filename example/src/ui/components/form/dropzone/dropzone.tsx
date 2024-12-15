@@ -60,13 +60,13 @@ const StyledMessage = styled(Box)<{ isDragActive: boolean }>(
   })
 );
 
-const OcrDropzone: React.FC<OcrDropzoneProps> = ({
+const OcrDropzone = ({
   children,
   accept,
   sx,
   handleAcceptedFiles,
   handleRejectedFiles,
-}) => {
+}: OcrDropzoneProps) => {
   const onDrop = useCallback(
     (acceptedFiles: File[], fileRejections: FileRejection[]) => {
       if (fileRejections?.length) {

@@ -1,30 +1,26 @@
 import OcrDropzone from "@/ui/components/form/dropzone/dropzone";
 import { FlexColumn } from "@/ui/layout/flexbox";
-import { Box, Typography } from "@mui/material";
+import { Button } from "@mui/material";
+import FileUploadIcon from "@mui/icons-material/FileUpload";
 
 export const WordCloudUpload = () => {
   return (
-    <FlexColumn>
-      <FlexColumn>
-        <Typography variant="h6">Upload Image</Typography>
-        <Typography variant="body1">
-          Upload an image to generate a word cloud. This could be a handwritten
-          document or a pdf!
-        </Typography>
-      </FlexColumn>
-      <OcrDropzone>
-        <Box
+    <OcrDropzone>
+      <FlexColumn
+        spacing={3}
+        sx={{
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <FileUploadIcon
+          fontSize="large"
           sx={{
-            border: "1px dashed",
-            borderColor: "grey.500",
-            borderRadius: 1,
-            p: 2,
-            mt: 2,
+            color: "primary.main",
           }}
-        >
-          <Typography variant="body2">Drop an image here</Typography>
-        </Box>
-      </OcrDropzone>
-    </FlexColumn>
+        />
+        <Button variant="outlined">Browse Files</Button>
+      </FlexColumn>
+    </OcrDropzone>
   );
 };
