@@ -1,8 +1,9 @@
+import { FlexSpacer } from "@/ui/layout/flexbox";
+import { WithSx } from "@/ui/props";
 import { CloudUpload } from "@mui/icons-material";
+import { Box, Button, styled } from "@mui/material";
 import React, { useCallback } from "react";
 import { Accept, FileRejection, useDropzone } from "react-dropzone";
-import { Box, styled } from "@mui/material";
-import { WithSx } from "@/ui/props";
 
 type OcrDropzoneProps = WithSx & {
   children: React.ReactNode;
@@ -81,7 +82,7 @@ const OcrDropzone = ({
     [handleAcceptedFiles, handleRejectedFiles]
   );
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
     onDrop,
     noClick: true,
     accept: accept,
@@ -91,6 +92,12 @@ const OcrDropzone = ({
     <StyledDropzone isDragActive={isDragActive} {...getRootProps()} sx={sx}>
       <input {...getInputProps()} />
       {children}
+
+      <FlexSpacer />
+
+      <Button onClick={open} variant="outlined" sx={{ margin: 2 }}>
+        Browse Files
+      </Button>
 
       <StyledMessage isDragActive={isDragActive}>
         <CloudUpload />

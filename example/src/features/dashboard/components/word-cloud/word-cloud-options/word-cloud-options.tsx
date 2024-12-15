@@ -25,39 +25,27 @@ export const WordCloudOptions = (props: WordCloudOptionsProps) => {
   return (
     <Grid2 container spacing={5}>
       <Grid2 size={6}>
-        <FlexColumn
-          sx={{
-            transition: "all 1s ease-out",
-          }}
-        >
-          {inputType === "text" ? (
-            <>
-              <Typography variant="h5">Text</Typography>
-              <Typography variant="body1">
-                Copy and paste or write out the words you would like to use to
-                generate your wordcloud!
-              </Typography>
-            </>
-          ) : (
-            <>
-              <Typography variant="h5">Upload Image</Typography>
-              <Typography>
-                Upload your image by dragging your file or clicking the button
-                below.
-              </Typography>
-            </>
-          )}
-        </FlexColumn>
-
         <Tabs
           value={inputType === "image" ? 0 : 1}
           onChange={(_, nv) => handleChange(nv)}
-          aria-label="basic tabs example"
+          aria-label="word cloud input type"
         >
           <Tab label="Upload" />
           <Tab label="Text" />
         </Tabs>
-        {inputType === "text" ? <WordCloudTextBox /> : <WordCloudUpload />}
+        <FlexColumn>
+          <FlexColumn sx={{ marginBottom: 3 }}>
+            <Typography variant="h5" sx={{ marginTop: 2 }}>
+              Upload Image
+            </Typography>
+            <Typography>
+              Upload your image by dragging your file or clicking the button
+              below.
+            </Typography>
+          </FlexColumn>
+
+          <WordCloudUpload />
+        </FlexColumn>
       </Grid2>
       <Grid2 size={6}>
         <WordCloudForm {...formProps} />

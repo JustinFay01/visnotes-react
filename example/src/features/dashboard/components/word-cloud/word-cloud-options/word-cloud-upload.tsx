@@ -1,11 +1,10 @@
 import OcrDropzone from "@/ui/components/form/dropzone/dropzone";
 import { FlexColumn } from "@/ui/layout/flexbox";
-import { Button } from "@mui/material";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 
 export const WordCloudUpload = () => {
   return (
-    <OcrDropzone>
+    <OcrDropzone sx={{ border: "2px dashed", borderColor: "primary.main" }}>
       <FlexColumn
         spacing={3}
         sx={{
@@ -13,13 +12,7 @@ export const WordCloudUpload = () => {
           justifyContent: "center",
         }}
       >
-        <FileUploadIcon
-          fontSize="large"
-          sx={{
-            color: "primary.main",
-          }}
-        />
-        <Button variant="outlined">Browse Files</Button>
+        <FileUploadIcon fontSize="large" sx={{ color: "primary.main" }} />
       </FlexColumn>
     </OcrDropzone>
   );
