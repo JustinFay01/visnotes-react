@@ -3,6 +3,8 @@ import { FlexColumn, FlexRow, FlexSpacer } from "@/ui/layout/flexbox";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { Button } from "@mui/material";
 import { useRef } from "react";
+import { LoadingButton } from "@mui/lab";
+import { useState } from "react";
 
 const Files = ({ files }: { files: File[] }) => {
   return (
@@ -17,7 +19,7 @@ const Files = ({ files }: { files: File[] }) => {
 type WordCloudUploadProps = {
   files: File[];
   setFiles: (files: File[]) => void;
-  onSubmit?: () => void;
+  onSubmit?: () => Promise<void>;
 };
 
 export const WordCloudUpload = ({
@@ -27,6 +29,7 @@ export const WordCloudUpload = ({
 }: WordCloudUploadProps) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const dropzoneRef = useRef<any>(null); // Ref to access the dropzone's `open` method
+  const [loading, setLoading] = useState(false);
 
   return (
     <OcrDropzone
@@ -47,9 +50,19 @@ export const WordCloudUpload = ({
           <FileUploadIcon fontSize="large" sx={{ color: "primary.main" }} />
         )}
         <FlexRow>
-          <Button onClick={onSubmit} variant="outlined" sx={{ margin: 2 }}>
+          <LoadingButton
+            onClick={() => {
+              setLoading(true);
+              onSubmit?.().finally(() => {
+                setLoading(false);
+              });
+            }}
+            variant="outlined"
+            sx={{ margin: 2 }}
+            loading={loading}
+          >
             Analyze
-          </Button>
+          </LoadingButton>
           <FlexSpacer />
           <Button
             onClick={() => {

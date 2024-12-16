@@ -6,7 +6,7 @@ import { WordCloudUpload } from "./word-cloud-upload";
 type WordCloudOptionsProps = WordCloudFormProps & {
   files: File[];
   setFiles: (files: File[]) => void;
-  onSubmit?: () => void;
+  onSubmit?: () => Promise<void>;
 };
 
 export const WordCloudOptions = (props: WordCloudOptionsProps) => {
