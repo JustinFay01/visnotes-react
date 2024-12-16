@@ -1,5 +1,5 @@
 import { FlexColumn } from "@/ui/layout/flexbox";
-import { Grid2, Tab, Tabs, Typography } from "@mui/material";
+import { Grid2, Typography } from "@mui/material";
 import { useState } from "react";
 import { WordCloudForm, WordCloudFormProps } from "./word-cloud-form";
 import { WordCloudUpload } from "./word-cloud-upload";
@@ -8,31 +8,11 @@ type WordCloudOptionsProps = WordCloudFormProps;
 
 export const WordCloudOptions = (props: WordCloudOptionsProps) => {
   const formProps = props;
-  const [inputType, setInputType] = useState<"text" | "image">("image");
   const [files, setFiles] = useState<File[]>([]);
-
-  const handleChange = (newValue: number) => {
-    switch (newValue) {
-      case 0:
-        setInputType("image");
-        break;
-      case 1:
-        setInputType("text");
-        break;
-    }
-  };
 
   return (
     <Grid2 container spacing={5}>
-      <Grid2 size={6}>
-        <Tabs
-          value={inputType === "image" ? 0 : 1}
-          onChange={(_, newValue) => handleChange(newValue)}
-          aria-label="word cloud input type"
-        >
-          <Tab label="Upload" />
-          <Tab label="Text" />
-        </Tabs>
+      <Grid2 size={{ sm: 12, md: 6 }}>
         <FlexColumn>
           <FlexColumn sx={{ marginBottom: 3 }}>
             <Typography variant="h5" sx={{ marginTop: 2 }}>
@@ -47,7 +27,7 @@ export const WordCloudOptions = (props: WordCloudOptionsProps) => {
           <WordCloudUpload files={files} setFiles={setFiles} />
         </FlexColumn>
       </Grid2>
-      <Grid2 size={6}>
+      <Grid2 size={{ xs: 12, sm: 6 }}>
         <WordCloudForm {...formProps} />
       </Grid2>
     </Grid2>

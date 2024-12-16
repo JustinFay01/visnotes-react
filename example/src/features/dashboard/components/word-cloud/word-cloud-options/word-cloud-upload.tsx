@@ -30,8 +30,11 @@ export const WordCloudUpload = ({ files, setFiles }: WordCloudUploadProps) => {
           justifyContent: "center",
         }}
       >
-        {files.length > 0 && <Files files={files} />}
-        <FileUploadIcon fontSize="large" sx={{ color: "primary.main" }} />
+        {files.length > 0 ? (
+          <Files files={files} />
+        ) : (
+          <FileUploadIcon fontSize="large" sx={{ color: "primary.main" }} />
+        )}
       </FlexColumn>
     </OcrDropzone>
   );
