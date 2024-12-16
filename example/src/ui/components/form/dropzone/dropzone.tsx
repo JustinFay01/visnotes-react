@@ -5,13 +5,6 @@ import { Box, Button, styled } from "@mui/material";
 import React, { useCallback } from "react";
 import { Accept, FileRejection, useDropzone } from "react-dropzone";
 
-type OcrDropzoneProps = WithSx & {
-  children: React.ReactNode;
-  accept?: Accept;
-  handleAcceptedFiles?: (files: File[]) => void;
-  handleRejectedFiles?: (files: FileRejection[]) => void;
-};
-
 const StyledDropzone = styled(Box, {
   shouldForwardProp: (prop) => prop !== "isDragActive",
 })<{ isDragActive: boolean }>(({ theme, isDragActive }) => ({
@@ -60,6 +53,13 @@ const StyledMessage = styled(Box, {
   opacity: isDragActive ? 1 : 0,
   transition: "transform 0.2s ease-out, opacity 0.2s ease-out",
 }));
+
+type OcrDropzoneProps = WithSx & {
+  children: React.ReactNode;
+  accept?: Accept;
+  handleAcceptedFiles?: (files: File[]) => void;
+  handleRejectedFiles?: (files: FileRejection[]) => void;
+};
 
 const OcrDropzone = ({
   children,
