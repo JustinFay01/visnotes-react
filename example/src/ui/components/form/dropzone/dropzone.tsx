@@ -1,8 +1,8 @@
 import { FlexSpacer } from "@/ui/layout/flexbox";
 import { WithSx } from "@/ui/props";
 import { CloudUpload } from "@mui/icons-material";
-import { Box, Button, styled } from "@mui/material";
-import React, { useCallback } from "react";
+import { Box, styled } from "@mui/material";
+import React, { forwardRef, useCallback, useImperativeHandle } from "react";
 import { Accept, FileRejection, useDropzone } from "react-dropzone";
 
 const StyledDropzone = styled(Box, {
@@ -61,50 +61,56 @@ type OcrDropzoneProps = WithSx & {
   handleRejectedFiles?: (files: FileRejection[]) => void;
 };
 
-const OcrDropzone = ({
-  children,
-  accept,
-  sx,
-  handleAcceptedFiles,
-  handleRejectedFiles,
-}: OcrDropzoneProps) => {
-  const onDrop = useCallback(
-    (acceptedFiles: File[], fileRejections: FileRejection[]) => {
-      if (fileRejections?.length) {
-        handleRejectedFiles?.(fileRejections);
-        return;
-      }
+const OcrDropzone = forwardRef(
+  (
+    {
+      children,
+      accept,
+      sx,
+      handleAcceptedFiles,
+      handleRejectedFiles,
+    }: OcrDropzoneProps,
+    ref
+  ) => {
+    const onDrop = useCallback(
+      (acceptedFiles: File[], fileRejections: FileRejection[]) => {
+        if (fileRejections?.length) {
+          handleRejectedFiles?.(fileRejections);
+          return;
+        }
 
-      if (acceptedFiles?.length) {
-        handleAcceptedFiles?.(acceptedFiles);
-      }
-    },
-    [handleAcceptedFiles, handleRejectedFiles]
-  );
+        if (acceptedFiles?.length) {
+          handleAcceptedFiles?.(acceptedFiles);
+        }
+      },
+      [handleAcceptedFiles, handleRejectedFiles]
+    );
 
-  const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
-    onDrop,
-    noClick: true,
-    accept: accept,
-  });
+    const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
+      onDrop,
+      noClick: true,
+      accept: accept,
+    });
 
-  return (
-    <StyledDropzone isDragActive={isDragActive} {...getRootProps()} sx={sx}>
-      <input {...getInputProps()} />
-      {children}
+    // Expose the `open` method to the parent component
+    useImperativeHandle(ref, () => ({
+      open,
+    }));
 
-      <FlexSpacer />
+    return (
+      <StyledDropzone isDragActive={isDragActive} {...getRootProps()} sx={sx}>
+        <input {...getInputProps()} />
+        {children}
 
-      <Button onClick={open} variant="outlined" sx={{ margin: 2 }}>
-        Browse Files
-      </Button>
+        <FlexSpacer />
 
-      <StyledMessage isDragActive={isDragActive}>
-        <CloudUpload />
-        Drop files to upload
-      </StyledMessage>
-    </StyledDropzone>
-  );
-};
+        <StyledMessage isDragActive={isDragActive}>
+          <CloudUpload />
+          Drop files to upload
+        </StyledMessage>
+      </StyledDropzone>
+    );
+  }
+);
 
 export default OcrDropzone;
