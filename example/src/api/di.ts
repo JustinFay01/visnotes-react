@@ -11,7 +11,7 @@ export const analyzeDocument = async ({
   const formData = new FormData();
   formData.append("file", file);
 
-  return (await api.post("/api/di", formData)).data as string[];
+  return (await api.post("/di", formData)).data as string[];
 };
 
 export const useAnalyzeDocumentMutation = () => {

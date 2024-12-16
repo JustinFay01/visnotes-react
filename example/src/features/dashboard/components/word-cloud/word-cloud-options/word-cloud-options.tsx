@@ -1,14 +1,17 @@
 import { FlexColumn } from "@/ui/layout/flexbox";
 import { Grid2, Typography } from "@mui/material";
-import { useState } from "react";
 import { WordCloudForm, WordCloudFormProps } from "./word-cloud-form";
 import { WordCloudUpload } from "./word-cloud-upload";
 
-type WordCloudOptionsProps = WordCloudFormProps;
+type WordCloudOptionsProps = WordCloudFormProps & {
+  files: File[];
+  setFiles: (files: File[]) => void;
+  onSubmit?: () => void;
+};
 
 export const WordCloudOptions = (props: WordCloudOptionsProps) => {
   const formProps = props;
-  const [files, setFiles] = useState<File[]>([]);
+  const { files, setFiles, onSubmit } = props;
 
   return (
     <Grid2 container spacing={5}>
@@ -24,7 +27,11 @@ export const WordCloudOptions = (props: WordCloudOptionsProps) => {
             </Typography>
           </FlexColumn>
 
-          <WordCloudUpload files={files} setFiles={setFiles} />
+          <WordCloudUpload
+            files={files}
+            setFiles={setFiles}
+            onSubmit={onSubmit}
+          />
         </FlexColumn>
       </Grid2>
       <Grid2 size={{ xs: 12, sm: 6 }}>

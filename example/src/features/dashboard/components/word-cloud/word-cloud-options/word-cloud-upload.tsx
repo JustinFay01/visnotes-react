@@ -1,5 +1,5 @@
 import OcrDropzone from "@/ui/components/form/dropzone/dropzone";
-import { FlexColumn } from "@/ui/layout/flexbox";
+import { FlexColumn, FlexRow, FlexSpacer } from "@/ui/layout/flexbox";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { Button } from "@mui/material";
 import { useRef } from "react";
@@ -17,9 +17,14 @@ const Files = ({ files }: { files: File[] }) => {
 type WordCloudUploadProps = {
   files: File[];
   setFiles: (files: File[]) => void;
+  onSubmit?: () => void;
 };
 
-export const WordCloudUpload = ({ files, setFiles }: WordCloudUploadProps) => {
+export const WordCloudUpload = ({
+  files,
+  setFiles,
+  onSubmit,
+}: WordCloudUploadProps) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const dropzoneRef = useRef<any>(null); // Ref to access the dropzone's `open` method
 
@@ -41,15 +46,21 @@ export const WordCloudUpload = ({ files, setFiles }: WordCloudUploadProps) => {
         ) : (
           <FileUploadIcon fontSize="large" sx={{ color: "primary.main" }} />
         )}
-        <Button
-          onClick={() => {
-            dropzoneRef.current?.open();
-          }}
-          variant="outlined"
-          sx={{ margin: 2 }}
-        >
-          Browse Files
-        </Button>
+        <FlexRow>
+          <Button onClick={onSubmit} variant="outlined" sx={{ margin: 2 }}>
+            Analyze
+          </Button>
+          <FlexSpacer />
+          <Button
+            onClick={() => {
+              dropzoneRef.current?.open();
+            }}
+            variant="outlined"
+            sx={{ margin: 2 }}
+          >
+            Browse
+          </Button>
+        </FlexRow>
       </FlexColumn>
     </OcrDropzone>
   );

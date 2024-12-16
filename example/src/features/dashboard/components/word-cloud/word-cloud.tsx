@@ -1,7 +1,7 @@
 import { FlexColumn } from "@/ui/layout/flexbox";
 import { totoAfricaLyrics } from "@dashboard/assets/text-fixture";
 import { SpiralType, WordData } from "@dashboard/types/word-cloud-types";
-import { WordDataHelper } from "@dashboard/util/word-cloud-helper";
+import { WordDataHelper } from "@dashboard/util/word-data-helper";
 import { Box } from "@mui/material";
 import { scaleLog } from "@visx/scale";
 import { Text } from "@visx/text";
@@ -10,6 +10,7 @@ import Wordcloud from "@visx/wordcloud/lib/Wordcloud";
 const colors = ["#143059", "#2F6B9A", "#82a6c2"];
 
 interface OcrWordCloudProps {
+  words: WordData[];
   width: number;
   height: number;
   spiralType: SpiralType;
@@ -17,13 +18,12 @@ interface OcrWordCloudProps {
 }
 
 export default function OcrWordCloud({
+  words = WordDataHelper.countWordsFromString(totoAfricaLyrics),
   width,
   height,
   spiralType,
   withRotation,
 }: OcrWordCloudProps) {
-  const words = WordDataHelper.countWordsFromString(totoAfricaLyrics);
-
   const fontScale = scaleLog({
     domain: [
       Math.min(...words.map((w) => w.value)),
