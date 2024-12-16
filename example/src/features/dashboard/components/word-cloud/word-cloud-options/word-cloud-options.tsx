@@ -27,7 +27,7 @@ export const WordCloudOptions = (props: WordCloudOptionsProps) => {
       <Grid2 size={6}>
         <Tabs
           value={inputType === "image" ? 0 : 1}
-          onChange={(_, nv) => handleChange(nv)}
+          onChange={(_, newValue) => handleChange(newValue)}
           aria-label="word cloud input type"
         >
           <Tab label="Upload" />
