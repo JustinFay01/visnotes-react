@@ -18,7 +18,7 @@ export const Dashboard = () => {
   const [spiralType, setSpiralType] = useState<SpiralType>("archimedean");
   const [withRotation, setWithRotation] = useState(false);
 
-  async function handleAnalyze() {
+  const handleAnalyze = async () => {
     if (files.length === 0) {
       return;
     }
@@ -32,7 +32,7 @@ export const Dashboard = () => {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   return (
     <FlexColumn spacing={5}>

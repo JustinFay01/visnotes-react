@@ -1,10 +1,10 @@
-import OcrDropzone from "@/ui/components/form/dropzone/dropzone";
 import { FlexColumn, FlexRow, FlexSpacer } from "@/ui/layout/flexbox";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { Button } from "@mui/material";
 import { useRef } from "react";
 import { LoadingButton } from "@mui/lab";
 import { useState } from "react";
+import { OcrDropzoneRef, OcrDropzone } from "@/ui/components/form/dropzone";
 
 const Files = ({ files }: { files: File[] }) => {
   return (
@@ -27,8 +27,7 @@ export const WordCloudUpload = ({
   setFiles,
   onSubmit,
 }: WordCloudUploadProps) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const dropzoneRef = useRef<any>(null); // Ref to access the dropzone's `open` method
+  const dropzoneRef = useRef<OcrDropzoneRef>(null); // Ref to access the dropzone's `open` method
   const [loading, setLoading] = useState(false);
 
   return (
