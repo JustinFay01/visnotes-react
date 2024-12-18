@@ -10,6 +10,8 @@ const StyledDropzone = styled(Box, {
 })<{ isDragActive: boolean }>(({ theme, isDragActive }) => ({
   position: "relative",
   overflow: "hidden",
+  height: "100%",
+  width: "100%",
   border: `2px solid ${
     isDragActive ? theme.palette.primary.main : "transparent"
   }`,
