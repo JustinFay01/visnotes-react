@@ -7,6 +7,7 @@ import { WordCloudOptions } from "./components/word-cloud/word-cloud-options/wor
 import { SpiralType, WordData } from "./types/word-cloud-types";
 import { useAnalyzeDocumentMutation } from "@/api/di";
 import { WordDataHelper } from "./util/word-data-helper";
+import { totoAfricaLyrics } from "./assets/text-fixture";
 
 export const Dashboard = () => {
   const useAnalyzeDocument = useAnalyzeDocumentMutation();
@@ -14,7 +15,10 @@ export const Dashboard = () => {
 
   const [files, setFiles] = useState<File[]>([]);
 
-  const [words, setWords] = useState<WordData[]>([]);
+  const [words, setWords] = useState<WordData[]>(
+    WordDataHelper.countWordsFromString(totoAfricaLyrics)
+  );
+
   const [spiralType, setSpiralType] = useState<SpiralType>("archimedean");
   const [withRotation, setWithRotation] = useState(false);
 
@@ -27,6 +31,8 @@ export const Dashboard = () => {
       const data = await useAnalyzeDocument.mutateAsync({
         file: files[0],
       });
+
+      console.log("request responded to", data);
 
       setWords(WordDataHelper.countWordsFromArray(data));
     } catch (error) {
