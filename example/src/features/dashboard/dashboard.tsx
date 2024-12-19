@@ -34,8 +34,6 @@ export const Dashboard = () => {
         file: files[0],
       });
 
-      console.log("request responded to", data);
-
       setWords(WordDataHelper.countWordsFromArray(data));
     } catch (error) {
       console.error(error);
