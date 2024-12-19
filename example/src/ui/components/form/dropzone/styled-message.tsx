@@ -3,7 +3,7 @@ import { styled, Box } from "@mui/material";
 export const StyledMessage = styled(Box, {
   shouldForwardProp: (prop) => prop !== "isDragActive",
 })<{ isDragActive: boolean }>(({ theme, isDragActive }) => ({
-  color: theme.palette.text.secondary,
+  color: theme.palette.primary.contrastText,
   backgroundColor: theme.palette.primary.main,
   fontWeight: 700,
   height: 48,

@@ -7,7 +7,7 @@ import { scaleLog } from "@visx/scale";
 import { Text } from "@visx/text";
 import Wordcloud from "@visx/wordcloud/lib/Wordcloud";
 
-const colors = ["#143059", "#2F6B9A", "#82a6c2"];
+const colors = ["#143059", "#2F6B9A", "#82a6c2", "#b8d3e2", "#f0f7ff"];
 
 interface OcrWordCloudProps {
   words: WordData[];
