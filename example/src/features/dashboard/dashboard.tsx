@@ -8,6 +8,7 @@ import { SpiralType, WordData } from "./types/word-cloud-types";
 import { useAnalyzeDocumentMutation } from "@/api/di";
 import { WordDataHelper } from "./util/word-data-helper";
 import { totoAfricaLyrics } from "./assets/text-fixture";
+import { toast } from "react-toastify";
 
 export const Dashboard = () => {
   const useAnalyzeDocument = useAnalyzeDocumentMutation();
@@ -21,6 +22,7 @@ export const Dashboard = () => {
 
   const [spiralType, setSpiralType] = useState<SpiralType>("archimedean");
   const [withRotation, setWithRotation] = useState(false);
+  const notify = (message: string) => toast(message);
 
   const handleAnalyze = async () => {
     if (files.length === 0) {
@@ -37,6 +39,7 @@ export const Dashboard = () => {
       setWords(WordDataHelper.countWordsFromArray(data));
     } catch (error) {
       console.error(error);
+      notify("Failed to analyze document");
     }
   };
 

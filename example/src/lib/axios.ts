@@ -6,13 +6,26 @@ export const api = Axios.create({
 
 api.interceptors.response.use(
   (response) => {
-    return response.data;
+    return response;
   },
   (error) => {
     const message = error.response?.data?.message || error.message;
-    if (error.response?.status === 401) {
-      // Redirect to login page
-      console.error("Unauthorized", message);
+
+    switch (error.response?.status) {
+      case 401:
+        console.error("Unauthorized", message);
+        break;
+      case 403:
+        console.error("Forbidden", message);
+        break;
+      case 404:
+        console.error("Not Found", message);
+        break;
+      case 500:
+        console.error("Internal Server Error", message);
+        break;
+      default:
+        console.error("Error", message);
     }
 
     return Promise.reject(error);

@@ -10,10 +10,7 @@ export const analyzeDocument = async ({
 }: AnalyzeDocumentOptions): Promise<string[]> => {
   const formData = new FormData();
   formData.append("file", file);
-
-  const response = await api.post("/di", formData);
-
-  return Array.isArray(response) ? response : [];
+  return (await api.post("/di", formData)).data as string[];
 };
 
 export const useAnalyzeDocumentMutation = () => {

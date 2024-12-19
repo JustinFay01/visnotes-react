@@ -4,6 +4,7 @@ import { createAppTheme } from "@/lib/theme";
 import { CssBaseline, ThemeProvider, useMediaQuery } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { ToastContainer } from "react-toastify";
 
 const appQueryClient = new QueryClient({
   defaultOptions: queryConfig,
@@ -21,6 +22,15 @@ export function AppProvider({ children }: React.PropsWithChildren) {
         <CssBaseline />
         {children}
         <ReactQueryDevtools initialIsOpen={false} />
+        <ToastContainer
+          position="bottom-left"
+          autoClose={5000}
+          newestOnTop
+          closeOnClick
+          draggable
+          pauseOnHover
+          theme={prefersDarkMode ? "dark" : "light"}
+        />
       </ThemeProvider>
     </QueryClientProvider>
   );
