@@ -54,6 +54,9 @@ export const darkThemeColors = {
 };
 
 const darkTheme = createTheme({
+  colorSchemes: {
+    dark: true,
+  },
   palette: {
     primary: {
       main: darkThemeColors.brand.slateBlue,
@@ -75,7 +78,5 @@ const darkTheme = createTheme({
   },
 });
 
-export const themes = {
-  light: lightTheme,
-  dark: darkTheme,
-};
+export const createAppTheme = (mode: "light" | "dark") =>
+  mode === "light" ? lightTheme : darkTheme;
