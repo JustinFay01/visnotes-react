@@ -47,9 +47,10 @@ export const darkThemeColors = {
     thistle: "#C7B8E2", // Softened for a dark background
     champagnePink: "#EACDC7", // Warmer tone for contrast
     spaceCadet: "#423C66", // Lightened for depth
-    tropicalIndigo: "#B0B0F7", // Slightly brighter for visibility
-    ylmnBlue: "#5C6289", // Adjusted for contrast
-    lightBlue: "#BAC5FF", // Softer light blue for dark mode
+
+    tropicalIndigo: "#9F9FED",
+    ylmnBlue: "#464D77",
+    lightBlue: "#A3BFFA",
   },
 };
 

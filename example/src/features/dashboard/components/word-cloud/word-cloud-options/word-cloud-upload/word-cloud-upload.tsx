@@ -1,56 +1,10 @@
+import { OcrDropzone, OcrDropzoneRef } from "@/ui/components/form/dropzone";
 import { FlexColumn, FlexRow, FlexSpacer } from "@/ui/layout/flexbox";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
-import { Box, Button, Card, Grid2, Typography } from "@mui/material";
-import { useRef } from "react";
 import { LoadingButton } from "@mui/lab";
-import { useState } from "react";
-import { OcrDropzoneRef, OcrDropzone } from "@/ui/components/form/dropzone";
-import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
-
-const convertBytes = (to: "KB" | "MB" | "GB", bytes: number) => {
-  const units = ["B", "KB", "MB", "GB"];
-  const index = units.indexOf(to);
-  return bytes / Math.pow(1024, index);
-};
-
-const Files = ({ files }: { files: File[] }) => {
-  return (
-    <FlexColumn
-      sx={{
-        alignItems: "center",
-        justifyContent: "center",
-        width: "100%",
-      }}
-    >
-      {files.map((file) => (
-        <Card
-          key={file.name}
-          sx={{
-            padding: 2,
-            marginBottom: 2,
-            width: "100%",
-            display: "flex",
-            justifyContent: "space-between", // Evenly spaces child items
-          }}
-        >
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <InsertDriveFileIcon />
-            <Typography>{file.name}</Typography>
-            {file.lastModified && (
-              <Typography>
-                {new Date(file.lastModified).toLocaleString()}
-              </Typography>
-            )}
-          </Box>
-          <Typography>
-            {`${convertBytes("KB", file.size).toFixed(2)} KB`}
-          </Typography>
-          {`${convertBytes("KB", file.size).toFixed(2)} KB`}
-        </Card>
-      ))}
-    </FlexColumn>
-  );
-};
+import { Button } from "@mui/material";
+import { useRef, useState } from "react";
+import { UploadFiles } from "./upload-files";
 
 type WordCloudUploadProps = {
   files: File[];
@@ -81,7 +35,7 @@ export const WordCloudUpload = ({
         }}
       >
         {files.length > 0 ? (
-          <Files files={files} />
+          <UploadFiles files={files} setFiles={setFiles} />
         ) : (
           <FileUploadIcon fontSize="large" sx={{ color: "primary.main" }} />
         )}

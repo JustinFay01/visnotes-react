@@ -1,7 +1,7 @@
 import { FlexColumn } from "@/ui/layout/flexbox";
 import { Card, Grid2, Typography } from "@mui/material";
 import { WordCloudForm, WordCloudFormProps } from "./word-cloud-form";
-import { WordCloudUpload } from "./word-cloud-upload";
+import { WordCloudUpload } from "./word-cloud-upload/word-cloud-upload";
 
 type WordCloudOptionsProps = WordCloudFormProps & {
   files: File[];
