@@ -11,8 +11,8 @@ export type CreateNoteMutationOptions = {
   config?: MutationConfig<typeof analyzeNote>;
 };
 
-export const useCreateNote = (options: CreateNoteMutationOptions) => {
-  const config = options.config ?? {};
+export const useCreateNote = (options?: CreateNoteMutationOptions) => {
+  const config = options?.config ?? {};
 
   return useMutation({
     mutationFn: analyzeNote,

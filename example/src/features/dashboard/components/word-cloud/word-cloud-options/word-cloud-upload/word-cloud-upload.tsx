@@ -4,7 +4,7 @@ import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { LoadingButton } from "@mui/lab";
 import { Button } from "@mui/material";
 import { useRef, useState } from "react";
-import { UploadFiles } from "./upload-files";
+import { UploadFiles } from "../../Files/upload-files";
 
 type WordCloudUploadProps = {
   files: File[];
@@ -35,7 +35,7 @@ export const WordCloudUpload = ({
         }}
       >
         {files.length > 0 ? (
-          <UploadFiles files={files} setFiles={setFiles} />
+          <UploadFiles files={files} onDelete={setFiles} />
         ) : (
           <FileUploadIcon fontSize="large" sx={{ color: "primary.main" }} />
         )}

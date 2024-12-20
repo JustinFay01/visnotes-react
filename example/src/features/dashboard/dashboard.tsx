@@ -1,49 +1,47 @@
 import useWindowDimensions from "@/hooks/use-window-dimensions";
 import { FlexColumn } from "@/ui/layout/flexbox";
-import { Typography } from "@mui/material";
-import { useState } from "react";
+import { Card, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 import OcrWordCloud from "./components/word-cloud/word-cloud";
 import { WordCloudOptions } from "./components/word-cloud/word-cloud-options/word-cloud-options";
 import { SpiralType, WordData } from "./types/word-cloud-types";
-import { useAnalyzeDocumentMutation } from "@/api/di";
 import { WordDataHelper } from "./util/word-data-helper";
 import { totoAfricaLyrics } from "./assets/text-fixture";
 import { toast } from "react-toastify";
+import { useGetNotes } from "@/api/notes/get-notes";
+import { useCreateNote } from "@/api/notes/anaylze-note";
+import { UploadFiles } from "./components/word-cloud/Files/upload-files";
+import { Note } from "./types/api-types";
 
 export const Dashboard = () => {
-  const useAnalyzeDocument = useAnalyzeDocumentMutation();
+  // Hooks
   const windowHook = useWindowDimensions();
-
-  const [files, setFiles] = useState<File[]>([]);
+  const notify = (message: string) => toast(message);
+  const getNotes = useGetNotes();
+  const createNote = useCreateNote();
 
   const [words, setWords] = useState<WordData[]>(
     WordDataHelper.countWordsFromString(totoAfricaLyrics)
   );
 
+  const [savedNotes, setSavedNotes] = useState<Note[]>([]);
+  const [filesToUpload, setFilesToUpload] = useState<File[]>([]);
+
+  // Options
   const [spiralType, setSpiralType] = useState<SpiralType>("archimedean");
   const [withRotation, setWithRotation] = useState(false);
-  const notify = (message: string) => toast(message);
 
-  const handleAnalyze = async () => {
-    if (files.length === 0) {
-      return;
-    }
+  // Methods
+  useEffect(() => {
+    const notes = getNotes.data ?? [];
+    console.log("notes");
 
-    try {
-      const data = await useAnalyzeDocument.mutateAsync({
-        file: files[0],
-      });
-
-      setWords(WordDataHelper.countWordsFromArray(data));
-    } catch (error) {
-      console.error(error);
-      notify("Failed to analyze document");
-    }
-  };
+    setSavedNotes(notes);
+  }, [getNotes.data]);
 
   return (
     <FlexColumn spacing={5}>
-      <FlexColumn paddingX={8} paddingTop={4}>
+      <FlexColumn paddingX={8} paddingTop={4} spacing={2}>
         <Typography
           variant="h4"
           component={"h1"}
@@ -52,14 +50,47 @@ export const Dashboard = () => {
         >
           Wordcloud
         </Typography>
+
+        <Card>
+          <FlexColumn
+            padding={2}
+            spacing={2}
+            sx={{
+              marginBottom: 3,
+            }}
+          >
+            <Typography variant="h5" sx={{ marginTop: 2 }}>
+              Saved Notes
+            </Typography>
+            <Card
+              sx={{
+                border: "none",
+                backgroundColor: "primary.main",
+              }}
+            >
+              <UploadFiles
+                files={savedNotes.map((note) => {
+                  console.log(note);
+                  return new File(["content"], note.name, {
+                    type: note.type,
+                    lastModified: 12,
+                  });
+                })}
+              />
+            </Card>
+          </FlexColumn>
+        </Card>
+
         <WordCloudOptions
-          files={files}
-          setFiles={setFiles}
+          files={filesToUpload}
+          setFiles={setFilesToUpload}
           withRotation={withRotation}
           setWithRotation={setWithRotation}
           spiralType={spiralType}
           setSpiralType={setSpiralType}
-          onSubmit={handleAnalyze}
+          onSubmit={async () => {
+            console.error("Not yet");
+          }}
         />
       </FlexColumn>
       <OcrWordCloud

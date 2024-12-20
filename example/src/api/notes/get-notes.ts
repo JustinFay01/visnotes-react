@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { noteKeys } from "./note-key-factory";
 
 export const getNotes = async (): Promise<Note[]> => {
-  return (await api.get("/notes")).data as Note[];
+  return (await api.get("notes")).data as Note[];
 };
 
 export const useGetNotes = () => {

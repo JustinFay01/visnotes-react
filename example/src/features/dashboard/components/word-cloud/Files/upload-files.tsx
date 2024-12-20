@@ -63,12 +63,12 @@ const FileCard = ({ file }: FileCardProps) => {
 
 type UploadFilesProps = {
   files: File[];
-  setFiles: (files: File[]) => void;
-};
+  onDelete?: (files: File[]) => void;
+} & React.ComponentProps<typeof FlexColumn>;
 
-export const UploadFiles = ({ files, setFiles }: UploadFilesProps) => {
+export const UploadFiles = ({ files, onDelete }: UploadFilesProps) => {
   const handleDelete = (file: File) => {
-    setFiles(files.filter((f) => f !== file));
+    onDelete?.(files.filter((f) => f !== file));
   };
 
   return (
