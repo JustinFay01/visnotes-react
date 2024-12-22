@@ -1,13 +1,8 @@
 import { FlexColumn } from "@/ui/layout/flexbox";
-import { Card, Box, Typography } from "@mui/material";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
+import { Box, Card, Typography } from "@mui/material";
 import React from "react";
-
-const convertBytes = (to: "KB" | "MB" | "GB", bytes: number) => {
-  const units = ["B", "KB", "MB", "GB"];
-  const index = units.indexOf(to);
-  return bytes / Math.pow(1024, index);
-};
+import { convertBytes } from "../../util/file-util";
 
 type FileCardProps = {
   file: File;

@@ -10,8 +10,8 @@ import { totoAfricaLyrics } from "./assets/text-fixture";
 import { toast } from "react-toastify";
 import { useGetNotes } from "@/api/notes/get-notes";
 import { useCreateNote } from "@/api/notes/anaylze-note";
-import { UploadFiles } from "./components/word-cloud/Files/upload-files";
 import { Note } from "./types/api-types";
+import { Notes } from "./components/notes/notes";
 
 export const Dashboard = () => {
   // Hooks
@@ -41,6 +41,8 @@ export const Dashboard = () => {
 
   return (
     <FlexColumn spacing={5}>
+      <Notes notes={savedNotes} />
+
       <FlexColumn paddingX={8} paddingTop={4} spacing={2}>
         <Typography
           variant="h4"
@@ -50,36 +52,6 @@ export const Dashboard = () => {
         >
           Wordcloud
         </Typography>
-
-        <Card>
-          <FlexColumn
-            padding={2}
-            spacing={2}
-            sx={{
-              marginBottom: 3,
-            }}
-          >
-            <Typography variant="h5" sx={{ marginTop: 2 }}>
-              Saved Notes
-            </Typography>
-            <Card
-              sx={{
-                border: "none",
-                backgroundColor: "primary.main",
-              }}
-            >
-              <UploadFiles
-                files={savedNotes.map((note) => {
-                  console.log(note);
-                  return new File(["content"], note.name, {
-                    type: note.type,
-                    lastModified: 12,
-                  });
-                })}
-              />
-            </Card>
-          </FlexColumn>
-        </Card>
 
         <WordCloudOptions
           files={filesToUpload}
