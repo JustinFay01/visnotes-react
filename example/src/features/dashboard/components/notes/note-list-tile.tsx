@@ -18,7 +18,7 @@ export const NoteListTile = ({
     <Card key={note.id} {...restProps}>
       <FlexRow>
         {note.name}
-        {note.createdAt.toDateString()}
+        {note.createdAt.toString()}
         {convertBytes(unit, note.size)}
       </FlexRow>
     </Card>
