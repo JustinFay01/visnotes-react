@@ -31,13 +31,15 @@ const columns: GridColDef<GridRowsProp[number]>[] = [
     valueFormatter: (val) => `${new Date(val).toLocaleDateString()}`,
   },
   {
-    field: "size",
-    headerName: "Size (KB)",
-    valueFormatter: (val) => `${convertBytes("KB", val).toPrecision(5)} KB`,
-  },
-  {
     field: "analyzed",
     headerName: "Analyzed",
+  },
+
+  {
+    field: "size",
+    headerName: "Size (KB)",
+    align: "right",
+    valueFormatter: (val) => `${convertBytes("KB", val).toPrecision(5)} KB`,
   },
 ];
 
@@ -76,12 +78,11 @@ export const Notes = ({ notes, ...cardProps }: NotesProps) => {
           rows={notes?.map((n) => {
             return {
               ...n,
-              analyzed: n.analyses?.length ?? 0 > 0 ? "yes" : "no",
+              analyzed: n.analyses?.length ?? 0 > 0 ? true : false,
             };
           })}
           checkboxSelection
           disableRowSelectionOnClick
-          autosizeOnMount
           autoPageSize
           sx={{
             bgcolor: "background.paper", // Ensures background matches theme

@@ -71,10 +71,6 @@ const darkTheme = createTheme({
     },
     background: {
       default: darkThemeColors.background,
-      paper: darkThemeColors.white,
-    },
-    text: {
-      primary: darkThemeColors.white,
     },
   },
 });
