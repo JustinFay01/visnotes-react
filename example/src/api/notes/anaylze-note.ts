@@ -7,11 +7,11 @@ export const analyzeNote = async (id: string): Promise<Analysis> => {
   return (await api.post(`notes/${id}`)).data as Analysis;
 };
 
-export type CreateNoteMutationOptions = {
+export type AnalyzeNoteMutationOptions = {
   config?: MutationConfig<typeof analyzeNote>;
 };
 
-export const useCreateNote = (options?: CreateNoteMutationOptions) => {
+export const useAnalyzeNote = (options?: AnalyzeNoteMutationOptions) => {
   const config = options?.config ?? {};
 
   return useMutation({

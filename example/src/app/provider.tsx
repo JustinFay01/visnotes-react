@@ -28,7 +28,7 @@ export function AppProvider({ children }: React.PropsWithChildren) {
           newestOnTop
           closeOnClick
           draggable
-          pauseOnHover
+          pauseOnHover={false}
           theme={prefersDarkMode ? "dark" : "light"}
         />
       </ThemeProvider>
