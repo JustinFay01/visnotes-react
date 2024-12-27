@@ -1,16 +1,18 @@
 import { FlexColumn } from "@/ui/layout/flexbox";
 import { Card } from "@mui/material";
 import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
-import React from "react";
+import React, { useRef } from "react";
 import { Note } from "../../types/api-types";
 import { convertBytes } from "../../util/file-util";
 import { NoteHeader } from "./note-header";
 import { useCreateNote } from "@/api/notes/create-note";
 import { toast } from "react-toastify";
 import { useToast } from "@/ui/components/toasts/use-toast";
+import { OcrDropzone, OcrDropzoneRef } from "@/ui/components/form/dropzone";
 
 type NotesProps = {
   notes?: Note[];
+  setNotes?: (notes: Note[]) => void;
 } & React.ComponentProps<typeof Card>;
 
 const columns: GridColDef<GridRowsProp[number]>[] = [
@@ -45,10 +47,11 @@ const columns: GridColDef<GridRowsProp[number]>[] = [
 
 export const Notes = ({ notes, ...cardProps }: NotesProps) => {
   const createNote = useCreateNote();
+  const dropZoneRef = useRef<OcrDropzoneRef>(null);
   const { success, error } = useToast();
 
   const handleCreateClick = () => {
-    success("Creating Note");
+    dropZoneRef.current?.open();
   };
 
   const handleDeleteClick = () => {
@@ -73,25 +76,27 @@ export const Notes = ({ notes, ...cardProps }: NotesProps) => {
           onDelete={handleDeleteClick}
           onAnalyze={handleAnalyzeClick}
         />
-        <DataGrid
-          columns={columns}
-          rows={notes?.map((n) => {
-            return {
-              ...n,
-              analyzed: n.analyses?.length ?? 0 > 0 ? true : false,
-            };
-          })}
-          checkboxSelection
-          disableRowSelectionOnClick
-          autoPageSize
-          sx={{
-            bgcolor: "background.paper", // Ensures background matches theme
-            color: "text.primary",
-            "& .MuiDataGrid-cell": {
+        <OcrDropzone ref={dropZoneRef}>
+          <DataGrid
+            columns={columns}
+            rows={notes?.map((n) => {
+              return {
+                ...n,
+                analyzed: n.analyses?.length ?? 0 > 0 ? true : false,
+              };
+            })}
+            checkboxSelection
+            disableRowSelectionOnClick
+            autoPageSize
+            sx={{
+              bgcolor: "background.paper", // Ensures background matches theme
               color: "text.primary",
-            },
-          }}
-        />
+              "& .MuiDataGrid-cell": {
+                color: "text.primary",
+              },
+            }}
+          />
+        </OcrDropzone>
       </FlexColumn>
     </Card>
   );

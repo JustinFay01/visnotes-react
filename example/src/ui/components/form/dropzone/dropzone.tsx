@@ -1,4 +1,3 @@
-import { FlexSpacer } from "@/ui/layout/flexbox";
 import { WithSx } from "@/ui/props";
 import { CloudUpload } from "@mui/icons-material";
 import React, { forwardRef, useCallback, useImperativeHandle } from "react";
@@ -57,9 +56,6 @@ export const OcrDropzone = forwardRef(
       <StyledDropzone isDragActive={isDragActive} {...getRootProps()} sx={sx}>
         <input {...getInputProps()} />
         {children}
-
-        <FlexSpacer />
-
         <StyledMessage isDragActive={isDragActive}>
           <CloudUpload />
           Drop files to upload
