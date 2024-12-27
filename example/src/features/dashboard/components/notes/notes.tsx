@@ -124,17 +124,12 @@ export const Notes = ({ notes, ...cardProps }: NotesProps) => {
 
   return (
     <Card {...cardProps}>
-      <FlexColumn
-        padding={2}
-        spacing={2}
-        sx={{
-          marginBottom: 3,
-        }}
-      >
+      <FlexColumn paddingX={2} spacing={2}>
         <NoteHeader
           onCreate={handleCreateClick}
           onDelete={handleDeleteClick}
           onAnalyze={handleAnalyzeClick}
+          notesSelected={selectedNotes.length > 0}
         />
         <OcrDropzone
           ref={dropZoneRef}

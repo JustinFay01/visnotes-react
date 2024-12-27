@@ -8,12 +8,14 @@ type NoteHeaderProps = {
   onCreate: () => void;
   onDelete: () => void;
   onAnalyze: () => void;
+  notesSelected: boolean;
 };
 
 export const NoteHeader = ({
   onCreate,
   onDelete,
   onAnalyze,
+  notesSelected,
 }: NoteHeaderProps) => (
   <FlexColumn>
     <Typography variant="h5" sx={{ marginTop: 2 }}>
@@ -30,10 +32,16 @@ export const NoteHeader = ({
         variant="contained"
         startIcon={<TroubleshootIcon />}
         onClick={onAnalyze}
+        disabled={!notesSelected}
       >
         Analyze
       </Button>
-      <Button variant="outlined" startIcon={<DeleteIcon />} onClick={onDelete}>
+      <Button
+        variant="outlined"
+        startIcon={<DeleteIcon />}
+        onClick={onDelete}
+        disabled={!notesSelected}
+      >
         Delete
       </Button>
     </FlexRow>
