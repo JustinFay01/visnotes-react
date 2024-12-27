@@ -1,18 +1,15 @@
 import { useCreateNote } from "@/api/notes/create-note";
 import { OcrDropzone, OcrDropzoneRef } from "@/ui/components/form/dropzone";
 import { useToast } from "@/ui/components/toasts/use-toast";
+import { useDialogs } from "@/ui/dialogs";
 import { FlexColumn } from "@/ui/layout/flexbox";
 import { Card } from "@mui/material";
 import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Note } from "../../types/api-types";
 import { convertBytes } from "../../util/file-util";
 import { NoteHeader } from "./note-header";
-
-type NotesProps = {
-  notes?: Note[];
-  setNotes?: (notes: Note[]) => void;
-} & React.ComponentProps<typeof Card>;
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const columns: GridColDef<GridRowsProp[number]>[] = [
   {
@@ -34,8 +31,8 @@ const columns: GridColDef<GridRowsProp[number]>[] = [
   {
     field: "analyzed",
     headerName: "Analyzed",
+    valueFormatter: (val) => (val ? "yes" : "no"),
   },
-
   {
     field: "size",
     headerName: "Size (KB)",
@@ -44,17 +41,68 @@ const columns: GridColDef<GridRowsProp[number]>[] = [
   },
 ];
 
+type NotesProps = {
+  notes?: Note[];
+  setNotes?: (notes: Note[]) => void;
+} & React.ComponentProps<typeof Card>;
+
+type NoteRowElement = {
+  analyzed: boolean;
+} & Note;
+
+const mapToNoteRow = (note: Note): NoteRowElement => {
+  return {
+    ...note,
+    analyzed: note.analyses?.length ?? 0 > 0 ? true : false,
+  };
+};
+
+const mapToNoteRows = (notes: Note[]): NoteRowElement[] => {
+  return notes.map(mapToNoteRow);
+};
+
 export const Notes = ({ notes, ...cardProps }: NotesProps) => {
   const createNote = useCreateNote();
   const dropZoneRef = useRef<OcrDropzoneRef>(null);
+
   const { success, error } = useToast();
+  const { confirm } = useDialogs();
+
+  const [selectedNotes, setSelectedNotes] = useState<Note[]>([]);
 
   const handleCreateClick = () => {
     dropZoneRef.current?.open();
   };
 
-  const handleDeleteClick = () => {
-    error("Deleting Note");
+  const handleAcceptedFiles = (files: File[]) => {
+    files.forEach(async (f) => {
+      console.log("Creating note for file", f.name);
+      try {
+        await createNote.mutateAsync({
+          file: f,
+        });
+        success(`${f.name} uploaded successfully`);
+      } catch (e) {
+        error(`Error uploading ${f.name}`);
+        console.error(e);
+      }
+    });
+  };
+
+  const handleDeleteClick = async () => {
+    const confirmed = await confirm("Are you sure?", {
+      variant: "error",
+      icon: (
+        <DeleteIcon
+          fontSize="inherit"
+          sx={{
+            color: "error.light",
+          }}
+        />
+      ),
+    });
+
+    if (confirmed) error("Cannot delete notes yet...");
   };
 
   const handleAnalyzeClick = () => {
@@ -75,18 +123,18 @@ export const Notes = ({ notes, ...cardProps }: NotesProps) => {
           onDelete={handleDeleteClick}
           onAnalyze={handleAnalyzeClick}
         />
-        <OcrDropzone ref={dropZoneRef}>
+        <OcrDropzone
+          ref={dropZoneRef}
+          handleAcceptedFiles={handleAcceptedFiles}
+        >
           <DataGrid
             columns={columns}
-            rows={notes?.map((n) => {
-              return {
-                ...n,
-                analyzed: n.analyses?.length ?? 0 > 0 ? true : false,
-              };
-            })}
+            rows={mapToNoteRows(notes ?? [])}
             checkboxSelection
             disableRowSelectionOnClick
-            autoPageSize
+            onRowSelectionModelChange={(selectedNoteRowId) => {
+              console.log(selectedNoteRowId);
+            }}
             sx={{
               bgcolor: "background.paper", // Ensures background matches theme
               color: "text.primary",

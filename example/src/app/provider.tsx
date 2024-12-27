@@ -20,19 +20,20 @@ export function AppProvider({ children }: React.PropsWithChildren) {
   return (
     <QueryClientProvider client={appQueryClient}>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
-        {children}
-        <ReactQueryDevtools initialIsOpen={false} />
-        <DialogsProvider />
-        <ToastContainer
-          position="bottom-left"
-          autoClose={5000}
-          newestOnTop
-          closeOnClick
-          draggable
-          pauseOnHover={false}
-          theme={prefersDarkMode ? "dark" : "light"}
-        />
+        <DialogsProvider>
+          <CssBaseline />
+          {children}
+          <ReactQueryDevtools initialIsOpen={false} />
+          <ToastContainer
+            position="bottom-left"
+            autoClose={5000}
+            newestOnTop
+            closeOnClick
+            draggable
+            pauseOnHover={false}
+            theme={prefersDarkMode ? "dark" : "light"}
+          />
+        </DialogsProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );

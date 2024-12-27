@@ -1,3 +1,4 @@
+import { FlexSpacer } from "@/ui/layout/flexbox";
 import {
   Button,
   DialogActions,
@@ -5,9 +6,8 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
-import { GenericDialogProps } from "../types/generic";
 import { ConfirmDialogOptions } from "../types/concrete";
-import { FlexSpacer } from "@/ui/layout/flexbox";
+import { GenericDialogProps } from "../types/generic";
 import { OcrDialog } from "./ocr-dialog";
 
 export type ConfirmDialogProps = GenericDialogProps<
@@ -22,7 +22,11 @@ export const ConfirmDialog = ({
 }: ConfirmDialogProps) => {
   return (
     <OcrDialog open={open} onClose={() => onClose(false)}>
-      <DialogTitle variant="h1" sx={{ display: "flex", alignItems: "center" }}>
+      <DialogTitle
+        component={"h1"}
+        variant="h4"
+        sx={{ display: "flex", alignItems: "center" }}
+      >
         {payload.title ?? "Are you sure?"}
         <FlexSpacer />
         {payload.icon}
@@ -35,7 +39,11 @@ export const ConfirmDialog = ({
         <Button onClick={() => onClose(false)} variant="outlined">
           {payload.cancelLabel ?? "Cancel"}
         </Button>
-        <Button onClick={() => onClose(true)} color={payload.variant}>
+        <Button
+          variant={"contained"}
+          onClick={() => onClose(true)}
+          color={payload.variant}
+        >
           {payload.confirmLabel ?? "Ok"}
         </Button>
       </DialogActions>

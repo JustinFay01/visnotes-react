@@ -1,21 +1,25 @@
-import { GenosButton } from "@genos/components/ui/button";
-import { FlexSpacer } from "@genos/components/ui/layout/flexbox";
 import {
   DialogTitle,
   DialogContent,
   DialogContentText,
   DialogActions,
+  Button,
 } from "@mui/material";
 import { GenericDialogProps } from "../types/generic";
-import { GenosDialog } from "./ocr-dialog";
 import { AlertDialogOptions } from "../types/concrete";
+import { FlexSpacer } from "@/ui/layout/flexbox";
+import { OcrDialog } from "./ocr-dialog";
 
 export type AlertDialogProps = GenericDialogProps<AlertDialogOptions, void>;
 
 export const AlertDialog = ({ open, payload, onClose }: AlertDialogProps) => {
   return (
-    <GenosDialog open={open} onClose={() => onClose()}>
-      <DialogTitle variant="h1" sx={{ display: "flex", alignItems: "center" }}>
+    <OcrDialog open={open} onClose={() => onClose()}>
+      <DialogTitle
+        component={"h1"}
+        variant="h3"
+        sx={{ display: "flex", alignItems: "center" }}
+      >
         {payload.title ?? "Alert"}
         <FlexSpacer />
         {payload.icon}
@@ -25,10 +29,10 @@ export const AlertDialog = ({ open, payload, onClose }: AlertDialogProps) => {
         <DialogContentText>{payload.message}</DialogContentText>
       </DialogContent>
       <DialogActions>
-        <GenosButton onClick={() => onClose()} color={payload.variant}>
+        <Button onClick={() => onClose()} color={payload.variant}>
           {payload.okLabel ?? "Ok"}
-        </GenosButton>
+        </Button>
       </DialogActions>
-    </GenosDialog>
+    </OcrDialog>
   );
 };
