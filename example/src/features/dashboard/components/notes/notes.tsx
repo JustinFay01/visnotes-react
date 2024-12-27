@@ -1,3 +1,6 @@
+import { useCreateNote } from "@/api/notes/create-note";
+import { OcrDropzone, OcrDropzoneRef } from "@/ui/components/form/dropzone";
+import { useToast } from "@/ui/components/toasts/use-toast";
 import { FlexColumn } from "@/ui/layout/flexbox";
 import { Card } from "@mui/material";
 import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
@@ -5,10 +8,6 @@ import React, { useRef } from "react";
 import { Note } from "../../types/api-types";
 import { convertBytes } from "../../util/file-util";
 import { NoteHeader } from "./note-header";
-import { useCreateNote } from "@/api/notes/create-note";
-import { toast } from "react-toastify";
-import { useToast } from "@/ui/components/toasts/use-toast";
-import { OcrDropzone, OcrDropzoneRef } from "@/ui/components/form/dropzone";
 
 type NotesProps = {
   notes?: Note[];
