@@ -1,7 +1,7 @@
 import { Analysis } from "@/features/dashboard/types/api-types";
 import { api } from "@/lib/axios";
 import { MutationConfig } from "@/lib/react-query";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { noteKeys } from "./note-key-factory";
 
 type AnalyzeNoteOptions = {

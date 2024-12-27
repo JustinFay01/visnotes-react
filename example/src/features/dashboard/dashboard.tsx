@@ -19,8 +19,6 @@ export const Dashboard = () => {
     WordDataHelper.countWordsFromString(totoAfricaLyrics)
   );
 
-  const [filesToUpload, setFilesToUpload] = useState<File[]>([]);
-
   // Options
   const [spiralType, setSpiralType] = useState<SpiralType>("archimedean");
   const [withRotation, setWithRotation] = useState(false);
@@ -28,8 +26,6 @@ export const Dashboard = () => {
   return (
     <FlexColumn spacing={5}>
       <FlexColumn paddingX={8} paddingTop={4} spacing={2}>
-        <Notes notes={getNotes.data} />
-
         <Typography
           variant="h4"
           component={"h1"}
@@ -38,17 +34,13 @@ export const Dashboard = () => {
         >
           Wordcloud
         </Typography>
+        <Notes notes={getNotes.data} />
 
         <WordCloudOptions
-          files={filesToUpload}
-          setFiles={setFilesToUpload}
           withRotation={withRotation}
           setWithRotation={setWithRotation}
           spiralType={spiralType}
           setSpiralType={setSpiralType}
-          onSubmit={async () => {
-            console.error("Not yet");
-          }}
         />
       </FlexColumn>
       <OcrWordCloud

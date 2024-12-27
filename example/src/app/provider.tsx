@@ -23,7 +23,7 @@ export function AppProvider({ children }: React.PropsWithChildren) {
         <DialogsProvider>
           <CssBaseline />
           {children}
-          <ReactQueryDevtools initialIsOpen={false} />
+          {/* <ReactQueryDevtools initialIsOpen={false} /> */}
           <ToastContainer
             position="bottom-left"
             autoClose={5000}
