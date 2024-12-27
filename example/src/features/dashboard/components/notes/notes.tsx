@@ -10,6 +10,7 @@ import { Note } from "../../types/api-types";
 import { convertBytes } from "../../util/file-util";
 import { NoteHeader } from "./note-header";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useAnalyzeNote } from "@/api/notes/anaylze-note";
 
 const columns: GridColDef<GridRowsProp[number]>[] = [
   {
@@ -63,9 +64,11 @@ const mapToNoteRows = (notes: Note[]): NoteRowElement[] => {
 
 export const Notes = ({ notes, ...cardProps }: NotesProps) => {
   const createNote = useCreateNote();
+  const analyzeNote = useAnalyzeNote();
+
   const dropZoneRef = useRef<OcrDropzoneRef>(null);
 
-  const { success, error } = useToast();
+  const { success, error, promise } = useToast();
   const { confirm } = useDialogs();
 
   const [selectedNotes, setSelectedNotes] = useState<Note[]>([]);
@@ -77,15 +80,15 @@ export const Notes = ({ notes, ...cardProps }: NotesProps) => {
   const handleAcceptedFiles = (files: File[]) => {
     files.forEach(async (f) => {
       console.log("Creating note for file", f.name);
-      try {
-        await createNote.mutateAsync({
-          file: f,
-        });
-        success(`${f.name} uploaded successfully`);
-      } catch (e) {
-        error(`Error uploading ${f.name}`);
-        console.error(e);
-      }
+      const prom = createNote.mutateAsync({
+        file: f,
+      });
+      promise(
+        prom,
+        `Uploading ${f.name}`,
+        `Uploaded ${f.name}`,
+        `Failed to upload ${f.name}`
+      );
     });
   };
 
@@ -106,7 +109,17 @@ export const Notes = ({ notes, ...cardProps }: NotesProps) => {
   };
 
   const handleAnalyzeClick = () => {
-    success("Analyzing Note");
+    selectedNotes.forEach(async (note) => {
+      const prom = analyzeNote.mutateAsync({
+        id: note.id,
+      });
+      promise(
+        prom,
+        `Analyzing ${note.name}`,
+        `Analyzed ${note.name}`,
+        `Failed to analyze ${note.name}`
+      );
+    });
   };
 
   return (
@@ -132,8 +145,10 @@ export const Notes = ({ notes, ...cardProps }: NotesProps) => {
             rows={mapToNoteRows(notes ?? [])}
             checkboxSelection
             disableRowSelectionOnClick
-            onRowSelectionModelChange={(selectedNoteRowId) => {
-              console.log(selectedNoteRowId);
+            onRowSelectionModelChange={(selectedNoteRowIds) => {
+              setSelectedNotes(
+                notes?.filter((n) => selectedNoteRowIds.includes(n.id)) ?? []
+              );
             }}
             sx={{
               bgcolor: "background.paper", // Ensures background matches theme

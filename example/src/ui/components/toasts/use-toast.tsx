@@ -20,5 +20,20 @@ export const useToast = () => {
     });
   };
 
-  return { success, error };
+  const promise = (
+    promise: Promise<unknown>,
+    pendingMessage: string,
+    successMessage: string,
+    errorMessage: string,
+    options?: ToastOptions<unknown> | undefined
+  ) => {
+    toast.promise(promise, {
+      pending: pendingMessage,
+      success: successMessage,
+      error: errorMessage,
+      ...options,
+    });
+  };
+
+  return { success, error, promise };
 };
