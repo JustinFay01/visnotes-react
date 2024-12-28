@@ -3,6 +3,7 @@ import useWindowDimensions from "@/hooks/use-window-dimensions";
 import { FlexColumn } from "@/ui/layout/flexbox";
 import { Typography } from "@mui/material";
 import { useState } from "react";
+import { useColor } from "react-color-palette";
 import { totoAfricaLyrics } from "./assets/text-fixture";
 import { Notes } from "./components/notes/notes";
 import OcrWordCloud from "./components/word-cloud/word-cloud";
@@ -18,6 +19,8 @@ export const Dashboard = () => {
   const [words, setWords] = useState<WordData[]>(
     WordDataHelper.countWordsFromString(totoAfricaLyrics)
   );
+
+  const [color, setColor] = useColor("#561ecb");
 
   // Options
   const [spiralType, setSpiralType] = useState<SpiralType>("archimedean");
@@ -41,6 +44,8 @@ export const Dashboard = () => {
           setWithRotation={setWithRotation}
           spiralType={spiralType}
           setSpiralType={setSpiralType}
+          color={color}
+          setColor={setColor}
         />
       </FlexColumn>
       <OcrWordCloud
@@ -49,6 +54,7 @@ export const Dashboard = () => {
         height={500}
         spiralType={spiralType}
         withRotation={withRotation}
+        colors={[color.hex]}
       />
     </FlexColumn>
   );
