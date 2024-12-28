@@ -11,6 +11,7 @@ import { convertBytes } from "../../util/file-util";
 import { NoteHeader } from "./note-header";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useAnalyzeNote } from "@/api/notes/anaylze-note";
+import { useDeleteNote } from "@/api/notes/delete-note";
 
 const columns: GridColDef<GridRowsProp[number]>[] = [
   {
@@ -64,6 +65,7 @@ const mapToNoteRows = (notes: Note[]): NoteRowElement[] => {
 
 export const Notes = ({ notes, ...cardProps }: NotesProps) => {
   const createNote = useCreateNote();
+  const deleteNote = useDeleteNote();
   const analyzeNote = useAnalyzeNote();
 
   const dropZoneRef = useRef<OcrDropzoneRef>(null);
@@ -93,19 +95,34 @@ export const Notes = ({ notes, ...cardProps }: NotesProps) => {
   };
 
   const handleDeleteClick = async () => {
-    const confirmed = await confirm("Are you sure?", {
-      variant: "error",
-      icon: (
-        <DeleteIcon
-          fontSize="inherit"
-          sx={{
-            color: "error.light",
-          }}
-        />
-      ),
-    });
+    const confirmed = await confirm(
+      `Are you sure you want to delete (${selectedNotes.length}) note(s)?`,
+      {
+        variant: "error",
+        icon: (
+          <DeleteIcon
+            fontSize="inherit"
+            sx={{
+              color: "error.light",
+            }}
+          />
+        ),
+      }
+    );
 
-    if (confirmed) error("Cannot delete notes yet...");
+    if (confirmed) {
+      selectedNotes.forEach(async (note) => {
+        const prom = deleteNote.mutateAsync({
+          id: note.id,
+        });
+        promise(
+          prom,
+          `Deleting ${note.name}`,
+          `Deleted ${note.name}`,
+          `Failed to delete ${note.name}`
+        );
+      });
+    }
   };
 
   const handleAnalyzeClick = () => {
