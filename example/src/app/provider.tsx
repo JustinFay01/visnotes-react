@@ -4,7 +4,6 @@ import { createAppTheme } from "@/lib/theme";
 import { DialogsProvider } from "@/ui/dialogs";
 import { CssBaseline, ThemeProvider, useMediaQuery } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ToastContainer } from "react-toastify";
 
 const appQueryClient = new QueryClient({

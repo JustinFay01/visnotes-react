@@ -70,7 +70,7 @@ export const Notes = ({ notes, ...cardProps }: NotesProps) => {
 
   const dropZoneRef = useRef<OcrDropzoneRef>(null);
 
-  const { error, promise } = useToast();
+  const { promise } = useToast();
   const { confirm } = useDialogs();
 
   const [selectedNotes, setSelectedNotes] = useState<Note[]>([]);
