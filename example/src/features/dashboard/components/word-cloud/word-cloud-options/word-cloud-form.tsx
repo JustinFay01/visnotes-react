@@ -1,5 +1,5 @@
 import { SpiralType } from "@/features/dashboard/types/word-cloud-types";
-import { FlexColumn, FlexRow } from "@/ui/layout/flexbox";
+import { FlexColumn } from "@/ui/layout/flexbox";
 import { OcrTypography } from "@/ui/typography/ocr-typography";
 import {
   Checkbox,
@@ -12,42 +12,22 @@ import {
   SelectChangeEvent,
   Typography,
 } from "@mui/material";
-import debounce from "lodash.debounce";
-import { ChangeEvent, useCallback } from "react";
+import { ChangeEvent } from "react";
 
 // Remove when wrapper component is created
 import { OcrAccordion } from "@/ui/components/form/accordion/ocr-accordion";
-import { ColorPicker, IColor, useColor } from "react-color-palette";
-import "react-color-palette/css";
+import { Palette } from "@mui/icons-material";
+import { PalettePicker } from "../../palette-picker.tsx/palette-picker";
 
 export type WordCloudFormProps = {
   withRotation: boolean;
   setWithRotation: (withRotation: boolean) => void;
   spiralType: SpiralType;
   setSpiralType: (spiralType: SpiralType) => void;
-  color: IColor;
-  setColor: (color: IColor) => void;
 };
 
 export const WordCloudForm = (props: WordCloudFormProps) => {
-  const {
-    withRotation,
-    setWithRotation,
-    spiralType,
-    setSpiralType,
-    color,
-    setColor,
-  } = props;
-
-  const [internalColor, setInternalColor] = useColor(color.hex);
-
-  const debounceColor = useCallback(debounce(setColor, 100), [internalColor]);
-
-  const handleColorChange = (color: IColor) => {
-    setInternalColor(color);
-    console.log(internalColor);
-    debounceColor(color);
-  };
+  const { withRotation, setWithRotation, spiralType, setSpiralType } = props;
 
   const handleStyleChange = (e: SelectChangeEvent) => {
     setSpiralType(e.target.value as SpiralType);
@@ -97,7 +77,7 @@ export const WordCloudForm = (props: WordCloudFormProps) => {
 
       <OcrAccordion summary="Color">
         <Typography variant="subtitle1">Choose your color</Typography>
-        <ColorPicker color={internalColor} onChange={handleColorChange} />
+        <PalettePicker />
       </OcrAccordion>
     </FlexColumn>
   );

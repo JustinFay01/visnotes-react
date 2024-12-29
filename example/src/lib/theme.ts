@@ -4,6 +4,7 @@ export const lightThemeColors = {
   background: "#f2f2f7",
   white: "#ffffff",
   black: "#121212",
+  grey: "#8e8e93",
   brand: {
     slateBlue: "#736CED",
     thistle: "#D4C1EC",
