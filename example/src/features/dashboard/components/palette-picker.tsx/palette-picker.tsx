@@ -1,7 +1,7 @@
-import { FlexRow } from "@/ui/layout/flexbox";
+import { Grid2 as Grid } from "@mui/material";
+import { AnimatePresence, motion } from "framer-motion";
 import { ColorChip } from "./color-chip";
 import { ColorPickerButton } from "./color-picker-button";
-import { Grid2 as Grid } from "@mui/material";
 
 export type PalettePickerProps = {
   colors: string[];
@@ -20,11 +20,20 @@ export const PalettePicker = ({ colors, setColors }: PalettePickerProps) => {
           onCompleted={(color) => setColors([...colors, color.hex])}
         />
       </Grid>
-      {colors.map((color, index) => (
-        <Grid key={index} size={{ xs: 6, sm: 3, md: 2 }}>
-          <ColorChip color={color} onDelete={handleDelete} />
-        </Grid>
-      ))}
+      <AnimatePresence>
+        {colors.map((color, index) => (
+          <Grid key={index} size={{ xs: 6, sm: 3, md: 2 }}>
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0 }}
+            >
+              <ColorChip color={color} onDelete={handleDelete} />
+            </motion.div>
+          </Grid>
+        ))}
+      </AnimatePresence>
     </Grid>
   );
 };
