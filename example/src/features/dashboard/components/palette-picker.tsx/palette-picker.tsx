@@ -1,20 +1,25 @@
-import { FlexColumn } from "@/ui/layout/flexbox";
-import debounce from "lodash.debounce";
-import { useCallback } from "react";
-import { ColorPicker, IColor, useColor } from "react-color-palette";
-import "react-color-palette/css";
+import { FlexRow } from "@/ui/layout/flexbox";
+import { ColorChip } from "./color-chip";
 import { ColorPickerButton } from "./color-picker-button";
 
 export type PalettePickerProps = {
-  color: IColor;
-  setColor: (color: IColor) => void;
+  colors: string[];
+  setColors: (colors: string[]) => void;
 };
-export const PalettePicker = () => {
-  //   const [internalColor, setInternalColor] = useColor("#121212");
-  //   const debounceColor = useCallback(debounce(setColor, 100), [internalColor]);
+export const PalettePicker = ({ colors, setColors }: PalettePickerProps) => {
+  const handleDelete = (color: string) => {
+    const newColors = colors.filter((c) => c !== color);
+    setColors(newColors);
+  };
+
   return (
-    <FlexColumn padding={2}>
-      <ColorPickerButton />
-    </FlexColumn>
+    <FlexRow padding={2} spacing={2}>
+      <ColorPickerButton
+        onCompleted={(color) => setColors([...colors, color.hex])}
+      />
+      {colors.map((color, index) => (
+        <ColorChip key={index} color={color} onDelete={handleDelete} />
+      ))}
+    </FlexRow>
   );
 };

@@ -7,6 +7,7 @@ import { scaleLog } from "@visx/scale";
 import { Text } from "@visx/text";
 import Wordcloud from "@visx/wordcloud/lib/Wordcloud";
 
+// https://airbnb.io/visx/wordcloud
 interface OcrWordCloudProps {
   words: WordData[];
   width: number;

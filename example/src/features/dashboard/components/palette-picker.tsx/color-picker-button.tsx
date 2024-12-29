@@ -1,9 +1,10 @@
 import { lightThemeColors } from "@/lib/theme";
 import AddIcon from "@mui/icons-material/Add";
-import { Button, Popover } from "@mui/material";
+import { Box, Chip, Popover } from "@mui/material";
 import { useState } from "react";
 import { ColorPicker, IColor, useColor } from "react-color-palette";
 import { getTextColor } from "../../util/color-util";
+import "react-color-palette/css";
 
 type ColorPickerButtonProps = {
   onCompleted?: (color: IColor) => void;
@@ -12,6 +13,12 @@ type ColorPickerButtonProps = {
 export const ColorPickerButton = ({ onCompleted }: ColorPickerButtonProps) => {
   const [buttonColor, setButtonColor] = useColor(lightThemeColors.grey);
   const [anchor, setAnchor] = useState<null | HTMLElement>(null);
+  const [textColor, setTextColor] = useState<string>("");
+
+  const handleSetColor = (color: IColor) => {
+    setButtonColor(color);
+    setTextColor(getTextColor(color.hex));
+  };
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchor(anchor ? null : event.currentTarget);
@@ -27,18 +34,18 @@ export const ColorPickerButton = ({ onCompleted }: ColorPickerButtonProps) => {
 
   return (
     <>
-      <Button
-        aria-describedby={id}
-        onClick={handleClick}
-        variant="contained"
-        startIcon={<AddIcon />}
-        sx={{
-          backgroundColor: buttonColor.hex,
-          color: getTextColor(buttonColor.hex),
-        }}
-      >
-        Add Color
-      </Button>
+      <Box>
+        <Chip
+          aria-describedby={id}
+          onClick={handleClick}
+          icon={<AddIcon style={{ color: textColor }} />}
+          label="Add Color"
+          sx={{
+            backgroundColor: buttonColor.hex,
+            color: textColor,
+          }}
+        />
+      </Box>
       <Popover
         id={id}
         open={open}
@@ -51,7 +58,7 @@ export const ColorPickerButton = ({ onCompleted }: ColorPickerButtonProps) => {
       >
         <ColorPicker
           color={buttonColor}
-          onChange={setButtonColor}
+          onChange={handleSetColor}
           onChangeComplete={onCompleted}
         />
       </Popover>

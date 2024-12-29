@@ -6,7 +6,7 @@ import { useState } from "react";
 import { totoAfricaLyrics } from "./assets/text-fixture";
 import { Notes } from "./components/notes/notes";
 import OcrWordCloud from "./components/word-cloud/word-cloud";
-import { WordCloudOptions } from "./components/word-cloud/word-cloud-options/word-cloud-options";
+import { WordCloudForm } from "./components/word-cloud/word-cloud-options/word-cloud-form";
 import { SpiralType, WordData } from "./types/word-cloud-types";
 import { WordDataHelper } from "./util/word-data-helper";
 
@@ -18,6 +18,12 @@ export const Dashboard = () => {
   const [words, setWords] = useState<WordData[]>(
     WordDataHelper.countWordsFromString(totoAfricaLyrics)
   );
+
+  const [colors, setColors] = useState<string[]>([
+    "#143059",
+    "#2F6B9A",
+    "#82a6c2",
+  ]);
 
   // Options
   const [spiralType, setSpiralType] = useState<SpiralType>("archimedean");
@@ -36,11 +42,13 @@ export const Dashboard = () => {
         </Typography>
         <Notes notes={getNotes.data} />
 
-        <WordCloudOptions
+        <WordCloudForm
           withRotation={withRotation}
           setWithRotation={setWithRotation}
           spiralType={spiralType}
           setSpiralType={setSpiralType}
+          colors={colors}
+          setColors={setColors}
         />
       </FlexColumn>
       <OcrWordCloud
