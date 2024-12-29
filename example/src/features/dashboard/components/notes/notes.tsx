@@ -141,7 +141,7 @@ export const Notes = ({ notes, ...cardProps }: NotesProps) => {
 
   return (
     <Card {...cardProps}>
-      <FlexColumn paddingX={2} spacing={2}>
+      <FlexColumn paddingX={2} paddingBottom={2} spacing={2}>
         <NoteHeader
           onCreate={handleCreateClick}
           onDelete={handleDeleteClick}
