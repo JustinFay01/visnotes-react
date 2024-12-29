@@ -84,10 +84,7 @@ export const WordCloudForm = (props: WordCloudFormProps) => {
       </OcrAccordion>
 
       <OcrAccordion summary="Color">
-        <FlexColumn padding={2}>
-          <Typography variant="subtitle1">Color Palette</Typography>
-          <PalettePicker colors={colors} setColors={setColors} />
-        </FlexColumn>
+        <PalettePicker colors={colors} setColors={setColors} />
       </OcrAccordion>
     </FlexColumn>
   );

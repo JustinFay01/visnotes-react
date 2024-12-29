@@ -57,6 +57,7 @@ export const Dashboard = () => {
         height={500}
         spiralType={spiralType}
         withRotation={withRotation}
+        colors={colors}
       />
     </FlexColumn>
   );
