@@ -14,7 +14,7 @@ interface OcrWordCloudProps {
   height: number;
   spiralType: SpiralType;
   withRotation: boolean;
-  colors?: string[];
+  colors: string[];
 }
 
 export default function OcrWordCloud({
@@ -23,7 +23,7 @@ export default function OcrWordCloud({
   height,
   spiralType,
   withRotation,
-  colors = ["#143059", "#2F6B9A", "#82a6c2", "#b8d3e2"],
+  colors,
 }: OcrWordCloudProps) {
   const fontScale = scaleLog({
     domain: [

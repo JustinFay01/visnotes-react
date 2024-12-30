@@ -1,16 +1,19 @@
 import { lightThemeColors } from "@/lib/theme";
 import AddIcon from "@mui/icons-material/Add";
-import { Box, Chip, Popover } from "@mui/material";
+import { Button, Popover } from "@mui/material";
 import { useState } from "react";
 import { ColorPicker, IColor, useColor } from "react-color-palette";
-import { getTextColor } from "../../util/color-util";
 import "react-color-palette/css";
+import { getTextColor } from "../../util/color-util";
 
 type ColorPickerButtonProps = {
   onCompleted?: (color: IColor) => void;
-};
+} & Omit<React.ComponentProps<typeof Button>, "children">;
 
-export const ColorPickerButton = ({ onCompleted }: ColorPickerButtonProps) => {
+export const ColorPickerButton = ({
+  onCompleted,
+  ...rest
+}: ColorPickerButtonProps) => {
   const [buttonColor, setButtonColor] = useColor(lightThemeColors.grey);
   const [anchor, setAnchor] = useState<null | HTMLElement>(null);
   const [textColor, setTextColor] = useState<string>("");
@@ -34,16 +37,19 @@ export const ColorPickerButton = ({ onCompleted }: ColorPickerButtonProps) => {
 
   return (
     <>
-      <Chip
+      <Button
         aria-describedby={id}
         onClick={handleClick}
-        icon={<AddIcon style={{ color: textColor }} />}
-        label="Add Color"
+        variant="contained"
+        startIcon={<AddIcon style={{ color: textColor }} />}
         sx={{
           backgroundColor: buttonColor.hex,
           color: textColor,
         }}
-      />
+        {...rest}
+      >
+        Add Color
+      </Button>
       <Popover
         id={id}
         open={open}

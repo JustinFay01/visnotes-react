@@ -9,6 +9,7 @@ import OcrWordCloud from "./components/word-cloud/word-cloud";
 import { WordCloudForm } from "./components/word-cloud/word-cloud-options/word-cloud-form";
 import { SpiralType, WordData } from "./types/word-cloud-types";
 import { WordDataHelper } from "./util/word-data-helper";
+import { palettes } from "./components/palette-picker.tsx/palettes";
 
 export const Dashboard = () => {
   // Hooks
@@ -19,11 +20,7 @@ export const Dashboard = () => {
     WordDataHelper.countWordsFromString(totoAfricaLyrics)
   );
 
-  const [colors, setColors] = useState<string[]>([
-    "#143059",
-    "#2F6B9A",
-    "#82a6c2",
-  ]);
+  const [colors, setColors] = useState<string[]>(palettes.default);
 
   // Options
   const [spiralType, setSpiralType] = useState<SpiralType>("archimedean");

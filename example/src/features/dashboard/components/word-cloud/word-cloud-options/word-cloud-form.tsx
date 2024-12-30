@@ -16,7 +16,7 @@ import { ChangeEvent } from "react";
 
 // Remove when wrapper component is created
 import { OcrAccordion } from "@/ui/components/form/accordion/ocr-accordion";
-import { PalettePicker } from "../../palette-picker.tsx/palette-picker";
+import { CustomPalettePicker } from "../../palette-picker.tsx/custom-palette-picker";
 
 export type WordCloudFormProps = {
   withRotation: boolean;
@@ -84,7 +84,17 @@ export const WordCloudForm = (props: WordCloudFormProps) => {
       </OcrAccordion>
 
       <OcrAccordion summary="Color">
-        <PalettePicker colors={colors} setColors={setColors} />
+        <FlexColumn paddingBottom={2}>
+          <OcrTypography variant="h6">Custom Colors</OcrTypography>
+          <CustomPalettePicker colors={colors} setColors={setColors} />
+        </FlexColumn>
+
+        <FlexColumn>
+          <OcrTypography variant="h6">Palettes</OcrTypography>
+          <Typography variant="subtitle1">
+            Choose from a selection of color options
+          </Typography>
+        </FlexColumn>
       </OcrAccordion>
     </FlexColumn>
   );

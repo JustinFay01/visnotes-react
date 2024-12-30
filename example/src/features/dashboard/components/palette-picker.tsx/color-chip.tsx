@@ -1,7 +1,6 @@
-import { Box, Chip } from "@mui/material";
-import { useState, useEffect } from "react";
+import { Chip } from "@mui/material";
+import { useEffect, useState } from "react";
 import { getTextColor } from "../../util/color-util";
-import { min } from "lodash";
 
 type ColorChipProps = {
   color: string;
