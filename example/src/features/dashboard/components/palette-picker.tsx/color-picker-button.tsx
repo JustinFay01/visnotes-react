@@ -34,18 +34,16 @@ export const ColorPickerButton = ({ onCompleted }: ColorPickerButtonProps) => {
 
   return (
     <>
-      <Box>
-        <Chip
-          aria-describedby={id}
-          onClick={handleClick}
-          icon={<AddIcon style={{ color: textColor }} />}
-          label="Add Color"
-          sx={{
-            backgroundColor: buttonColor.hex,
-            color: textColor,
-          }}
-        />
-      </Box>
+      <Chip
+        aria-describedby={id}
+        onClick={handleClick}
+        icon={<AddIcon style={{ color: textColor }} />}
+        label="Add Color"
+        sx={{
+          backgroundColor: buttonColor.hex,
+          color: textColor,
+        }}
+      />
       <Popover
         id={id}
         open={open}

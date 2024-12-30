@@ -14,15 +14,19 @@ export const PalettePicker = ({ colors, setColors }: PalettePickerProps) => {
   };
 
   return (
-    <Grid container spacing={1}>
-      <Grid size={{ xs: 6, sm: 3, md: 2 }}>
+    <Grid container rowSpacing={1}>
+      <Grid size={2} sx={{ minWidth: "120px", maxWidth: "120px" }}>
         <ColorPickerButton
           onCompleted={(color) => setColors([...colors, color.hex])}
         />
       </Grid>
       <AnimatePresence>
         {colors.map((color, index) => (
-          <Grid key={index} size={{ xs: 6, sm: 3, md: 2 }}>
+          <Grid
+            key={index}
+            size={2}
+            sx={{ minWidth: "120px", maxWidth: "120px" }}
+          >
             <motion.div
               key={index}
               initial={{ opacity: 0, scale: 0 }}
