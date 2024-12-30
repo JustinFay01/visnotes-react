@@ -1,7 +1,7 @@
 import { useGetNotes } from "@/api/notes/get-notes";
 import useWindowDimensions from "@/hooks/use-window-dimensions";
 import { FlexColumn } from "@/ui/layout/flexbox";
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useState } from "react";
 import { totoAfricaLyrics } from "./assets/text-fixture";
 import { Notes } from "./components/notes/notes";
@@ -21,6 +21,9 @@ export const Dashboard = () => {
   );
 
   const [colors, setColors] = useState<string[]>(palettes.default);
+  const [backgroundColor, setBackgroundColor] = useState<
+    "white" | "black" | "background.main"
+  >("background.main");
 
   // Options
   const [spiralType, setSpiralType] = useState<SpiralType>("archimedean");
@@ -46,16 +49,25 @@ export const Dashboard = () => {
           setSpiralType={setSpiralType}
           colors={colors}
           setColors={setColors}
+          backgroundColor={backgroundColor}
+          setBackgroundColor={setBackgroundColor}
         />
       </FlexColumn>
-      <OcrWordCloud
-        words={words}
-        width={windowHook.width > 800 ? 800 : windowHook.width}
-        height={500}
-        spiralType={spiralType}
-        withRotation={withRotation}
-        colors={colors}
-      />
+      <Box
+        sx={{
+          backgroundColor: backgroundColor,
+          borderRadius: 4,
+        }}
+      >
+        <OcrWordCloud
+          words={words}
+          width={windowHook.width > 800 ? 800 : windowHook.width}
+          height={500}
+          spiralType={spiralType}
+          withRotation={withRotation}
+          colors={colors}
+        />
+      </Box>
     </FlexColumn>
   );
 };

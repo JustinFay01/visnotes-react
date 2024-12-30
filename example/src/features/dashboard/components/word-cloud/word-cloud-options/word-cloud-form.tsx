@@ -1,7 +1,8 @@
 import { SpiralType } from "@/features/dashboard/types/word-cloud-types";
-import { FlexColumn } from "@/ui/layout/flexbox";
+import { FlexColumn, FlexRow } from "@/ui/layout/flexbox";
 import { OcrTypography } from "@/ui/typography/ocr-typography";
 import {
+  Box,
   Checkbox,
   FormControl,
   FormControlLabel,
@@ -18,11 +19,7 @@ import { ChangeEvent, useState } from "react";
 import { OcrAccordion } from "@/ui/components/form/accordion/ocr-accordion";
 import { CustomPalettePicker } from "../../palette-picker.tsx/custom-palette-picker";
 import { PalettePicker } from "../../palette-picker.tsx/palette-picker";
-import {
-  Palette,
-  paletteOptions,
-  palettes,
-} from "../../palette-picker.tsx/palettes";
+import { Palette, palettes } from "../../palette-picker.tsx/palettes";
 
 export type WordCloudFormProps = {
   withRotation: boolean;
@@ -31,6 +28,10 @@ export type WordCloudFormProps = {
   setSpiralType: (spiralType: SpiralType) => void;
   colors: string[];
   setColors: (colors: string[]) => void;
+  backgroundColor: "white" | "black" | "background.main";
+  setBackgroundColor: (
+    backgroundColor: "white" | "black" | "background.main"
+  ) => void;
 };
 
 export const WordCloudForm = (props: WordCloudFormProps) => {
@@ -41,6 +42,8 @@ export const WordCloudForm = (props: WordCloudFormProps) => {
     setSpiralType,
     colors,
     setColors,
+    backgroundColor,
+    setBackgroundColor,
   } = props;
 
   const [palette, setPalette] = useState<Palette>("default");
@@ -109,6 +112,79 @@ export const WordCloudForm = (props: WordCloudFormProps) => {
               setColors(palettes[pal]);
             }}
           />
+        </FlexColumn>
+
+        <FlexColumn>
+          <OcrTypography variant="h6">Background Color</OcrTypography>
+          <Typography variant="subtitle1" sx={{ marginBottom: 2 }}>
+            Choose the background color for your word cloud
+          </Typography>
+
+          <FlexRow spacing={2}>
+            <FlexColumn
+              sx={{
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Box
+                borderRadius={1}
+                onClick={() => setBackgroundColor("black")}
+                sx={{
+                  width: "50px",
+                  height: "50px",
+                  backgroundColor: "black",
+                  border: "2px solid transparent",
+                  borderColor:
+                    backgroundColor === "black" ? "primary.main" : "",
+                }}
+              />
+              Black
+            </FlexColumn>
+
+            <FlexColumn
+              sx={{
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Box
+                borderRadius={1}
+                onClick={() => setBackgroundColor("white")}
+                sx={{
+                  width: "50px",
+                  height: "50px",
+                  backgroundColor: "white",
+                  border: "2px solid transparent",
+                  borderColor:
+                    backgroundColor === "white" ? "primary.main" : "",
+                }}
+              />
+              White
+            </FlexColumn>
+
+            <FlexColumn
+              sx={{
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Box
+                borderRadius={1}
+                onClick={() => setBackgroundColor("background.main")}
+                sx={{
+                  width: "50px",
+                  height: "50px",
+                  backgroundColor: "white",
+                  opacity: 0.25,
+                  border: "2px solid transparent",
+                  borderColor:
+                    backgroundColor === "background.main" ? "primary.main" : "",
+                }}
+              />
+              Transparent
+            </FlexColumn>
+          </FlexRow>
         </FlexColumn>
       </OcrAccordion>
     </FlexColumn>
