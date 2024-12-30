@@ -5,3 +5,4 @@ export const palettes = {
   beach: ["#E2EFDE", "#AFD0BF", "#808F87", "#9B7E46", "#F4B266"],
 };
 export type Palette = keyof typeof palettes;
+export const paletteOptions = Object.keys(palettes) as Palette[];

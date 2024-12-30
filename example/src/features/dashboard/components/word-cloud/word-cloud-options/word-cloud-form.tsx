@@ -12,11 +12,17 @@ import {
   SelectChangeEvent,
   Typography,
 } from "@mui/material";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 
 // Remove when wrapper component is created
 import { OcrAccordion } from "@/ui/components/form/accordion/ocr-accordion";
 import { CustomPalettePicker } from "../../palette-picker.tsx/custom-palette-picker";
+import { PalettePicker } from "../../palette-picker.tsx/palette-picker";
+import {
+  Palette,
+  paletteOptions,
+  palettes,
+} from "../../palette-picker.tsx/palettes";
 
 export type WordCloudFormProps = {
   withRotation: boolean;
@@ -36,6 +42,8 @@ export const WordCloudForm = (props: WordCloudFormProps) => {
     colors,
     setColors,
   } = props;
+
+  const [palette, setPalette] = useState<Palette>("default");
 
   const handleStyleChange = (e: SelectChangeEvent) => {
     setSpiralType(e.target.value as SpiralType);
@@ -84,16 +92,23 @@ export const WordCloudForm = (props: WordCloudFormProps) => {
       </OcrAccordion>
 
       <OcrAccordion summary="Color">
-        <FlexColumn paddingBottom={2}>
+        <FlexColumn paddingBottom={4}>
           <OcrTypography variant="h6">Custom Colors</OcrTypography>
           <CustomPalettePicker colors={colors} setColors={setColors} />
         </FlexColumn>
 
-        <FlexColumn>
+        <FlexColumn paddingBottom={4}>
           <OcrTypography variant="h6">Palettes</OcrTypography>
-          <Typography variant="subtitle1">
+          <Typography variant="subtitle1" sx={{ marginBottom: 2 }}>
             Choose from a selection of color options
           </Typography>
+          <PalettePicker
+            palette={palette}
+            onPaletteChange={(pal) => {
+              setPalette(pal);
+              setColors(palettes[pal]);
+            }}
+          />
         </FlexColumn>
       </OcrAccordion>
     </FlexColumn>
