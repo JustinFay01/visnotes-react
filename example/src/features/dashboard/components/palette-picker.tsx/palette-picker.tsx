@@ -21,21 +21,19 @@ export const PalettePicker = ({ colors, setColors }: PalettePickerProps) => {
         />
       </Grid>
       <AnimatePresence>
-        {colors.map((color, index) => (
-          <Grid
-            key={index}
-            size={2}
-            sx={{ minWidth: "120px", maxWidth: "120px" }}
+        {colors.map((color) => (
+          <motion.div
+            key={color}
+            layout
+            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, scale: 0 }}
+            transition={{ duration: 0.2 }}
+            exit={{ opacity: 0, scale: 0 }}
           >
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0 }}
-            >
+            <Grid size={2} sx={{ minWidth: "120px", maxWidth: "120px" }}>
               <ColorChip color={color} onDelete={handleDelete} />
-            </motion.div>
-          </Grid>
+            </Grid>
+          </motion.div>
         ))}
       </AnimatePresence>
     </Grid>
