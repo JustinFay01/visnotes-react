@@ -46,6 +46,8 @@ const columns: GridColDef<GridRowsProp[number]>[] = [
 type NotesProps = {
   notes?: Note[];
   setNotes?: (notes: Note[]) => void;
+  selectedNotes?: Note[];
+  setSelectedNotes?: (notes: Note[]) => void;
 } & React.ComponentProps<typeof Card>;
 
 type NoteRowElement = {
@@ -63,7 +65,12 @@ const mapToNoteRows = (notes: Note[]): NoteRowElement[] => {
   return notes.map(mapToNoteRow);
 };
 
-export const Notes = ({ notes, ...cardProps }: NotesProps) => {
+export const Notes = ({
+  notes,
+  selectedNotes,
+  setSelectedNotes,
+  ...cardProps
+}: NotesProps) => {
   const createNote = useCreateNote();
   const deleteNote = useDeleteNote();
   const analyzeNote = useAnalyzeNote();
@@ -73,7 +80,11 @@ export const Notes = ({ notes, ...cardProps }: NotesProps) => {
   const { promise } = useToast();
   const { confirm } = useDialogs();
 
-  const [selectedNotes, setSelectedNotes] = useState<Note[]>([]);
+  const [internalSelectedNotes, setInternalSelectedNotes] = useState<Note[]>(
+    []
+  );
+  const finalSelectedNotes = selectedNotes ?? internalSelectedNotes;
+  const finalSetSelectedNotes = setSelectedNotes ?? setInternalSelectedNotes;
 
   const handleCreateClick = () => {
     dropZoneRef.current?.open();
@@ -146,7 +157,7 @@ export const Notes = ({ notes, ...cardProps }: NotesProps) => {
           onCreate={handleCreateClick}
           onDelete={handleDeleteClick}
           onAnalyze={handleAnalyzeClick}
-          notesSelected={selectedNotes.length > 0}
+          notesSelected={finalSelectedNotes.length > 0}
         />
         <OcrDropzone
           ref={dropZoneRef}
@@ -158,7 +169,7 @@ export const Notes = ({ notes, ...cardProps }: NotesProps) => {
             checkboxSelection
             disableRowSelectionOnClick
             onRowSelectionModelChange={(selectedNoteRowIds) => {
-              setSelectedNotes(
+              finalSetSelectedNotes(
                 notes?.filter((n) => selectedNoteRowIds.includes(n.id)) ?? []
               );
             }}

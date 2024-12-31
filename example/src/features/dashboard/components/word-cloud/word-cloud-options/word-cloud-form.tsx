@@ -7,6 +7,7 @@ import { OcrTypography } from "@/ui/typography/ocr-typography";
 import {
   Box,
   Checkbox,
+  Chip,
   FormControl,
   FormControlLabel,
   Grid2 as Grid,
@@ -29,6 +30,8 @@ import { OcrAccordion } from "@/ui/components/form/accordion/ocr-accordion";
 import { CustomPalettePicker } from "../../palette-picker.tsx/custom-palette-picker";
 import { PalettePicker } from "../../palette-picker.tsx/palette-picker";
 import { Palette, palettes } from "../../palette-picker.tsx/palettes";
+import { Note } from "@/features/dashboard/types/api-types";
+import { useDialogs } from "@/ui/dialogs";
 
 export type WordCloudFormProps = {
   withRotation: boolean;
@@ -43,6 +46,7 @@ export type WordCloudFormProps = {
   ) => void;
   wordData: WordData[];
   setWordData: (words: WordData[]) => void;
+  selectedNotes: Note[];
 };
 
 export const WordCloudForm = (props: WordCloudFormProps) => {
@@ -57,9 +61,11 @@ export const WordCloudForm = (props: WordCloudFormProps) => {
     setBackgroundColor,
     wordData,
     setWordData,
+    selectedNotes,
   } = props;
 
   const [palette, setPalette] = useState<Palette>("default");
+  const { alert } = useDialogs();
 
   const [ignoredWords, setIgnoredWords] = useState<WordData[]>([]);
 
@@ -221,45 +227,96 @@ export const WordCloudForm = (props: WordCloudFormProps) => {
       </OcrAccordion>
 
       <OcrAccordion summary="Words">
-        <FlexRow>
-          <Typography variant="h6">Word Frequency</Typography>
-        </FlexRow>
+        <FlexColumn paddingBottom={2}>
+          <Typography variant="h6">Notes Used</Typography>
+          <Typography variant="subtitle1">
+            Select the notes in the table above to include them in the word
+            cloud
+          </Typography>
+          <Typography
+            variant="subtitle1"
+            fontStyle={"italic"}
+            sx={{ marginBottom: 2 }}
+          >
+            Click on the file name to view the analysis
+          </Typography>
 
-        <TableContainer sx={{ height: "40vh" }}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Frequency</TableCell>
-                <TableCell>Word</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {wordData
-                .concat(ignoredWords)
-                .sort((a, b) => b.value - a.value)
-                .map((wd, index) => (
-                  <TableRow key={index}>
-                    <TableCell>{wd.value}</TableCell>
-                    <TableCell>
-                      <FlexRow>
-                        {wd.text}
-                        <FlexSpacer />
-                        <Checkbox
-                          aria-label="Include Word"
-                          checked={
-                            !ignoredWords.find((iw) => iw.text === wd.text)
-                          }
-                          onChange={(event) => {
-                            handleCheckboxChange(event, wd);
-                          }}
-                        />
-                      </FlexRow>
-                    </TableCell>
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+          <Grid container spacing={1}>
+            {selectedNotes.map((note) => (
+              <Grid key={note.id} size={2} width={250}>
+                <Chip
+                  label={note.name}
+                  sx={{
+                    margin: 1,
+                    width: 250,
+                    backgroundColor:
+                      note.analyses?.length ?? 0 > 0
+                        ? "primary.main"
+                        : "error.main",
+                    color: (theme) =>
+                      theme.palette.getContrastText(theme.palette.primary.main),
+                    fontWeight: "bold",
+                  }}
+                  onClick={() => {
+                    alert(
+                      <FlexColumn spacing={2}>
+                        <Typography variant="h6">{note.name}</Typography>
+                        <Typography variant="body1">
+                          {note.analyses?.length ?? 0 > 0
+                            ? note.analyses![0].filteredValue
+                            : "No analysis found"}
+                        </Typography>
+                      </FlexColumn>,
+                      {
+                        title: "Analysis",
+                      }
+                    );
+                  }}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        </FlexColumn>
+
+        <FlexColumn>
+          <Typography variant="h6">Word Frequency</Typography>
+
+          <TableContainer sx={{ height: "40vh" }}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Frequency</TableCell>
+                  <TableCell>Word</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {wordData
+                  .concat(ignoredWords)
+                  .sort((a, b) => b.value - a.value)
+                  .map((wd, index) => (
+                    <TableRow key={index}>
+                      <TableCell>{wd.value}</TableCell>
+                      <TableCell>
+                        <FlexRow>
+                          {wd.text}
+                          <FlexSpacer />
+                          <Checkbox
+                            aria-label="Include Word"
+                            checked={
+                              !ignoredWords.find((iw) => iw.text === wd.text)
+                            }
+                            onChange={(event) => {
+                              handleCheckboxChange(event, wd);
+                            }}
+                          />
+                        </FlexRow>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </FlexColumn>
       </OcrAccordion>
     </FlexColumn>
   );

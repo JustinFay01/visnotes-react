@@ -10,6 +10,7 @@ import { WordCloudForm } from "./components/word-cloud/word-cloud-options/word-c
 import { SpiralType, WordData } from "./types/word-cloud-types";
 import { WordDataHelper } from "./util/word-data-helper";
 import { palettes } from "./components/palette-picker.tsx/palettes";
+import { Note } from "./types/api-types";
 
 export const Dashboard = () => {
   // Hooks
@@ -32,6 +33,7 @@ export const Dashboard = () => {
   // Options
   const [spiralType, setSpiralType] = useState<SpiralType>("archimedean");
   const [withRotation, setWithRotation] = useState(false);
+  const [selectedNotes, setSelectedNotes] = useState<Note[]>([]);
 
   return (
     <FlexColumn spacing={5}>
@@ -44,7 +46,11 @@ export const Dashboard = () => {
         >
           Wordcloud
         </Typography>
-        <Notes notes={getNotes.data} />
+        <Notes
+          notes={getNotes.data}
+          selectedNotes={selectedNotes}
+          setSelectedNotes={setSelectedNotes}
+        />
 
         <WordCloudForm
           withRotation={withRotation}
@@ -57,6 +63,7 @@ export const Dashboard = () => {
           setBackgroundColor={setBackgroundColor}
           wordData={wordCloudData}
           setWordData={setWordCloudData}
+          selectedNotes={selectedNotes}
         />
       </FlexColumn>
       <Box
