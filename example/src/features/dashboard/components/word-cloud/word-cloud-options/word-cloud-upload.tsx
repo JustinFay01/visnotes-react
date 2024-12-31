@@ -4,7 +4,7 @@ import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { LoadingButton } from "@mui/lab";
 import { Button } from "@mui/material";
 import { useRef, useState } from "react";
-import { UploadFiles } from "../../../files/upload-files";
+import { UploadFiles } from "../../files/upload-files";
 
 type WordCloudUploadProps = {
   files: File[];

@@ -5,6 +5,7 @@ import { DialogsProvider } from "@/ui/dialogs";
 import { CssBaseline, ThemeProvider, useMediaQuery } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ToastContainer } from "react-toastify";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const appQueryClient = new QueryClient({
   defaultOptions: queryConfig,
@@ -22,7 +23,7 @@ export function AppProvider({ children }: React.PropsWithChildren) {
         <DialogsProvider>
           <CssBaseline />
           {children}
-          {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+          <ReactQueryDevtools initialIsOpen={false} />
           <ToastContainer
             position="bottom-left"
             autoClose={5000}

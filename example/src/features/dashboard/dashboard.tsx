@@ -16,8 +16,12 @@ export const Dashboard = () => {
   const windowHook = useWindowDimensions();
   const getNotes = useGetNotes();
 
-  const [words, setWords] = useState<WordData[]>(
-    WordDataHelper.countWordsFromString(totoAfricaLyrics)
+  const [wordCloudData, setWordCloudData] = useState<WordData[]>(
+    WordDataHelper.countWordsFromString(totoAfricaLyrics, {
+      removeAllSpecialCharacters: true,
+      capitalize: true,
+      ignoreCase: true,
+    })
   );
 
   const [colors, setColors] = useState<string[]>(palettes.default);
@@ -51,6 +55,8 @@ export const Dashboard = () => {
           setColors={setColors}
           backgroundColor={backgroundColor}
           setBackgroundColor={setBackgroundColor}
+          wordData={wordCloudData}
+          setWordData={setWordCloudData}
         />
       </FlexColumn>
       <Box
@@ -60,7 +66,7 @@ export const Dashboard = () => {
         }}
       >
         <OcrWordCloud
-          words={words}
+          words={wordCloudData.sort((a, b) => b.value - a.value)}
           width={windowHook.width > 800 ? 800 : windowHook.width}
           height={500}
           spiralType={spiralType}

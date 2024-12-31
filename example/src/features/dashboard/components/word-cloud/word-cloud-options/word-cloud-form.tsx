@@ -1,5 +1,8 @@
-import { SpiralType } from "@/features/dashboard/types/word-cloud-types";
-import { FlexColumn, FlexRow } from "@/ui/layout/flexbox";
+import {
+  SpiralType,
+  WordData,
+} from "@/features/dashboard/types/word-cloud-types";
+import { FlexColumn, FlexRow, FlexSpacer } from "@/ui/layout/flexbox";
 import { OcrTypography } from "@/ui/typography/ocr-typography";
 import {
   Box,
@@ -11,6 +14,12 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
   Typography,
 } from "@mui/material";
 import { ChangeEvent, useState } from "react";
@@ -32,6 +41,8 @@ export type WordCloudFormProps = {
   setBackgroundColor: (
     backgroundColor: "white" | "black" | "background.main"
   ) => void;
+  wordData: WordData[];
+  setWordData: (words: WordData[]) => void;
 };
 
 export const WordCloudForm = (props: WordCloudFormProps) => {
@@ -44,6 +55,8 @@ export const WordCloudForm = (props: WordCloudFormProps) => {
     setColors,
     backgroundColor,
     setBackgroundColor,
+    wordData,
+    setWordData,
   } = props;
 
   const [palette, setPalette] = useState<Palette>("default");
@@ -186,6 +199,34 @@ export const WordCloudForm = (props: WordCloudFormProps) => {
             </FlexColumn>
           </FlexRow>
         </FlexColumn>
+      </OcrAccordion>
+
+      <OcrAccordion summary="Words">
+        <Typography variant="h6">Word Frequency</Typography>
+
+        <TableContainer sx={{ height: "20vh" }}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Frequency</TableCell>
+                <TableCell>Word</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {wordData.map((wd, index) => (
+                <TableRow key={index}>
+                  <TableCell>{wd.value}</TableCell>
+                  <TableCell>
+                    <FlexRow>
+                      {wd.text}
+                      <FlexSpacer />
+                    </FlexRow>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </OcrAccordion>
     </FlexColumn>
   );
