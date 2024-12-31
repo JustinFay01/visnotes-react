@@ -260,7 +260,7 @@ export const WordCloudForm = (props: WordCloudFormProps) => {
                   onClick={() => {
                     alert(
                       <FlexColumn spacing={2}>
-                        <Typography variant="h6">{note.name}</Typography>
+                        <OcrTypography variant="h6">{note.name}</OcrTypography>
                         <Typography variant="body1">
                           {note.analyses?.length ?? 0 > 0
                             ? note.analyses![0].filteredValue

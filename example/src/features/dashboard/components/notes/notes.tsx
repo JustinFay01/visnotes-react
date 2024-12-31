@@ -107,7 +107,7 @@ export const Notes = ({
 
   const handleDeleteClick = async () => {
     const confirmed = await confirm(
-      `Are you sure you want to delete (${selectedNotes.length}) note(s)?`,
+      `Are you sure you want to delete (${finalSelectedNotes.length}) note(s)?`,
       {
         variant: "error",
         icon: (
@@ -122,7 +122,7 @@ export const Notes = ({
     );
 
     if (confirmed) {
-      selectedNotes.forEach(async (note) => {
+      finalSelectedNotes.forEach(async (note) => {
         const prom = deleteNote.mutateAsync({
           id: note.id,
         });
@@ -137,7 +137,7 @@ export const Notes = ({
   };
 
   const handleAnalyzeClick = () => {
-    selectedNotes.forEach(async (note) => {
+    finalSelectedNotes.forEach(async (note) => {
       const prom = analyzeNote.mutateAsync({
         id: note.id,
       });

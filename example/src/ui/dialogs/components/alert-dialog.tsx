@@ -1,13 +1,12 @@
-import {
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-  Button,
-} from "@mui/material";
-import { GenericDialogProps } from "../types/generic";
-import { AlertDialogOptions } from "../types/concrete";
 import { FlexSpacer } from "@/ui/layout/flexbox";
+import {
+  Button,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from "@mui/material";
+import { AlertDialogOptions } from "../types/concrete";
+import { GenericDialogProps } from "../types/generic";
 import { OcrDialog } from "./ocr-dialog";
 
 export type AlertDialogProps = GenericDialogProps<AlertDialogOptions, void>;
@@ -25,9 +24,7 @@ export const AlertDialog = ({ open, payload, onClose }: AlertDialogProps) => {
         {payload.icon}
       </DialogTitle>
 
-      <DialogContent>
-        <DialogContentText>{payload.message}</DialogContentText>
-      </DialogContent>
+      <DialogContent>{payload.message}</DialogContent>
       <DialogActions>
         <Button onClick={() => onClose()} color={payload.variant}>
           {payload.okLabel ?? "Ok"}

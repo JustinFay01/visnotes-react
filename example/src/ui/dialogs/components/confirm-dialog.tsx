@@ -3,7 +3,6 @@ import {
   Button,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
 } from "@mui/material";
 import { ConfirmDialogOptions } from "../types/concrete";
@@ -24,7 +23,7 @@ export const ConfirmDialog = ({
     <OcrDialog open={open} onClose={() => onClose(false)}>
       <DialogTitle
         component={"h1"}
-        variant="h4"
+        variant="h3"
         sx={{ display: "flex", alignItems: "center" }}
       >
         {payload.title ?? "Are you sure?"}
@@ -32,9 +31,7 @@ export const ConfirmDialog = ({
         {payload.icon}
       </DialogTitle>
 
-      <DialogContent>
-        <DialogContentText>{payload.message}</DialogContentText>
-      </DialogContent>
+      <DialogContent>{payload.message}</DialogContent>
       <DialogActions>
         <Button onClick={() => onClose(false)} variant="outlined">
           {payload.cancelLabel ?? "Cancel"}
