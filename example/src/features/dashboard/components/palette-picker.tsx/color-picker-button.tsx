@@ -3,7 +3,8 @@ import AddIcon from "@mui/icons-material/Add";
 import { Button, Popover } from "@mui/material";
 import { useState } from "react";
 import { ColorPicker, IColor, useColor } from "react-color-palette";
-// import "react-color-palette/css";
+// @ts-ignore
+import "react-color-palette/css";
 import { getTextColor } from "../../util/color-util";
 
 type ColorPickerButtonProps = {
