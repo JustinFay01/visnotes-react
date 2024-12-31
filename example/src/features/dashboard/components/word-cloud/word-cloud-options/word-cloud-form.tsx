@@ -22,7 +22,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 // Remove when wrapper component is created
 import { OcrAccordion } from "@/ui/components/form/accordion/ocr-accordion";
@@ -225,7 +225,7 @@ export const WordCloudForm = (props: WordCloudFormProps) => {
           <Typography variant="h6">Word Frequency</Typography>
         </FlexRow>
 
-        <TableContainer sx={{ height: "20vh" }}>
+        <TableContainer sx={{ height: "40vh" }}>
           <Table>
             <TableHead>
               <TableRow>
