@@ -23,7 +23,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 // Remove when wrapper component is created
 import { OcrAccordion } from "@/ui/components/form/accordion/ocr-accordion";
@@ -32,6 +32,7 @@ import { PalettePicker } from "../../palette-picker.tsx/palette-picker";
 import { Palette, palettes } from "../../palette-picker.tsx/palettes";
 import { Note } from "@/features/dashboard/types/api-types";
 import { useDialogs } from "@/ui/dialogs";
+import { WordDataHelper } from "@/features/dashboard/util/word-data-helper";
 
 export type WordCloudFormProps = {
   withRotation: boolean;
@@ -68,6 +69,21 @@ export const WordCloudForm = (props: WordCloudFormProps) => {
   const { alert } = useDialogs();
 
   const [ignoredWords, setIgnoredWords] = useState<WordData[]>([]);
+
+  useEffect(() => {
+    if (selectedNotes.length > 0) {
+      const words = selectedNotes
+        .map((note) => note.analyses?.[0].filteredValue)
+        .join(" ");
+      setWordData(
+        WordDataHelper.countWordsFromString(words, {
+          removeAllSpecialCharacters: true,
+          capitalize: true,
+          ignoreCase: true,
+        })
+      );
+    }
+  }, [selectedNotes, setWordData]);
 
   const handleStyleChange = (e: SelectChangeEvent) => {
     setSpiralType(e.target.value as SpiralType);
