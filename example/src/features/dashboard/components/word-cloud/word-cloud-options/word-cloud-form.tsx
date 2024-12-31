@@ -22,7 +22,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 // Remove when wrapper component is created
 import { OcrAccordion } from "@/ui/components/form/accordion/ocr-accordion";
@@ -61,12 +61,31 @@ export const WordCloudForm = (props: WordCloudFormProps) => {
 
   const [palette, setPalette] = useState<Palette>("default");
 
+  const [ignoredWords, setIgnoredWords] = useState<WordData[]>([]);
+
   const handleStyleChange = (e: SelectChangeEvent) => {
     setSpiralType(e.target.value as SpiralType);
   };
 
   const handleRotationChange = (e: ChangeEvent<HTMLInputElement>) => {
     setWithRotation(e.target.checked);
+  };
+
+  const handleCheckboxChange = (
+    e: ChangeEvent<HTMLInputElement>,
+    wd: WordData
+  ) => {
+    if (e.target.checked) {
+      // remove word from ignored words
+      // and add it to word data and maintain order
+      setWordData([...wordData, wd]);
+      setIgnoredWords(ignoredWords.filter((iw) => iw.text !== wd.text));
+    } else {
+      // Add word to ignored words
+      // and remove it from word data and maintain order
+      setIgnoredWords([...ignoredWords, wd]);
+      setWordData(wordData.filter((w) => w.text !== wd.text));
+    }
   };
 
   return (
@@ -202,7 +221,9 @@ export const WordCloudForm = (props: WordCloudFormProps) => {
       </OcrAccordion>
 
       <OcrAccordion summary="Words">
-        <Typography variant="h6">Word Frequency</Typography>
+        <FlexRow>
+          <Typography variant="h6">Word Frequency</Typography>
+        </FlexRow>
 
         <TableContainer sx={{ height: "20vh" }}>
           <Table>
@@ -213,17 +234,29 @@ export const WordCloudForm = (props: WordCloudFormProps) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {wordData.map((wd, index) => (
-                <TableRow key={index}>
-                  <TableCell>{wd.value}</TableCell>
-                  <TableCell>
-                    <FlexRow>
-                      {wd.text}
-                      <FlexSpacer />
-                    </FlexRow>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {wordData
+                .concat(ignoredWords)
+                .sort((a, b) => b.value - a.value)
+                .map((wd, index) => (
+                  <TableRow key={index}>
+                    <TableCell>{wd.value}</TableCell>
+                    <TableCell>
+                      <FlexRow>
+                        {wd.text}
+                        <FlexSpacer />
+                        <Checkbox
+                          aria-label="Include Word"
+                          checked={
+                            !ignoredWords.find((iw) => iw.text === wd.text)
+                          }
+                          onChange={(event) => {
+                            handleCheckboxChange(event, wd);
+                          }}
+                        />
+                      </FlexRow>
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>
