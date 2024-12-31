@@ -73,6 +73,7 @@ export const WordCloudForm = (props: WordCloudFormProps) => {
   useEffect(() => {
     if (selectedNotes.length > 0) {
       const words = selectedNotes
+        .filter((note) => note.analyses?.length ?? 0 > 0)
         .map((note) => note.analyses?.[0].filteredValue)
         .join(" ");
       setWordData(
