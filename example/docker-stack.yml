@@ -2,7 +2,7 @@ services:
   ocr-react:
     image: justinfay501/ocr-react:latest # Image name
     networks:
-      - ocr_net
+      - ocr-api_ocr_net
     ports:
       - "3000:3000"
     deploy: # Rolling release (Blue Green Deployment)
@@ -11,5 +11,5 @@ services:
 
 # Network is defined in the backend stack
 networks:
-  ocr_net:
+  ocr-api_ocr_net:
     external: true
