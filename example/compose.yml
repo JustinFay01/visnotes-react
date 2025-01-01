@@ -6,3 +6,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
+      
+# Network is defined in the backend stack
+networks:
+  ocr_net:
+    external: true
