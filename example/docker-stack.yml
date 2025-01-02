@@ -1,5 +1,5 @@
 services:
-  ocr-react:
+  web:
     image: justinfay501/ocr-react:${GIT_COMMIT_HASH-latest} # Image name
     labels:
       - "traefik.enable=true"
