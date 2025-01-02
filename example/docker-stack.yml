@@ -1,6 +1,6 @@
 services:
   ocr-react:
-    image: justinfay501/ocr-react:latest # Image name
+    image: justinfay501/ocr-react:${GIT_COMMIT_HASH-latest} # Image name
     networks:
       - ocr_net
     ports:

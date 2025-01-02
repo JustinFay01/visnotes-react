@@ -32,24 +32,25 @@ jobs:
             justinfay501/ocr-react:latest
             justinfay501/ocr-react:${{ github.sha }}
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs:
-      - build-and-push-image
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+  # Can't SSH into local network for deployment
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   needs:
+  #     - build-and-push-image
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
 
-      - name: create env file
-        run: |
-          echo "GIT_COMMIT_HASH=${{ github.sha }}" >> ./envfile
+  #     - name: create env file
+  #       run: |
+  #         echo "GIT_COMMIT_HASH=${{ github.sha }}" >> ./envfile
 
-      - name: Docker Stack Deploy
-        uses: cssnr/stack-deploy-action@v1
-        with:
-          name: ocr-react
-          file: example/docker-stack.yaml
-          host: ${{ secrets.DEPLOY_HOST }}
-          user: deploy-ocr-react
-          ssh_key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
-          env_file: ./envfile
+  #     - name: Docker Stack Deploy
+  #       uses: cssnr/stack-deploy-action@v1
+  #       with:
+  #         name: ocr-react
+  #         file: example/docker-stack.yaml
+  #         host: ${{ secrets.DEPLOY_HOST }}
+  #         user: deploy-ocr-react
+  #         ssh_key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
+  #         env_file: ./envfile
