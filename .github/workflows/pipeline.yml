@@ -1,0 +1,29 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  packages: write
+
+jobs:
+
+  build-and-push-image:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Latest
+    - uses: actions/checkout@v4
+    
+    
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v6
+      with:
+        context: .
+        push: true
+        tags: |
+          justinfay501/ocr-react:latest
+          justinfay501/ocr-react:${{ github.sha }}
