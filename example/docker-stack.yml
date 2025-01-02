@@ -1,15 +1,11 @@
 services:
   ocr-react:
     image: justinfay501/ocr-react:${GIT_COMMIT_HASH-latest} # Image name
-    networks:
-      - ocr_net
-    ports:
-      - "3000:3000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.ocr-react.rule=Host(`eremos.cloud`)"
+      - "traefik.http.routers.ocr-react.entrypoints=websecure"
+      - "traefik.http.routers.ocr-react.tls.certresolver=myresolver"
     deploy: # Rolling release (Blue Green Deployment)
       update_config:
         order: start-first
-
-# Network is defined in the backend stack
-networks:
-  ocr_net:
-    external: true
