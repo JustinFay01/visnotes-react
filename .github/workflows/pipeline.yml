@@ -47,7 +47,7 @@ jobs:
         uses: cssnr/stack-deploy-action@v1
         with:
           name: ocr-react
-          file: example/docker-stack.yaml
+          file: example/docker-stack.yml
           host: ${{ secrets.DEPLOY_HOST }}
           user: deploy-ocr-react
           ssh_key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
