@@ -30,7 +30,6 @@ jobs:
             justinfay501/ocr-react:latest
             justinfay501/ocr-react:${{ github.sha }}
 
-  # Can't SSH into local network for deployment
   deploy:
     runs-on: ubuntu-latest
     needs:

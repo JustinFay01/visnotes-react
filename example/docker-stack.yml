@@ -7,7 +7,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.services.web.loadbalancer.server.port=3000"
-      - "traefik.http.routers.web.rule=Host(`eremos.cloud`)"
+      - "traefik.http.routers.web.rule=Host(`eremos.cloud`) && !PathPrefix(`/api`)"
       - "traefik.http.routers.web.entrypoints=websecure"
       - "traefik.http.routers.web.tls.certresolver=myresolver"
     deploy: # Rolling release (Blue Green Deployment)
