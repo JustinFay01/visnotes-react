@@ -1,0 +1,13 @@
+services:
+  ocr-react:
+    image: ocr-react
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+      
+# Network is defined in the backend stack
+networks:
+  ocr_net:
+    external: true
