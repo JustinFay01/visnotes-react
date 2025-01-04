@@ -1,7 +1,7 @@
 import Axios from "axios";
 
 export const api = Axios.create({
-  baseURL: `${import.meta.env.VITE_API_URL}/api`,
+  baseURL: `${import.meta.env.VITE_API_URL}`,
 });
 
 api.interceptors.response.use(
