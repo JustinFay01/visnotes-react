@@ -44,7 +44,7 @@ export const Dashboard = () => {
           fontWeight={"bold"}
           gutterBottom
         >
-          Wordcloud - With CI and CD!!
+          Wordcloud - V2
         </Typography>
         <Notes
           notes={getNotes.data}
