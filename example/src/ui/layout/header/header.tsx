@@ -9,6 +9,7 @@ import {
   useColorScheme,
 } from "@mui/material";
 import { FlexRow, FlexSpacer } from "../flexbox";
+import { paths } from "@/lib/path";
 export const Header = () => {
   const { mode, setMode } = useColorScheme();
 
@@ -30,13 +31,21 @@ export const Header = () => {
         </OcrTypography>
         <FlexSpacer />
         <FlexRow gap={2}>
-          <Button variant="text" href="/dashboard" sx={textSx}>
+          <Button
+            variant="text"
+            href={paths.app.dashboard.getHref()}
+            sx={textSx}
+          >
             Dashboard
           </Button>
-          <Button variant="text" href="/notes" sx={textSx}>
+          <Button variant="text" href={paths.app.notes.getHref()} sx={textSx}>
             notes
           </Button>
-          <Button variant="text" href="/" sx={textSx}>
+          <Button
+            variant="text"
+            href={paths.app.wordcloud.getHref()}
+            sx={textSx}
+          >
             WordCloud
           </Button>
           <IconButton

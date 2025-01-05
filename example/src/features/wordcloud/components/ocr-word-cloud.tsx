@@ -1,7 +1,10 @@
 import { FlexColumn } from "@/ui/layout/flexbox";
 import { totoAfricaLyrics } from "@dashboard/assets/text-fixture";
-import { SpiralType, WordData } from "@dashboard/types/word-cloud-types";
-import { WordDataHelper } from "@dashboard/util/word-data-helper";
+import {
+  SpiralType,
+  WordData,
+} from "@/features/wordcloud/types/word-cloud-types";
+import { WordDataHelper } from "@/features/wordcloud/util/word-data-helper";
 import { Box } from "@mui/material";
 import { scaleLog } from "@visx/scale";
 import { Text } from "@visx/text";

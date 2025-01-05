@@ -1,3 +1,4 @@
+import { paths } from "@/lib/path";
 import { FlexColumn } from "@/ui/layout/flexbox";
 import { ErrorRouteBase } from "@/ui/layout/route-base";
 import { OcrTypography } from "@/ui/typography/ocr-typography";
@@ -16,7 +17,7 @@ export const NotFoundRoute = () => {
         }}
       >
         <OcrTypography variant="h1">404 Not Found</OcrTypography>
-        <Button variant="contained" href="/">
+        <Button variant="contained" href={paths.app.dashboard.getHref()}>
           Go Home
         </Button>
       </FlexColumn>

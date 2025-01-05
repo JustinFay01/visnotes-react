@@ -2,7 +2,7 @@ import { FlexColumn } from "@/ui/layout/flexbox";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import { Box, Card, Typography } from "@mui/material";
 import React from "react";
-import { convertBytes } from "../../util/file-util";
+import { convertBytes } from "../../../wordcloud/util/file-util";
 
 type FileCardProps = {
   file: File;

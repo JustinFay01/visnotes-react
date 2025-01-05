@@ -6,12 +6,13 @@ import { FlexColumn } from "@/ui/layout/flexbox";
 import { Card } from "@mui/material";
 import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import React, { useRef, useState } from "react";
-import { Note } from "../../types/api-types";
-import { convertBytes } from "../../util/file-util";
-import { NoteHeader } from "./note-header";
+import { NoteHeader } from "./components/note-header";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useAnalyzeNote } from "@/api/notes/anaylze-note";
 import { useDeleteNote } from "@/api/notes/delete-note";
+import { convertBytes } from "../wordcloud/util/file-util";
+import { Note } from "./types/api-types";
+import { useGetNotes } from "@/api/notes/get-notes";
 
 const columns: GridColDef<GridRowsProp[number]>[] = [
   {
@@ -44,8 +45,8 @@ const columns: GridColDef<GridRowsProp[number]>[] = [
 ];
 
 type NotesProps = {
-  notes?: Note[];
-  setNotes?: (notes: Note[]) => void;
+  // notes?: Note[];
+  // setNotes?: (notes: Note[]) => void;
   selectedNotes?: Note[];
   setSelectedNotes?: (notes: Note[]) => void;
 } & React.ComponentProps<typeof Card>;
@@ -66,7 +67,6 @@ const mapToNoteRows = (notes: Note[]): NoteRowElement[] => {
 };
 
 export const Notes = ({
-  notes,
   selectedNotes,
   setSelectedNotes,
   ...cardProps
@@ -74,6 +74,7 @@ export const Notes = ({
   const createNote = useCreateNote();
   const deleteNote = useDeleteNote();
   const analyzeNote = useAnalyzeNote();
+  const { data: notes } = useGetNotes();
 
   const dropZoneRef = useRef<OcrDropzoneRef>(null);
 

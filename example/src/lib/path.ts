@@ -24,8 +24,16 @@ export const app = {
     getHref: () => "/app",
   },
   dashboard: {
-    path: "",
+    path: "/app",
     getHref: () => "/app",
+  },
+  notes: {
+    path: "/app/notes",
+    getHref: () => "/app/notes",
+  },
+  wordcloud: {
+    path: "/app/wordcloud",
+    getHref: () => "/app/wordcloud",
   },
 };
 

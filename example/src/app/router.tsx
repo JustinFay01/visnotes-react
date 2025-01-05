@@ -6,6 +6,13 @@ const createRouter = () =>
   createBrowserRouter([
     {
       path: paths.home.path,
+      lazy: async () => {
+        const { LandingRoute } = await import("./routes/landing-route");
+        return { Component: LandingRoute };
+      },
+    },
+    {
+      path: paths.app.root.path,
       element: <AppRoot />,
       children: [
         {
@@ -13,6 +20,20 @@ const createRouter = () =>
           lazy: async () => {
             const { DashboardRoute } = await import("./routes/dashboard-route");
             return { Component: DashboardRoute };
+          },
+        },
+        {
+          path: paths.app.wordcloud.path,
+          lazy: async () => {
+            const { WordcloudRoute } = await import("./routes/wordcloud-route");
+            return { Component: WordcloudRoute };
+          },
+        },
+        {
+          path: paths.app.notes.path,
+          lazy: async () => {
+            const { NotesRoute } = await import("./routes/notes-route");
+            return { Component: NotesRoute };
           },
         },
       ],

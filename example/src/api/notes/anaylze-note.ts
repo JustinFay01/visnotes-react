@@ -1,4 +1,4 @@
-import { Analysis } from "@/features/dashboard/types/api-types";
+import { Analysis } from "@/features/notes/types/api-types";
 import { api } from "@/lib/axios";
 import { MutationConfig } from "@/lib/react-query";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

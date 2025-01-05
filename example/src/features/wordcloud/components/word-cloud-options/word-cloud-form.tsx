@@ -1,13 +1,12 @@
 import {
   SpiralType,
   WordData,
-} from "@/features/dashboard/types/word-cloud-types";
+} from "@/features/wordcloud/types/word-cloud-types";
 import { FlexColumn, FlexRow, FlexSpacer } from "@/ui/layout/flexbox";
 import { OcrTypography } from "@/ui/typography/ocr-typography";
 import {
   Box,
   Checkbox,
-  Chip,
   FormControl,
   FormControlLabel,
   Grid2 as Grid,
@@ -23,16 +22,13 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 // Remove when wrapper component is created
 import { OcrAccordion } from "@/ui/components/form/accordion/ocr-accordion";
-import { CustomPalettePicker } from "../../palette-picker.tsx/custom-palette-picker";
-import { PalettePicker } from "../../palette-picker.tsx/palette-picker";
-import { Palette, palettes } from "../../palette-picker.tsx/palettes";
-import { Note } from "@/features/dashboard/types/api-types";
-import { useDialogs } from "@/ui/dialogs";
-import { WordDataHelper } from "@/features/dashboard/util/word-data-helper";
+import { CustomPalettePicker } from "../palette-picker.tsx/custom-palette-picker";
+import { PalettePicker } from "../palette-picker.tsx/palette-picker";
+import { Palette, palettes } from "../palette-picker.tsx/palettes";
 
 export type WordCloudFormProps = {
   withRotation: boolean;
@@ -47,7 +43,6 @@ export type WordCloudFormProps = {
   ) => void;
   wordData: WordData[];
   setWordData: (words: WordData[]) => void;
-  selectedNotes: Note[];
 };
 
 export const WordCloudForm = (props: WordCloudFormProps) => {
@@ -62,29 +57,28 @@ export const WordCloudForm = (props: WordCloudFormProps) => {
     setBackgroundColor,
     wordData,
     setWordData,
-    selectedNotes,
   } = props;
 
   const [palette, setPalette] = useState<Palette>("default");
-  const { alert } = useDialogs();
+  //const { alert } = useDialogs();
 
   const [ignoredWords, setIgnoredWords] = useState<WordData[]>([]);
 
-  useEffect(() => {
-    if (selectedNotes.length > 0) {
-      const words = selectedNotes
-        .filter((note) => note.analyses?.length ?? 0 > 0)
-        .map((note) => note.analyses?.[0].filteredValue)
-        .join(" ");
-      setWordData(
-        WordDataHelper.countWordsFromString(words, {
-          removeAllSpecialCharacters: true,
-          capitalize: true,
-          ignoreCase: true,
-        })
-      );
-    }
-  }, [selectedNotes, setWordData]);
+  // useEffect(() => {
+  //   if (selectedNotes.length > 0) {
+  //     const words = selectedNotes
+  //       .filter((note) => note.analyses?.length ?? 0 > 0)
+  //       .map((note) => note.analyses?.[0].filteredValue)
+  //       .join(" ");
+  //     setWordData(
+  //       WordDataHelper.countWordsFromString(words, {
+  //         removeAllSpecialCharacters: true,
+  //         capitalize: true,
+  //         ignoreCase: true,
+  //       })
+  //     );
+  //   }
+  // }, [selectedNotes, setWordData]);
 
   const handleStyleChange = (e: SelectChangeEvent) => {
     setSpiralType(e.target.value as SpiralType);
@@ -258,7 +252,7 @@ export const WordCloudForm = (props: WordCloudFormProps) => {
             Click on the file name to view the analysis
           </Typography>
 
-          <Grid container spacing={1}>
+          {/* <Grid container spacing={1}>
             {selectedNotes.map((note) => (
               <Grid key={note.id} size={2} width={250}>
                 <Chip
@@ -292,7 +286,7 @@ export const WordCloudForm = (props: WordCloudFormProps) => {
                 />
               </Grid>
             ))}
-          </Grid>
+          </Grid> */}
         </FlexColumn>
 
         <FlexColumn>

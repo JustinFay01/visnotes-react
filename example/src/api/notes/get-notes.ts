@@ -1,4 +1,4 @@
-import { Note } from "@/features/dashboard/types/api-types";
+import { Note } from "@/features/notes/types/api-types";
 import { api } from "@/lib/axios";
 import { useQuery } from "@tanstack/react-query";
 import { noteKeys } from "./note-key-factory";

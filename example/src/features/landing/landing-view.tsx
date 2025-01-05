@@ -1,7 +1,6 @@
+import { paths } from "@/lib/path";
 import { FlexColumn } from "@/ui/layout/flexbox";
-import { Divider, Typography } from "@mui/material";
-import { ErrorExample } from "./components/error-example";
-import { MuiThemeExample } from "./components/mui-theme-example";
+import { Button, Divider, Typography } from "@mui/material";
 
 export const LandingView = () => {
   return (
@@ -13,14 +12,28 @@ export const LandingView = () => {
         minHeight: 700,
       }}
     >
-      <Typography variant="h1">Hello, world!</Typography>
-      <Typography variant="body1"> Welcome to the landing page.</Typography>
-      <Divider />
-      <FlexColumn spacing={5} padding={5}>
-        <MuiThemeExample />
-        <Divider />
-        <ErrorExample />
-      </FlexColumn>
+      <Typography
+        variant="h1"
+        component={"h1"}
+        fontWeight={"bold"}
+        gutterBottom
+      >
+        Welcome to the OCR App
+      </Typography>
+
+      <Divider sx={{ width: "100%" }} />
+
+      <Typography variant="h2" component={"h2"} gutterBottom>
+        Real landing page coming soon
+      </Typography>
+
+      <Button
+        variant="contained"
+        color="primary"
+        href={paths.app.wordcloud.getHref()}
+      >
+        Go to Wordcloud
+      </Button>
     </FlexColumn>
   );
 };
