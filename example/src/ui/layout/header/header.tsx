@@ -12,23 +12,32 @@ import { FlexRow, FlexSpacer } from "../flexbox";
 export const Header = () => {
   const { mode, setMode } = useColorScheme();
 
-  //TODO: Add user context
+  const textSx = {
+    fontWeight: "bold",
+    color: mode === "dark" ? "text.primary" : "white",
+  };
+
   return (
-    <AppBar position="static">
-      <Toolbar>
+    <AppBar position="sticky">
+      <Toolbar
+        sx={{
+          backgroundColor: "primary.main",
+        }}
+      >
         <OcrTypography variant="h6" fontWeight={"bold"}>
           OCR
         </OcrTypography>
         <FlexSpacer />
         <FlexRow gap={2}>
-          <Button variant="text" href="/dashboard" sx={{ fontWeight: "bold" }}>
+          <Button variant="text" href="/dashboard" sx={textSx}>
             Dashboard
           </Button>
-          <Button variant="text" href="/notes" sx={{ fontWeight: "bold" }}>
+          <Button variant="text" href="/notes" sx={textSx}>
             notes
           </Button>
           <IconButton
             aria-activedescendant="toggle-theme"
+            sx={textSx}
             onClick={() => {
               setMode(mode === "dark" ? "light" : "dark");
             }}
@@ -39,7 +48,15 @@ export const Header = () => {
               <DarkModeOutlinedIcon />
             )}
           </IconButton>
-          <Button variant="outlined" href="/login">
+          <Button
+            variant="outlined"
+            href="/login"
+            sx={{
+              ...textSx,
+              fontWeight: "bold",
+              border: "2px solid",
+            }}
+          >
             Login
           </Button>
         </FlexRow>
