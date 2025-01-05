@@ -3,7 +3,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { Button, Popover } from "@mui/material";
 import { useState } from "react";
 import { ColorPicker, IColor, useColor } from "react-color-palette";
-// @ts-ignore
+// @ts-expect-error does not have a default export but is a valid import
 import "react-color-palette/css";
 import { getTextColor } from "../../util/color-util";
 
