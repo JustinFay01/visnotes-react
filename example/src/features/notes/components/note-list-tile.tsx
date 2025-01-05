@@ -1,8 +1,11 @@
 import { Card } from "@mui/material";
-import { Note } from "../../types/api-types";
 import React from "react";
 import { FlexRow } from "@/ui/layout/flexbox";
-import { ConversionUnit, convertBytes } from "../../util/file-util";
+import {
+  ConversionUnit,
+  convertBytes,
+} from "@/features/wordcloud/util/file-util";
+import { Note } from "../types/api-types";
 
 type NoteListTileProps = {
   note: Note;
