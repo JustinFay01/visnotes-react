@@ -16,6 +16,7 @@ export const Header = () => {
     fontWeight: "bold",
     color: mode === "dark" ? "text.primary" : "white",
   };
+  //TODO: Add mobile header as a drawer for other pages
 
   return (
     <AppBar position="sticky">
@@ -34,6 +35,9 @@ export const Header = () => {
           </Button>
           <Button variant="text" href="/notes" sx={textSx}>
             notes
+          </Button>
+          <Button variant="text" href="/" sx={textSx}>
+            WordCloud
           </Button>
           <IconButton
             aria-activedescendant="toggle-theme"
