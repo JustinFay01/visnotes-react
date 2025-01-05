@@ -1,5 +1,5 @@
 import { WithChildren } from "../props";
-import { BasicLayout } from "./blocks";
+import { BaseLayout, HeaderLayout } from "./blocks";
 import { ErrorBase } from "../components/errors/error-base";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
 import { Suspense } from "react";
@@ -15,11 +15,28 @@ export const RouteBase = ({
   suspenseFallback,
 }: RouteBaseProps) => {
   return (
-    <BasicLayout>
+    <HeaderLayout>
       <ErrorBoundary FallbackComponent={errorFallback ?? ErrorBase}>
         <Suspense fallback={suspenseFallback ?? <div>Loading...</div>} />
         {children}
       </ErrorBoundary>
-    </BasicLayout>
+    </HeaderLayout>
+  );
+};
+
+export type ErrorRouteBaseProps = RouteBaseProps;
+
+export const ErrorRouteBase = ({
+  children,
+  errorFallback,
+  suspenseFallback,
+}: ErrorRouteBaseProps) => {
+  return (
+    <BaseLayout>
+      <ErrorBoundary FallbackComponent={errorFallback ?? ErrorBase}>
+        <Suspense fallback={suspenseFallback ?? <div>Loading...</div>} />
+        {children}
+      </ErrorBoundary>
+    </BaseLayout>
   );
 };

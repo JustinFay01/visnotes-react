@@ -17,13 +17,19 @@ export const Main = ({ children, sx }: WithChildrenAndSx) => (
   </Box>
 );
 
-export const BasicLayout = ({ children }: WithChildren) => {
+export const BaseLayout = ({ children }: WithChildren) => {
   return (
     <LayoutContainer>
-      <Main>
-        <Header />
-        {children}
-      </Main>
+      <Main>{children}</Main>
     </LayoutContainer>
+  );
+};
+
+export const HeaderLayout = ({ children }: WithChildren) => {
+  return (
+    <BaseLayout>
+      <Header />
+      {children}
+    </BaseLayout>
   );
 };

@@ -1,7 +1,4 @@
 import { paths } from "@/lib/path";
-import OcrDropzone from "@/ui/components/form/dropzone/dropzone";
-import { BasicLayout } from "@/ui/layout/blocks";
-import { Stack, Typography } from "@mui/material";
 import { RouterProvider, createBrowserRouter } from "react-router-dom"; // need to install react-router-dom
 import { AppRoot } from "./routes/root";
 
@@ -21,25 +18,13 @@ const createRouter = () =>
       ],
     },
     {
-      path: `${paths.home.path}/test`,
-      element: (
-        <BasicLayout>
-          <Stack
-            padding={2}
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              height: "75vh",
-            }}
-          >
-            <OcrDropzone>
-              <Typography>Drop files here</Typography>
-            </OcrDropzone>
-          </Stack>
-        </BasicLayout>
-      ),
+      path: paths.error.notFound.path,
+      lazy: async () => {
+        const { NotFoundRoute } = await import(
+          "./routes/errors/not-found-route"
+        );
+        return { Component: NotFoundRoute };
+      },
     },
   ]);
 
