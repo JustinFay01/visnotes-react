@@ -42,7 +42,7 @@ export function AppProvider({ children }: React.PropsWithChildren) {
   useDynamicIcon();
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme} defaultMode="system">
       <App>{children}</App>
     </ThemeProvider>
   );
