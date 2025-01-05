@@ -15,12 +15,12 @@ export const RouteBase = ({
   suspenseFallback,
 }: RouteBaseProps) => {
   return (
-    <HeaderLayout>
-      <ErrorBoundary FallbackComponent={errorFallback ?? ErrorBase}>
+    <ErrorBoundary FallbackComponent={errorFallback ?? ErrorBase}>
+      <HeaderLayout>
         <Suspense fallback={suspenseFallback ?? <div>Loading...</div>} />
         {children}
-      </ErrorBoundary>
-    </HeaderLayout>
+      </HeaderLayout>
+    </ErrorBoundary>
   );
 };
 
@@ -32,11 +32,11 @@ export const ErrorRouteBase = ({
   suspenseFallback,
 }: ErrorRouteBaseProps) => {
   return (
-    <BaseLayout>
-      <ErrorBoundary FallbackComponent={errorFallback ?? ErrorBase}>
+    <ErrorBoundary FallbackComponent={errorFallback ?? ErrorBase}>
+      <BaseLayout>
         <Suspense fallback={suspenseFallback ?? <div>Loading...</div>} />
         {children}
-      </ErrorBoundary>
-    </BaseLayout>
+      </BaseLayout>
+    </ErrorBoundary>
   );
 };

@@ -17,35 +17,13 @@ export const lightThemeColors = {
   },
 };
 
-const lightTheme = createTheme({
-  palette: {
-    primary: {
-      main: lightThemeColors.brand.slateBlue,
-      light: lightThemeColors.brand.thistle,
-      dark: lightThemeColors.brand.spaceCadet,
-    },
-    secondary: {
-      main: lightThemeColors.brand.tropicalIndigo,
-      light: lightThemeColors.brand.lightBlue,
-      dark: lightThemeColors.brand.ylmnBlue,
-    },
-    background: {
-      default: lightThemeColors.background,
-      paper: lightThemeColors.white,
-    },
-    text: {
-      primary: lightThemeColors.black,
-    },
-  },
-});
-
 export const darkThemeColors = {
   background: "#121212", // Dark background
-  white: "#ffffff", // Unchanged for contrast
-  black: "#000000", // True black for accents
+  paper: "#1e1e1e",
+  onBackground: "#d8d8d8", // White text
   brand: {
-    slateBlue: "#8A84EE", // Slightly brighter for better visibility
-    thistle: "#C7B8E2", // Softened for a dark background
+    slateBlue: "#8A84EE", // primary
+    thistle: "#C7B8E2", // on primary
     champagnePink: "#EACDC7", // Warmer tone for contrast
     spaceCadet: "#423C66", // Lightened for depth
 
@@ -55,26 +33,50 @@ export const darkThemeColors = {
   },
 };
 
-const darkTheme = createTheme({
+export const theme = createTheme({
   colorSchemes: {
-    dark: true,
-  },
-  palette: {
-    primary: {
-      main: darkThemeColors.brand.slateBlue,
-      light: darkThemeColors.brand.thistle,
-      dark: darkThemeColors.brand.spaceCadet,
+    light: {
+      palette: {
+        primary: {
+          main: lightThemeColors.brand.slateBlue,
+          light: lightThemeColors.brand.thistle,
+          dark: lightThemeColors.brand.spaceCadet,
+        },
+        secondary: {
+          main: lightThemeColors.brand.tropicalIndigo,
+          light: lightThemeColors.brand.lightBlue,
+          dark: lightThemeColors.brand.ylmnBlue,
+        },
+        background: {
+          default: lightThemeColors.background,
+          paper: lightThemeColors.white,
+        },
+        text: {
+          primary: lightThemeColors.black,
+        },
+      },
     },
-    secondary: {
-      main: darkThemeColors.brand.tropicalIndigo,
-      light: darkThemeColors.brand.lightBlue,
-      dark: darkThemeColors.brand.ylmnBlue,
-    },
-    background: {
-      default: darkThemeColors.background,
+    dark: {
+      palette: {
+        primary: {
+          main: darkThemeColors.brand.slateBlue,
+          light: darkThemeColors.brand.thistle,
+          dark: darkThemeColors.brand.spaceCadet,
+        },
+        secondary: {
+          main: darkThemeColors.brand.thistle,
+          light: darkThemeColors.brand.lightBlue,
+          dark: darkThemeColors.brand.ylmnBlue,
+        },
+        background: {
+          default: darkThemeColors.background,
+          paper: darkThemeColors.paper,
+        },
+        text: {
+          primary: darkThemeColors.onBackground,
+          secondary: darkThemeColors.brand.thistle,
+        },
+      },
     },
   },
 });
-
-export const createAppTheme = (mode: "light" | "dark") =>
-  mode === "light" ? lightTheme : darkTheme;

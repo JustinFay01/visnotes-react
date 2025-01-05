@@ -1,40 +1,49 @@
 import useDynamicIcon from "@/hooks/use-dynamic-icon";
 import { queryConfig } from "@/lib/react-query";
-import { createAppTheme } from "@/lib/theme";
+import { theme } from "@/lib/theme";
 import { DialogsProvider } from "@/ui/dialogs";
-import { CssBaseline, ThemeProvider, useMediaQuery } from "@mui/material";
+import { CssBaseline, ThemeProvider, useColorScheme } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ToastContainer } from "react-toastify";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { ToastContainer } from "react-toastify";
 
 const appQueryClient = new QueryClient({
   defaultOptions: queryConfig,
 });
 
-export function AppProvider({ children }: React.PropsWithChildren) {
-  useDynamicIcon();
+function App({ children }: React.PropsWithChildren) {
+  const { mode } = useColorScheme();
 
-  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
-  const theme = createAppTheme(prefersDarkMode ? "dark" : "light");
+  if (!mode) {
+    return null;
+  }
 
   return (
     <QueryClientProvider client={appQueryClient}>
-      <ThemeProvider theme={theme}>
-        <DialogsProvider>
-          <CssBaseline />
-          {children}
-          <ReactQueryDevtools initialIsOpen={false} />
-          <ToastContainer
-            position="bottom-left"
-            autoClose={5000}
-            newestOnTop
-            closeOnClick
-            draggable
-            pauseOnHover={false}
-            theme={prefersDarkMode ? "dark" : "light"}
-          />
-        </DialogsProvider>
-      </ThemeProvider>
+      <DialogsProvider>
+        <CssBaseline />
+        {children}
+        <ReactQueryDevtools initialIsOpen={false} />
+        <ToastContainer
+          position="bottom-left"
+          autoClose={5000}
+          newestOnTop
+          closeOnClick
+          draggable
+          pauseOnHover={false}
+          theme={mode === "dark" ? "dark" : "light"}
+        />
+      </DialogsProvider>
     </QueryClientProvider>
+  );
+}
+
+export function AppProvider({ children }: React.PropsWithChildren) {
+  useDynamicIcon();
+
+  return (
+    <ThemeProvider theme={theme}>
+      <App>{children}</App>
+    </ThemeProvider>
   );
 }
