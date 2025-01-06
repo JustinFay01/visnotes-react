@@ -6,16 +6,36 @@ import {
   Button,
   IconButton,
   Toolbar,
+  Tooltip,
   useColorScheme,
+  useMediaQuery,
 } from "@mui/material";
 import { FlexRow, FlexSpacer } from "../flexbox";
 import { paths } from "@/lib/path";
+
+const useCurrentTheme = (mode: string | undefined): string => {
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+
+  if (mode === "dark") {
+    return "dark";
+  } else if (mode === "light") {
+    return "light";
+  } else if (mode === "system") {
+    if (prefersDarkMode) {
+      return "dark";
+    }
+    return "light";
+  }
+  return prefersDarkMode ? "dark" : "light";
+};
+
 export const Header = () => {
   const { mode, setMode } = useColorScheme();
+  const currentTheme = useCurrentTheme(mode);
 
   const textSx = {
     fontWeight: "bold",
-    color: mode === "dark" ? "text.primary" : "white",
+    color: currentTheme === "dark" ? "text.primary" : "white",
   };
   //TODO: Add mobile header as a drawer for other pages
 
@@ -48,19 +68,21 @@ export const Header = () => {
           >
             WordCloud
           </Button>
-          <IconButton
-            aria-activedescendant="toggle-theme"
-            sx={textSx}
-            onClick={() => {
-              setMode(mode === "dark" ? "light" : "dark");
-            }}
-          >
-            {mode === "dark" ? (
-              <LightModeOutlinedIcon />
-            ) : (
-              <DarkModeOutlinedIcon />
-            )}
-          </IconButton>
+          <Tooltip title="Toggle Theme" placement="bottom" arrow>
+            <IconButton
+              aria-activedescendant="toggle-theme"
+              sx={textSx}
+              onClick={() => {
+                setMode(currentTheme === "dark" ? "light" : "dark");
+              }}
+            >
+              {currentTheme === "dark" ? (
+                <LightModeOutlinedIcon />
+              ) : (
+                <DarkModeOutlinedIcon />
+              )}
+            </IconButton>
+          </Tooltip>
           <Button
             variant="outlined"
             href="/login"
