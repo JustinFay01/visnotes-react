@@ -79,6 +79,95 @@ export function AppProvider({ children }: React.PropsWithChildren) {
 }
 ```
 
+IF you want to use both a light and dark theme, as well as let mui handle the toggling, you can use the `createTheme` function to create a theme that supports both:
+
+```ts
+import { createTheme } from '@mui/material/styles';
+
+export const lightThemeColors = { ... }
+export const darkThemeColors = { ... }
+
+export const theme = createTheme({
+  colorSchemes: {
+    light: {
+      palette: {
+        primary: {
+          ...
+        },
+        ...
+      },
+    },
+    dark: {
+      palette: {
+        primary: {
+          ...
+        },
+        ...
+      },
+    },
+  },
+});
+```
+
+This allows you to use the `useColorScheme` hook to determine which theme to use:
+
+[Example from Mui](https://mui.com/material-ui/customization/dark-mode/)
+
+```tsx
+function MyApp() {
+  const { mode, setMode } = useColorScheme();
+  if (!mode) {
+    return null;
+  }
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        bgcolor: 'background.default',
+        color: 'text.primary',
+        borderRadius: 1,
+        p: 3,
+        minHeight: '56px',
+      }}
+    >
+      <FormControl>
+        <FormLabel id="demo-theme-toggle">Theme</FormLabel>
+        <RadioGroup
+          aria-labelledby="demo-theme-toggle"
+          name="theme-toggle"
+          row
+          value={mode}
+          onChange={(event) =>
+            setMode(event.target.value as 'system' | 'light' | 'dark')
+          }
+        >
+          <FormControlLabel value="system" control={<Radio />} label="System" />
+          <FormControlLabel value="light" control={<Radio />} label="Light" />
+          <FormControlLabel value="dark" control={<Radio />} label="Dark" />
+        </RadioGroup>
+      </FormControl>
+    </Box>
+  );
+}
+
+const theme = createTheme({
+  colorSchemes: {
+    dark: true,
+  },
+});
+
+export default function ToggleColorMode() {
+  return (
+    <ThemeProvider theme={theme}>
+      <MyApp />
+    </ThemeProvider>
+  );
+}
+```
+
 ## Styling 
 
 ### Components

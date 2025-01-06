@@ -1,3 +1,4 @@
+import { paths } from "@/lib/path";
 import { OcrTypography } from "@/ui/typography/ocr-typography";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
@@ -11,7 +12,6 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { FlexRow, FlexSpacer } from "../flexbox";
-import { paths } from "@/lib/path";
 
 const useCurrentTheme = (mode: string | undefined): string => {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");

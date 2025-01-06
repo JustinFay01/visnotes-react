@@ -83,6 +83,11 @@ Zustand is an incredible tool that can abstract some of the complexities of stat
 
 ### Toastify
 
+React-Toastify is a simple library that can be used to create toast notifications. It is highly customizable and can be used to create a variety of different notifications. [React-Toastify](https://fkhadra.github.io/react-toastify/introduction)
+
+[Configuration & Example](./tools/toastify.md)
+
+
 ### Suspense
 
 ### Error Boundaries
