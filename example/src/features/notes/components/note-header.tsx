@@ -18,7 +18,14 @@ export const NoteHeader = ({
   notesSelected,
 }: NoteHeaderProps) => {
   return (
-    <FlexColumn>
+    <FlexColumn
+      sx={{
+        border: "1px solid",
+        borderColor: "divider",
+        borderRadius: 5,
+        padding: 1,
+      }}
+    >
       <Typography variant="h5" sx={{ marginTop: 2 }}>
         Saved Notes
       </Typography>

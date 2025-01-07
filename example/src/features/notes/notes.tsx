@@ -1,95 +1,32 @@
+import { useAnalyzeNote } from "@/api/notes/analyze-note";
 import { useCreateNote } from "@/api/notes/create-note";
-import { OcrDropzone, OcrDropzoneRef } from "@/ui/components/form/dropzone";
+import { useDeleteNote } from "@/api/notes/delete-note";
+import { useGetNotes } from "@/api/notes/get-notes";
+import { OcrDropzoneRef } from "@/ui/components/form/dropzone";
 import { useToast } from "@/ui/components/toasts/use-toast";
 import { useDialogs } from "@/ui/dialogs";
 import { FlexColumn } from "@/ui/layout/flexbox";
-import { Card } from "@mui/material";
-import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
-import React, { useRef, useState } from "react";
-import { NoteHeader } from "./components/note-header";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useAnalyzeNote } from "@/api/notes/analyze-note";
-import { useDeleteNote } from "@/api/notes/delete-note";
-import { convertBytes } from "../wordcloud/util/file-util";
+import { Box, Card, Divider } from "@mui/material";
+import React, { useState } from "react";
+import { NoteDropzone } from "./components/note-dropzone";
+import { NoteHeader } from "./components/note-header";
+import { NoteListTile } from "./components/note-list-tile";
 import { Note } from "./types/api-types";
-import { useGetNotes } from "@/api/notes/get-notes";
 
-const columns: GridColDef<GridRowsProp[number]>[] = [
-  {
-    field: "name",
-    headerName: "Name",
-    width: 150,
-  },
-  {
-    field: "type",
-    headerName: "Type",
-    description: "MIME type of the file",
-    width: 150,
-  },
-  {
-    field: "createdAt",
-    headerName: "Created At",
-    valueFormatter: (val) => `${new Date(val).toLocaleDateString()}`,
-  },
-  {
-    field: "analyzed",
-    headerName: "Analyzed",
-    valueFormatter: (val) => (val ? "yes" : "no"),
-  },
-  {
-    field: "size",
-    headerName: "Size (KB)",
-    align: "right",
-    valueFormatter: (val) => `${convertBytes("KB", val).toPrecision(5)} KB`,
-  },
-];
+type NotesProps = React.ComponentProps<typeof Card>;
 
-type NotesProps = {
-  // notes?: Note[];
-  // setNotes?: (notes: Note[]) => void;
-  selectedNotes?: Note[];
-  setSelectedNotes?: (notes: Note[]) => void;
-} & React.ComponentProps<typeof Card>;
-
-type NoteRowElement = {
-  analyzed: boolean;
-} & Note;
-
-const mapToNoteRow = (note: Note): NoteRowElement => {
-  return {
-    ...note,
-    analyzed: note.analyses?.length ?? 0 > 0 ? true : false,
-  };
-};
-
-const mapToNoteRows = (notes: Note[]): NoteRowElement[] => {
-  return notes.map(mapToNoteRow);
-};
-
-export const Notes = ({
-  selectedNotes,
-  setSelectedNotes,
-  ...cardProps
-}: NotesProps) => {
+export const Notes = ({ ...cardProps }: NotesProps) => {
   const createNote = useCreateNote();
   const deleteNote = useDeleteNote();
   const analyzeNote = useAnalyzeNote();
   const { data: notes } = useGetNotes();
 
-  const dropZoneRef = useRef<OcrDropzoneRef>(null);
-
   const { promise } = useToast();
   const { confirm } = useDialogs();
 
-  const [internalSelectedNotes, setInternalSelectedNotes] = useState<Note[]>(
-    []
-  );
-  const finalSelectedNotes = selectedNotes ?? internalSelectedNotes;
-  const finalSetSelectedNotes = setSelectedNotes ?? setInternalSelectedNotes;
-
-  const handleCreateClick = () => {
-    dropZoneRef.current?.open();
-  };
+  const [selectedNotes, setSelectedNotes] = useState<Note[]>([]);
+  const dropzoneRef = React.useRef<OcrDropzoneRef>(null);
 
   const handleAcceptedFiles = (files: File[]) => {
     files.forEach(async (f) => {
@@ -108,7 +45,7 @@ export const Notes = ({
 
   const handleDeleteClick = async () => {
     const confirmed = await confirm(
-      `Are you sure you want to delete (${finalSelectedNotes.length}) note(s)?`,
+      `Are you sure you want to delete (${selectedNotes.length}) note(s)?`,
       {
         variant: "error",
         icon: (
@@ -123,7 +60,7 @@ export const Notes = ({
     );
 
     if (confirmed) {
-      finalSelectedNotes.forEach(async (note) => {
+      selectedNotes.forEach(async (note) => {
         const prom = deleteNote.mutateAsync({
           id: note.id,
         });
@@ -138,7 +75,7 @@ export const Notes = ({
   };
 
   const handleAnalyzeClick = () => {
-    finalSelectedNotes.forEach(async (note) => {
+    selectedNotes.forEach(async (note) => {
       const prom = analyzeNote.mutateAsync({
         id: note.id,
       });
@@ -152,38 +89,62 @@ export const Notes = ({
   };
 
   return (
-    <Card {...cardProps}>
-      <FlexColumn paddingX={2} paddingBottom={2} spacing={2}>
-        <NoteHeader
-          onCreate={handleCreateClick}
-          onDelete={handleDeleteClick}
-          onAnalyze={handleAnalyzeClick}
-          notesSelected={finalSelectedNotes.length > 0}
-        />
-        <OcrDropzone
-          ref={dropZoneRef}
-          handleAcceptedFiles={handleAcceptedFiles}
+    <FlexColumn
+      spacing={5}
+      paddingX={2}
+      height={"100vh"}
+      sx={{
+        backgroundColor: "background.paper",
+      }}
+    >
+      <Box sx={{ display: "none" }} />
+      <NoteDropzone
+        ref={dropzoneRef}
+        handleAcceptedFiles={handleAcceptedFiles}
+        handleRejectedFiles={() => {}}
+      />
+      <Card
+        sx={{ borderRadius: 5, backgroundColor: "background.main" }}
+        {...cardProps}
+      >
+        <FlexColumn
+          paddingX={2}
+          paddingBottom={2}
+          spacing={2}
+          sx={{ backgroundColor: "background.main" }}
         >
-          <DataGrid
-            columns={columns}
-            rows={mapToNoteRows(notes ?? [])}
-            checkboxSelection
-            disableRowSelectionOnClick
-            onRowSelectionModelChange={(selectedNoteRowIds) => {
-              finalSetSelectedNotes(
-                notes?.filter((n) => selectedNoteRowIds.includes(n.id)) ?? []
-              );
-            }}
-            sx={{
-              bgcolor: "background.paper", // Ensures background matches theme
-              color: "text.primary",
-              "& .MuiDataGrid-cell": {
-                color: "text.primary",
-              },
-            }}
+          <NoteHeader
+            onCreate={() => dropzoneRef.current?.open()}
+            onDelete={handleDeleteClick}
+            onAnalyze={handleAnalyzeClick}
+            notesSelected={selectedNotes.length > 0}
           />
-        </OcrDropzone>
-      </FlexColumn>
-    </Card>
+          {notes && (
+            <FlexColumn
+              spacing={2}
+              sx={{
+                marginTop: 2,
+                backgroundColor: "background.paper",
+                borderRadius: 5,
+                padding: 1,
+              }}
+            >
+              {notes.map((note, index) => (
+                <FlexColumn>
+                  <NoteListTile
+                    note={note}
+                    sx={{
+                      border: "none",
+                      boxShadow: "none",
+                    }}
+                  />
+                  {index < notes.length - 1 && <Divider />}
+                </FlexColumn>
+              ))}
+            </FlexColumn>
+          )}
+        </FlexColumn>
+      </Card>
+    </FlexColumn>
   );
 };

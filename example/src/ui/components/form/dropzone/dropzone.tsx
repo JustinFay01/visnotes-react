@@ -5,7 +5,7 @@ import { Accept, FileRejection, useDropzone } from "react-dropzone";
 import { StyledDropzone } from "./styled-dropzone";
 import { StyledMessage } from "./styled-message";
 
-type OcrDropzoneProps = WithSx & {
+export type OcrDropzoneProps = WithSx & {
   children: React.ReactNode;
   accept?: Accept;
   handleAcceptedFiles?: (files: File[]) => void;

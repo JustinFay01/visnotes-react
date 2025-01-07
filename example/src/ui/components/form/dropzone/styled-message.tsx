@@ -16,10 +16,11 @@ export const StyledMessage = styled(Box, {
   width: "340px",
   left: "50%",
   zIndex: 10,
+  bottom: 10,
   transform: `${
     isDragActive
       ? "translateX(-50%) scale(1)"
-      : "translateX(-50%) translateY(100%) scale(0.8)"
+      : "translateX(-50%) translateY(10px) scale(0.8)"
   }`,
   opacity: isDragActive ? 1 : 0,
   transition: "transform 0.2s ease-out, opacity 0.2s ease-out",
