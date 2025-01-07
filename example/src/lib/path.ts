@@ -20,20 +20,20 @@ export const error = {
 
 export const app = {
   root: {
-    path: "/app",
-    getHref: () => "/app",
+    path: "/",
+    getHref: () => "/",
   },
   dashboard: {
-    path: "/app",
-    getHref: () => "/app",
+    path: "/dashboard",
+    getHref: () => "/dashboard",
   },
   notes: {
-    path: "/app/notes",
-    getHref: () => "/app/notes",
+    path: "/notes",
+    getHref: () => "/notes",
   },
   wordcloud: {
-    path: "/app/wordcloud",
-    getHref: () => "/app/wordcloud",
+    path: "/wordcloud",
+    getHref: () => "/wordcloud",
   },
 };
 
