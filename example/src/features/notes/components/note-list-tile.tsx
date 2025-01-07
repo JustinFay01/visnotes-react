@@ -1,16 +1,16 @@
-import { Card, Checkbox, Grid2 as Grid } from "@mui/material";
-import React from "react";
-import { FlexRow, FlexSpacer } from "@/ui/layout/flexbox";
 import {
   ConversionUnit,
   convertBytes,
 } from "@/features/wordcloud/util/file-util";
-import { Note } from "../types/api-types";
+import { FlexSpacer } from "@/ui/layout/flexbox";
+import { OcrTypography } from "@/ui/typography/ocr-typography";
 import ArticleIcon from "@mui/icons-material/Article";
-import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import ImageIcon from "@mui/icons-material/Image";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { OcrTypography } from "@/ui/typography/ocr-typography";
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import { Card, Checkbox, Grid2 as Grid } from "@mui/material";
+import React from "react";
+import { Note } from "../types/api-types";
 
 type NoteListTileProps = {
   note: Note;

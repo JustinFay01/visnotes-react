@@ -25,6 +25,7 @@ export const Notes = ({ ...cardProps }: NotesProps) => {
   const { promise } = useToast();
   const { confirm } = useDialogs();
 
+  //@ts-ignore - This will be fixed in the next update
   const [selectedNotes, setSelectedNotes] = useState<Note[]>([]);
   const dropzoneRef = React.useRef<OcrDropzoneRef>(null);
 
