@@ -8,7 +8,7 @@ import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import React, { useRef, useState } from "react";
 import { NoteHeader } from "./components/note-header";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useAnalyzeNote } from "@/api/notes/anaylze-note";
+import { useAnalyzeNote } from "@/api/notes/analyze-note";
 import { useDeleteNote } from "@/api/notes/delete-note";
 import { convertBytes } from "../wordcloud/util/file-util";
 import { Note } from "./types/api-types";
