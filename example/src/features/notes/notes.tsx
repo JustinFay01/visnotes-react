@@ -173,9 +173,7 @@ export const Notes = ({ ...cardProps }: NotesProps) => {
         {...cardProps}
       >
         <FlexColumn spacing={2} sx={{ backgroundColor: "background.main" }}>
-          {!notes ? (
-            <EmptyNoteList />
-          ) : (
+          {notes && (
             <FlexColumn
               spacing={2}
               sx={{
@@ -218,6 +216,7 @@ export const Notes = ({ ...cardProps }: NotesProps) => {
               ))}
             </FlexColumn>
           )}
+          {!notes || (notes.length === 0 && <EmptyNoteList />)}
         </FlexColumn>
       </Card>
     </FlexColumn>
