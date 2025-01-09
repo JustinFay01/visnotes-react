@@ -23,8 +23,7 @@ type NoteHeaderProps = {
   onDelete: () => void;
   onAnalyze: () => void;
   checked: boolean;
-  onCheck: (val: boolean) => void;
-  notesSelected: boolean;
+  onCheck: () => void;
 };
 
 export const NoteHeader = ({
@@ -33,7 +32,6 @@ export const NoteHeader = ({
   onAnalyze,
   checked,
   onCheck,
-  notesSelected,
 }: NoteHeaderProps) => {
   const textSx = {
     color: "text.secondary",
@@ -81,7 +79,7 @@ export const NoteHeader = ({
           variant="contained"
           startIcon={<TroubleshootIcon />}
           onClick={onAnalyze}
-          disabled={!notesSelected}
+          disabled={!checked}
         >
           Analyze
         </Button>
@@ -89,7 +87,7 @@ export const NoteHeader = ({
           variant="outlined"
           startIcon={<DeleteIcon />}
           onClick={onDelete}
-          disabled={!notesSelected}
+          disabled={!checked}
         >
           Delete
         </Button>
@@ -99,7 +97,7 @@ export const NoteHeader = ({
         <Checkbox
           aria-label="Select Note"
           checked={checked}
-          onClick={() => onCheck(!checked)}
+          onClick={onCheck}
         />
 
         <Grid size={gridSpacing[1]} gap={1.5} sx={gridSx}>

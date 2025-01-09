@@ -14,8 +14,13 @@ import { NoteHeader } from "./components/note-header";
 import { NoteListTile } from "./components/note-list/note-list-tile";
 import { Note } from "./types/api-types";
 import { EmptyNoteList } from "./components/note-list/empty-note-list";
+import { OcrTypography } from "@/ui/typography/ocr-typography";
 
 type NotesProps = React.ComponentProps<typeof Card>;
+
+const concatNoteNames = (notes: Note[]) => {
+  return notes.map((note) => note.name).join(", ");
+};
 
 export const Notes = ({ ...cardProps }: NotesProps) => {
   const createNote = useCreateNote();
@@ -23,10 +28,9 @@ export const Notes = ({ ...cardProps }: NotesProps) => {
   const analyzeNote = useAnalyzeNote();
   const { data: notes } = useGetNotes();
 
-  const { promise } = useToast();
+  const { promise, error, success } = useToast();
   const { confirm } = useDialogs();
 
-  //@ts-ignore - This will be fixed in the next update
   const [selectedNotes, setSelectedNotes] = useState<Note[]>([]);
   const dropzoneRef = React.useRef<OcrDropzoneRef>(null);
 
@@ -56,9 +60,20 @@ export const Notes = ({ ...cardProps }: NotesProps) => {
 
   const handleDeleteClick = async () => {
     const confirmed = await confirm(
-      `Are you sure you want to delete (${selectedNotes.length}) note(s)?`,
+      <FlexColumn spacing={2}>
+        <Box>
+          Are you sure you want to delete the following files?
+          {selectedNotes.map((note) => (
+            <Box>- {note.name}</Box>
+          ))}
+        </Box>
+        <OcrTypography sx={{ fontWeight: "bold" }}>
+          This action cannot be undone.
+        </OcrTypography>
+      </FlexColumn>,
       {
         variant: "error",
+        title: "Delete Notes",
         icon: (
           <DeleteIcon
             fontSize="inherit"
@@ -74,31 +89,56 @@ export const Notes = ({ ...cardProps }: NotesProps) => {
       return;
     }
 
-    selectedNotes.forEach(async (note) => {
-      const prom = deleteNote.mutateAsync({
-        id: note.id,
-      });
-      promise(
-        prom,
-        `Deleting ${note.name}`,
-        `Deleted ${note.name}`,
-        `Failed to delete ${note.name}`
-      );
+    const successFullNotes: Note[] = [];
+    selectedNotes.forEach((note) => {
+      deleteNote
+        .mutateAsync({
+          id: note.id,
+        })
+        .catch((e) => {
+          console.error(e);
+          error(`Failed to delete ${note.name}`);
+        })
+        .finally(() => {
+          setSelectedNotes(selectedNotes.filter((n) => n.id !== note.id));
+          successFullNotes.push(note);
+        });
     });
+
+    if (successFullNotes.length === 0) {
+      return;
+    }
+
+    success(
+      <OcrTypography>Deleted {concatNoteNames(successFullNotes)}</OcrTypography>
+    );
   };
 
   const handleAnalyzeClick = () => {
-    selectedNotes.forEach(async (note) => {
-      const prom = analyzeNote.mutateAsync({
-        id: note.id,
-      });
-      promise(
-        prom,
-        `Analyzing ${note.name}`,
-        `Analyzed ${note.name}`,
-        `Failed to analyze ${note.name}`
-      );
+    const successFullNotes: Note[] = [];
+    selectedNotes.forEach((note) => {
+      analyzeNote
+        .mutateAsync({
+          id: note.id,
+        })
+        .catch((e) => {
+          console.error(e);
+          error(`Failed to analyze ${note.name}`);
+        })
+        .finally(() => {
+          successFullNotes.push(note);
+        });
     });
+
+    if (successFullNotes.length === 0) {
+      return;
+    }
+
+    success(
+      <OcrTypography>
+        Analyzed {concatNoteNames(successFullNotes)}
+      </OcrTypography>
+    );
   };
 
   return (
@@ -143,11 +183,30 @@ export const Notes = ({ ...cardProps }: NotesProps) => {
                 onCreate={() => dropzoneRef.current?.open()}
                 onDelete={handleDeleteClick}
                 onAnalyze={handleAnalyzeClick}
-                notesSelected={selectedNotes.length > 0}
+                onCheck={() => {
+                  if (selectedNotes.length === notes.length) {
+                    setSelectedNotes([]);
+                  } else {
+                    setSelectedNotes(notes);
+                  }
+                }}
+                checked={!!selectedNotes.length}
               />
               {notes.map((note, index) => (
                 <FlexColumn padding={1}>
-                  <NoteListTile note={note} />
+                  <NoteListTile
+                    note={note}
+                    checked={selectedNotes.includes(note)}
+                    onCheck={(val) => {
+                      if (val) {
+                        setSelectedNotes([...selectedNotes, note]);
+                      } else {
+                        setSelectedNotes(
+                          selectedNotes.filter((n) => n.id !== note.id)
+                        );
+                      }
+                    }}
+                  />
                   {index < notes.length - 1 && <Divider />}
                 </FlexColumn>
               ))}

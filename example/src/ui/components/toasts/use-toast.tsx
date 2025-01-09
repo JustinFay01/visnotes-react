@@ -2,7 +2,7 @@ import { toast, ToastOptions } from "react-toastify";
 
 export const useToast = () => {
   const success = (
-    message: string,
+    message: React.ReactNode,
     options?: ToastOptions<unknown> | undefined
   ) =>
     toast(message, {
@@ -11,7 +11,7 @@ export const useToast = () => {
     });
 
   const error = (
-    message: string,
+    message: React.ReactNode,
     options?: ToastOptions<unknown> | undefined
   ) => {
     toast(message, {
