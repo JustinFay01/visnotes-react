@@ -10,12 +10,13 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import { Card, Checkbox, Grid2 as Grid } from "@mui/material";
 import React from "react";
-import { Note } from "../types/api-types";
+import { Note } from "../../types/api-types";
+import { gridSpacing, gridSx } from "../../util/note-list-grid-size";
 
 type NoteListTileProps = {
   note: Note;
-  checked?: boolean;
-  onCheck?: (val: boolean) => void;
+  checked: boolean;
+  onCheck: (val: boolean) => void;
   unit?: ConversionUnit;
 } & React.ComponentProps<typeof Card>;
 
@@ -37,22 +38,6 @@ export const NoteListTile = ({
   checked,
   ...restProps
 }: NoteListTileProps) => {
-  const [internalChecked, setInternalChecked] = React.useState(
-    checked ?? false
-  );
-
-  const controlled = checked !== undefined;
-
-  const handleCheck = () => {
-    if (!controlled) {
-      setInternalChecked(!internalChecked);
-    }
-
-    if (onCheck) {
-      onCheck(!internalChecked);
-    }
-  };
-
   const formatDate = (date: Date): string => {
     const month = date.toLocaleString("default", { month: "short" });
     const day = date.getDay();
@@ -64,30 +49,28 @@ export const NoteListTile = ({
   return (
     <Card
       key={note.id}
-      sx={{
-        border: "none",
-      }}
+      sx={{ border: "none", boxShadow: "none" }}
       {...restProps}
     >
-      <Grid container spacing={2} alignItems="center">
+      <Grid container spacing={gridSpacing[0]} sx={gridSx}>
         <Checkbox
           aria-label="Select Note"
-          checked={controlled ? checked : internalChecked}
-          onClick={handleCheck}
+          checked={checked}
+          onClick={() => onCheck(!checked)}
         />
 
-        <Grid size={3} gap={1.5} sx={{ display: "flex", alignItems: "center" }}>
+        <Grid size={gridSpacing[1]} gap={1.5} sx={gridSx}>
           {iconMap[note.type] ?? <ArticleIcon />}
           <OcrTypography variant="body2" sx={{ fontWeight: "bold" }}>
             {note.name}
           </OcrTypography>
         </Grid>
 
-        <Grid
-          size={2}
-          sx={{ display: "flex", alignItems: "center" }}
-        >{`${convertBytes(unit, note.size).toPrecision(1)} ${unit}`}</Grid>
-        <Grid size={2} sx={{ display: "flex", alignItems: "center" }}>
+        <Grid size={gridSpacing[2]} sx={gridSx}>{`${convertBytes(
+          unit,
+          note.size
+        ).toPrecision(1)} ${unit}`}</Grid>
+        <Grid size={gridSpacing[3]} sx={gridSx}>
           {formatDate(new Date(note.createdAt))}
         </Grid>
         <FlexSpacer />

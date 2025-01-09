@@ -11,8 +11,9 @@ import { Box, Card, Divider } from "@mui/material";
 import React, { useState } from "react";
 import { NoteDropzone } from "./components/note-dropzone";
 import { NoteHeader } from "./components/note-header";
-import { NoteListTile } from "./components/note-list-tile";
+import { NoteListTile } from "./components/note-list/note-list-tile";
 import { Note } from "./types/api-types";
+import { EmptyNoteList } from "./components/note-list/empty-note-list";
 
 type NotesProps = React.ComponentProps<typeof Card>;
 
@@ -30,18 +31,27 @@ export const Notes = ({ ...cardProps }: NotesProps) => {
   const dropzoneRef = React.useRef<OcrDropzoneRef>(null);
 
   const handleAcceptedFiles = (files: File[]) => {
+    if (files.length === 0) {
+      return;
+    }
+
+    const promises: Promise<Note>[] = [];
     files.forEach(async (f) => {
       console.log("Creating note for file", f.name);
       const prom = createNote.mutateAsync({
         file: f,
       });
-      promise(
-        prom,
-        `Uploading ${f.name}`,
-        `Uploaded ${f.name}`,
-        `Failed to upload ${f.name}`
-      );
+      promises.push(prom);
     });
+
+    const moreThanOne = promises.length > 1;
+
+    promise(
+      Promise.all(promises),
+      `Uploading ${moreThanOne ? `${promises.length} files` : files[0].name}`,
+      `Uploaded ${moreThanOne ? `${promises.length} files` : files[0].name}`,
+      "One or more files failed to upload"
+    );
   };
 
   const handleDeleteClick = async () => {
@@ -60,19 +70,21 @@ export const Notes = ({ ...cardProps }: NotesProps) => {
       }
     );
 
-    if (confirmed) {
-      selectedNotes.forEach(async (note) => {
-        const prom = deleteNote.mutateAsync({
-          id: note.id,
-        });
-        promise(
-          prom,
-          `Deleting ${note.name}`,
-          `Deleted ${note.name}`,
-          `Failed to delete ${note.name}`
-        );
-      });
+    if (!confirmed) {
+      return;
     }
+
+    selectedNotes.forEach(async (note) => {
+      const prom = deleteNote.mutateAsync({
+        id: note.id,
+      });
+      promise(
+        prom,
+        `Deleting ${note.name}`,
+        `Deleted ${note.name}`,
+        `Failed to delete ${note.name}`
+      );
+    });
   };
 
   const handleAnalyzeClick = () => {
@@ -93,9 +105,10 @@ export const Notes = ({ ...cardProps }: NotesProps) => {
     <FlexColumn
       spacing={5}
       paddingX={2}
-      height={"100vh"}
+      paddingBottom={10}
       sx={{
         backgroundColor: "background.paper",
+        overflowY: "auto",
       }}
     >
       <Box sx={{ display: "none" }} />
@@ -105,22 +118,18 @@ export const Notes = ({ ...cardProps }: NotesProps) => {
         handleRejectedFiles={() => {}}
       />
       <Card
-        sx={{ borderRadius: 5, backgroundColor: "background.main" }}
+        sx={{
+          borderRadius: 5,
+          backgroundColor: "background.main",
+
+          boxShadow: "none",
+        }}
         {...cardProps}
       >
-        <FlexColumn
-          paddingX={2}
-          paddingBottom={2}
-          spacing={2}
-          sx={{ backgroundColor: "background.main" }}
-        >
-          <NoteHeader
-            onCreate={() => dropzoneRef.current?.open()}
-            onDelete={handleDeleteClick}
-            onAnalyze={handleAnalyzeClick}
-            notesSelected={selectedNotes.length > 0}
-          />
-          {notes && (
+        <FlexColumn spacing={2} sx={{ backgroundColor: "background.main" }}>
+          {!notes ? (
+            <EmptyNoteList />
+          ) : (
             <FlexColumn
               spacing={2}
               sx={{
@@ -130,15 +139,15 @@ export const Notes = ({ ...cardProps }: NotesProps) => {
                 padding: 1,
               }}
             >
+              <NoteHeader
+                onCreate={() => dropzoneRef.current?.open()}
+                onDelete={handleDeleteClick}
+                onAnalyze={handleAnalyzeClick}
+                notesSelected={selectedNotes.length > 0}
+              />
               {notes.map((note, index) => (
-                <FlexColumn>
-                  <NoteListTile
-                    note={note}
-                    sx={{
-                      border: "none",
-                      boxShadow: "none",
-                    }}
-                  />
+                <FlexColumn padding={1}>
+                  <NoteListTile note={note} />
                   {index < notes.length - 1 && <Divider />}
                 </FlexColumn>
               ))}
