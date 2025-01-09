@@ -64,7 +64,7 @@ export const Notes = ({ ...cardProps }: NotesProps) => {
         <Box>
           Are you sure you want to delete the following files?
           {selectedNotes.map((note) => (
-            <Box>- {note.name}</Box>
+            <Box key={note.id}>- {note.name}</Box>
           ))}
         </Box>
         <OcrTypography sx={{ fontWeight: "bold" }}>
@@ -90,28 +90,34 @@ export const Notes = ({ ...cardProps }: NotesProps) => {
     }
 
     const successFullNotes: Note[] = [];
-    selectedNotes.forEach((note) => {
-      deleteNote
-        .mutateAsync({
-          id: note.id,
-        })
-        .catch((e) => {
-          console.error(e);
-          error(`Failed to delete ${note.name}`);
-        })
-        .finally(() => {
-          setSelectedNotes(selectedNotes.filter((n) => n.id !== note.id));
-          successFullNotes.push(note);
-        });
-    });
+    const failedNotes: Note[] = [];
 
-    if (successFullNotes.length === 0) {
-      return;
-    }
-
-    success(
-      <OcrTypography>Deleted {concatNoteNames(successFullNotes)}</OcrTypography>
+    // Use Promise.all to handle all delete operations simultaneously
+    await Promise.all(
+      selectedNotes.map((note) =>
+        deleteNote
+          .mutateAsync({ id: note.id })
+          .then(() => successFullNotes.push(note))
+          .catch(() => {
+            console.error(`Failed to delete ${note.name}`);
+            error(`Failed to delete ${note.name}`);
+            failedNotes.push(note);
+          })
+      )
     );
+
+    // Update state only once after all operations
+    setSelectedNotes((prev) =>
+      prev.filter((note) => !successFullNotes.some((n) => n.id === note.id))
+    );
+
+    if (successFullNotes.length > 0) {
+      success(
+        <OcrTypography sx={{ textOverflow: "ellipsis" }}>
+          Deleted {concatNoteNames(successFullNotes)}
+        </OcrTypography>
+      );
+    }
   };
 
   const handleAnalyzeClick = () => {
