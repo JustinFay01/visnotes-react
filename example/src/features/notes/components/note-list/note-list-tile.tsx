@@ -16,7 +16,7 @@ import { gridSpacing, gridSx } from "../../util/note-list-grid-size";
 type NoteListTileProps = {
   note: Note;
   checked: boolean;
-  onCheck: (val: boolean) => void;
+  onCheck: (event: React.ChangeEvent<HTMLInputElement>) => void;
   unit?: ConversionUnit;
 } & React.ComponentProps<typeof Card>;
 
@@ -56,7 +56,7 @@ export const NoteListTile = ({
         <Checkbox
           aria-label="Select Note"
           checked={checked}
-          onClick={() => onCheck(!checked)}
+          onChange={onCheck}
         />
 
         <Grid size={gridSpacing[1]} gap={1.5} sx={gridSx}>
