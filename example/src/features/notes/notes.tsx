@@ -9,11 +9,11 @@ import { OcrTypography } from "@/ui/typography/ocr-typography";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { Box, Divider } from "@mui/material";
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
+import { useDropzone } from "react-dropzone";
 import { NoteHeader } from "./components/note-header";
 import { NoteListTile } from "./components/note-list/note-list-tile";
 import { Note } from "./types/api-types";
-import { useDropzone } from "react-dropzone";
 
 const concatNoteNames = (notes: Note[]) => {
   return notes.map((note) => note.name).join(", ");
