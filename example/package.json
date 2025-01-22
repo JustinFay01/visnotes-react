@@ -12,6 +12,7 @@
     "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
+    "@auth0/auth0-react": "^2.2.4",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^6.3.1",

@@ -1,6 +1,8 @@
 import { paths } from "@/lib/path";
 import { RouterProvider, createBrowserRouter } from "react-router-dom"; // need to install react-router-dom
 import { AppRoot } from "./routes/root";
+import { Authenticated } from "@/lib/auth/authenticated";
+import { AuthProvider } from "@/lib/auth/auth-provider";
 
 const createRouter = () =>
   createBrowserRouter([
@@ -13,7 +15,13 @@ const createRouter = () =>
     },
     {
       path: paths.app.root.path,
-      element: <AppRoot />,
+      element: (
+        <AuthProvider>
+          <Authenticated>
+            <AppRoot />
+          </Authenticated>
+        </AuthProvider>
+      ),
       children: [
         {
           path: paths.app.dashboard.path,
