@@ -4,6 +4,13 @@ export const api = Axios.create({
   baseURL: `${import.meta.env.VITE_API_URL}`,
 });
 
+export const addAuthToken = (token: string) => {
+  api.interceptors.request.use((req) => {
+    req.headers.Authorization = `Bearer ${token}`;
+    return req;
+  });
+};
+
 api.interceptors.response.use(
   (response) => {
     return response;
