@@ -4,6 +4,7 @@ import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import {
   AppBar,
+  Avatar,
   Button,
   IconButton,
   Toolbar,
@@ -12,6 +13,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { FlexRow, FlexSpacer } from "../flexbox";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const useCurrentTheme = (mode: string | undefined): string => {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
@@ -32,6 +34,7 @@ const useCurrentTheme = (mode: string | undefined): string => {
 export const Header = () => {
   const { mode, setMode } = useColorScheme();
   const currentTheme = useCurrentTheme(mode);
+  const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
 
   const textSx = {
     fontWeight: "bold",
@@ -83,17 +86,26 @@ export const Header = () => {
               )}
             </IconButton>
           </Tooltip>
-          <Button
-            variant="outlined"
-            href="/login"
-            sx={{
-              ...textSx,
-              fontWeight: "bold",
-              border: "2px solid",
-            }}
-          >
-            Login
-          </Button>
+          {isAuthenticated ? (
+            <FlexRow>
+              <Avatar alt={user?.given_name} src={user?.picture} />
+              <Button variant="outlined" sx={textSx} onClick={() => logout()}>
+                Logout
+              </Button>
+            </FlexRow>
+          ) : (
+            <Button
+              variant="outlined"
+              sx={{
+                ...textSx,
+                fontWeight: "bold",
+                border: "2px solid",
+              }}
+              onClick={() => loginWithRedirect()}
+            >
+              Login
+            </Button>
+          )}
         </FlexRow>
       </Toolbar>
     </AppBar>
