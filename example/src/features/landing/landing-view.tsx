@@ -30,9 +30,9 @@ export const LandingView = () => {
       <Button
         variant="contained"
         color="primary"
-        href={paths.app.wordcloud.getHref()}
+        href={paths.app.dashboard.getHref()}
       >
-        Go to Wordcloud
+        Go to Dashboard
       </Button>
     </FlexColumn>
   );

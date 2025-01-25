@@ -9,9 +9,14 @@ export const Authenticated = ({ children }: AuthenticatedProps) => {
   const { getAccessTokenSilently } = useAuth0();
 
   useEffect(() => {
-    getAccessTokenSilently().then(addAuthToken);
+    getAccessTokenSilently().then((token) => {
+      addAuthToken(token);
+    });
   }, [getAccessTokenSilently]);
 
-  const Component = withAuthenticationRequired(() => <>{children}</>);
+  const Component = withAuthenticationRequired(() => children, {
+    onRedirecting: () => <div>Loading...</div>,
+  });
+
   return <Component />;
 };

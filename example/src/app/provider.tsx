@@ -1,4 +1,5 @@
 import useDynamicIcon from "@/hooks/use-dynamic-icon";
+import { AuthProvider } from "@/lib/auth/auth-provider";
 import { queryConfig } from "@/lib/react-query";
 import { theme } from "@/lib/theme";
 import { DialogsProvider } from "@/ui/dialogs";
@@ -42,8 +43,10 @@ export function AppProvider({ children }: React.PropsWithChildren) {
   useDynamicIcon();
 
   return (
-    <ThemeProvider theme={theme} defaultMode="system">
-      <App>{children}</App>
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider theme={theme} defaultMode="system">
+        <App>{children}</App>
+      </ThemeProvider>
+    </AuthProvider>
   );
 }
