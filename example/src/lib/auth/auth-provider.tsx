@@ -18,8 +18,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       authorizationParams={{
         redirect_uri: window.location.origin,
         audience: `${import.meta.env.VITE_AUTH0_AUDIENCE}`,
-        scope:
-          "read:current_user update:current_user_metadata read:notes create:notes",
+        scope: `${import.meta.env.VITE_OCR_API_SCOPE} ${
+          import.meta.env.VITE_AUTH0_SCOPE
+        }`,
       }}
     >
       {children}

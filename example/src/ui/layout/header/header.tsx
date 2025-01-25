@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { FlexRow, FlexSpacer } from "../flexbox";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useEffect } from "react";
 
 const useCurrentTheme = (mode: string | undefined): string => {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
@@ -36,11 +37,14 @@ export const Header = () => {
   const currentTheme = useCurrentTheme(mode);
   const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
 
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
+
   const textSx = {
     fontWeight: "bold",
     color: currentTheme === "dark" ? "text.primary" : "white",
   };
-  //TODO: Add mobile header as a drawer for other pages
 
   return (
     <AppBar position="sticky">
@@ -87,8 +91,12 @@ export const Header = () => {
             </IconButton>
           </Tooltip>
           {isAuthenticated ? (
-            <FlexRow>
-              <Avatar alt={user?.given_name} src={user?.picture} />
+            <FlexRow sx={{ alignItems: "center" }}>
+              <Avatar
+                alt={user?.given_name}
+                src={user?.picture}
+                sx={{ width: 32, height: 32 }}
+              />
               <Button variant="outlined" sx={textSx} onClick={() => logout()}>
                 Logout
               </Button>

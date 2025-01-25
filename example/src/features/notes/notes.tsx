@@ -238,7 +238,7 @@ export const Notes = () => {
               )}
 
               {notes.map((note, index) => (
-                <FlexColumn padding={1}>
+                <FlexColumn padding={1} key={note.id}>
                   <NoteListTile
                     note={note}
                     checked={selectedNotes.includes(note)}
