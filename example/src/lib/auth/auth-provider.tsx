@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       domain={`${import.meta.env.VITE_AUTH0_DOMAIN}`}
       clientId={`${import.meta.env.VITE_AUTH0_CLIENT_ID}`}
       authorizationParams={{
-        redirect_uri: `http://localhost:3000/dashboard`,
+        redirect_uri: `${import.meta.env.VITE_AUTH0_REDIRECT_URI}`,
         audience: `${import.meta.env.VITE_AUTH0_AUDIENCE}`,
         scope: `${import.meta.env.VITE_OCR_API_SCOPE} ${
           import.meta.env.VITE_AUTH0_SCOPE
