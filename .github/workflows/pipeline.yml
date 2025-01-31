@@ -27,7 +27,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
-          context: example/
+          context: src/
           push: true
           tags: |
             justinfay501/ocr-react:latest
@@ -49,7 +49,7 @@ jobs:
         uses: cssnr/stack-deploy-action@v1
         with:
           name: ocr-react
-          file: example/docker-stack.yml
+          file: src/docker-stack.yml
           host: ${{ secrets.DEPLOY_HOST }}
           user: deploy-ocr-react
           ssh_key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
