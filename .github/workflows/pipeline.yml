@@ -51,6 +51,6 @@ jobs:
           name: ocr-react
           file: src/docker-stack.yml
           host: ${{ secrets.DEPLOY_HOST }}
-          user: deploy-ocr-react
+          user: deploy-visnotes
           ssh_key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
           env_file: ./envfile
