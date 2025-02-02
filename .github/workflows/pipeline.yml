@@ -50,7 +50,7 @@ jobs:
         with:
           name: ocr-react
           file: src/docker-stack.yml
-          host: ${{ secrets.DEPLOY_HOST }}
+          host: eremos.cloud
           user: deploy-visnotes
           ssh_key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
           env_file: ./envfile
